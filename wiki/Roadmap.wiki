@@ -1,0 +1,34 @@
+#summary Roadmap
+#labels roadmap
+
+= Roadmap =
+
+===0.5===
+  * First public release
+  * TODO: Upload to Google Code
+  * ETA: 2010/01/31
+
+===0.6===
+  * TODO: Temporary unsaved config
+  * ETA: 2010/02/07
+
+===0.7===
+  * TODO: Game filtering
+
+===0.8===
+  * TODO: Software update
+
+===0.9===
+  * TODO: Help pages
+
+===1.0===
+  * TODO: Final bug fix and polish
+
+===1.1===
+  * TODO: Feedback mechanism
+
+===1.2===
+  * TODO: Game tagging
+
+===1.3===
+  * TODO: Misc Windows 7 integrations (e.g. jump list)
