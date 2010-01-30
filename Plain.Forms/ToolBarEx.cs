@@ -5,6 +5,7 @@ using System.Windows.Forms.Design;
 using Plain.Design;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Plain.Forms {
 	[Designer(typeof(ControlDesigner))]

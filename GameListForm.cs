@@ -16,8 +16,40 @@ namespace DosboxApp {
 	public partial class GameListForm : Form {
 		public GameListForm() {
 			InitializeComponent();
+
+			base.SuspendLayout();
+			DateTime d0 = DateTime.Now;
+			DateTime d1 = DateTime.Now;
+			d0 = DateTime.Now;
+
+			themeToMatchFonts();
+			themeToMatchDropDown();
+			themeToMatchUserPref();
+			Program.AppConfig.GameListFormConfig.LoadTo(this);
+			listFromHash(lvwGame, Program.AppConfig.GameConfig.Games);
+
+			d1 = DateTime.Now;
+			System.Diagnostics.Debug.WriteLine(d1 - d0);
+			d0 = DateTime.Now;
+
+			DosboxInfo dinfo = loadDosboxVersions();
+			if (dinfo != null) {
+				gridConfig.SelectedObject = dinfo.LoadConfig();
+			}
+
+			d1 = DateTime.Now;
+			System.Diagnostics.Debug.WriteLine(d1 - d0);
+
+			tvwHelp.ExpandAll();
+#if true
+			tab.TabPages.Remove(pageOptions);
+			tab.TabPages.Remove(pageHelp);
+#endif
+			base.ResumeLayout();
+			m_IsInitializationDone = true;
 		}
 
+		bool m_IsInitializationDone;
 		bool m_IsSelectionScrolling;
 
 		protected override void OnHandleCreated(EventArgs e) {
@@ -51,38 +83,6 @@ namespace DosboxApp {
 					catch (DllNotFoundException) { }
 				}
 			}
-#endif
-		}
-
-		protected override void OnLoad(EventArgs e) {
-			DateTime d0 = DateTime.Now;
-			base.OnLoad(e);
-			DateTime d1 = DateTime.Now;
-			System.Diagnostics.Debug.WriteLine(d1 - d0);
-			d0 = DateTime.Now;
-
-			themeToMatchFonts();
-			themeToMatchDropDown();
-			themeToMatchUserPref();
-			Program.AppConfig.GameListFormConfig.LoadTo(this);
-			listFromHash(lvwGame, Program.AppConfig.GameConfig.Games);
-
-			d1 = DateTime.Now;
-			System.Diagnostics.Debug.WriteLine(d1 - d0);
-			d0 = DateTime.Now;
-
-			DosboxInfo dinfo = loadDosboxVersions();
-			if (dinfo != null) {
-				gridConfig.SelectedObject = dinfo.LoadConfig();
-			}
-
-			d1 = DateTime.Now;
-			System.Diagnostics.Debug.WriteLine(d1 - d0);
-
-			tvwHelp.ExpandAll();
-#if false
-			tab.TabPages.Remove(pageOptions);
-			tab.TabPages.Remove(pageHelp);
 #endif
 		}
 
@@ -385,25 +385,28 @@ namespace DosboxApp {
 		}
 
 		private void tbrAction_Resize(object sender, EventArgs e) {
-			pnlTop.Height = tbrAction.Height;
-			// TODO: find out why this is called many times.
-			Rectangle rectRef;
-			if (tbrAction.Buttons.Count > 0) {
-				rectRef = tbrAction.Buttons[0].Rectangle;
-				rectRef.Offset(0, 1);
+			if (m_IsInitializationDone) {
+				// TODO: find out why this is called many times.
+				//pnlTop.Height = Math.Max(tbrAction.Height, pnlSearch.Height);
+				pnlTop.Height = tbrAction.Height;
+				Rectangle rectRef;
+				if (tbrAction.Buttons.Count > 0) {
+					rectRef = tbrAction.Buttons[0].Rectangle;
+					rectRef.Offset(0, 1);
+				}
+				else {
+					rectRef = tbrAction.ClientRectangle;
+					rectRef.Offset(0, -1);
+				}
+				Rectangle rect = new Rectangle();
+				rect.Y = rectRef.Top + (rectRef.Height - pnlSearch.Height) / 2;
+				int xClipped = pnlSearch.Bounds.Right - (tbrAction.ClientSize.Width - 4);
+				int xTo = tbrAction.Buttons[tbrAction.Buttons.Count - 1].Rectangle.Right + 4;
+				if (pnlSearch.Left < xTo) {
+					pnlSearch.SetBounds(xTo, 0, pnlSearch.Parent.ClientSize.Width - xTo - 4, 0, BoundsSpecified.X | BoundsSpecified.Width);
+				}
+				pnlSearch.SetBounds(rect.Left, rect.Top, rect.Width, 0, BoundsSpecified.Location | BoundsSpecified.Width);
 			}
-			else {
-				rectRef = tbrAction.ClientRectangle;
-				rectRef.Offset(0, -1);
-			}
-			Rectangle rect = new Rectangle();
-			rect.Y = rectRef.Top + (rectRef.Height - pnlSearch.Height) / 2;
-			int xClipped = pnlSearch.Bounds.Right - (tbrAction.ClientSize.Width - 4);
-			int xTo = tbrAction.Buttons[tbrAction.Buttons.Count - 1].Rectangle.Right + 4;
-			if (pnlSearch.Left < xTo) {
-				pnlSearch.SetBounds(xTo, 0, pnlSearch.Parent.ClientSize.Width - xTo - 4, 0, BoundsSpecified.X | BoundsSpecified.Width);
-			}
-			pnlSearch.SetBounds(rect.Left, rect.Top, rect.Width, 0, BoundsSpecified.Location | BoundsSpecified.Width);
 		}
 
 		private void mnuDosboxVersion_Click(object sender, EventArgs e) {
@@ -450,7 +453,9 @@ namespace DosboxApp {
 		}
 
 		private void txtSearch_Resize(object sender, EventArgs e) {
-			pnlSearch.Height = txtSearch.Height;
+			if (m_IsInitializationDone) {
+				pnlSearch.Height = txtSearch.Height;
+			}
 		}
 
 		private void lvwGame_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e) {

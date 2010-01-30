@@ -53,9 +53,6 @@
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.pcsDosbox = new System.Diagnostics.Process();
 			this.pnlMain = new System.Windows.Forms.Panel();
-			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
-			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
-			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
 			this.tab = new Plain.Forms.TabControlEx();
 			this.pageGames = new System.Windows.Forms.TabPage();
 			this.lvwGame = new Plain.Forms.ListViewEx();
@@ -78,6 +75,9 @@
 			this.txtSendData = new System.Windows.Forms.TextBox();
 			this.lblSendFeedback = new System.Windows.Forms.Label();
 			this.tvwHelp = new Plain.Forms.TreeViewEx();
+			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
+			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
+			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
 			this.pnlTop = new Plain.Forms.RebarPanel();
 			this.tbrTool = new Plain.Forms.ToolBarEx();
 			this.btnOpenCapture = new System.Windows.Forms.ToolBarButton();
@@ -194,25 +194,6 @@
 			this.pnlMain.Name = "pnlMain";
 			this.pnlMain.Size = new System.Drawing.Size(500, 165);
 			this.pnlMain.TabIndex = 3;
-			// 
-			// mnuSoftwareUpdate
-			// 
-			this.mnuSoftwareUpdate.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuUpdateStartup,
-            this.mnuUpdateManual});
-			// 
-			// mnuUpdateStartup
-			// 
-			this.mnuUpdateStartup.Index = 0;
-			this.mnuUpdateStartup.RadioCheck = true;
-			this.mnuUpdateStartup.Text = "Check on Startup";
-			// 
-			// mnuUpdateManual
-			// 
-			this.mnuUpdateManual.Checked = true;
-			this.mnuUpdateManual.Index = 1;
-			this.mnuUpdateManual.RadioCheck = true;
-			this.mnuUpdateManual.Text = "Manually";
 			// 
 			// tab
 			// 
@@ -557,6 +538,25 @@
 			this.tvwHelp.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvwHelp_BeforeCollapse);
 			this.tvwHelp.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwHelp_AfterSelect);
 			// 
+			// mnuSoftwareUpdate
+			// 
+			this.mnuSoftwareUpdate.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuUpdateStartup,
+            this.mnuUpdateManual});
+			// 
+			// mnuUpdateStartup
+			// 
+			this.mnuUpdateStartup.Index = 0;
+			this.mnuUpdateStartup.RadioCheck = true;
+			this.mnuUpdateStartup.Text = "Check on Startup";
+			// 
+			// mnuUpdateManual
+			// 
+			this.mnuUpdateManual.Checked = true;
+			this.mnuUpdateManual.Index = 1;
+			this.mnuUpdateManual.RadioCheck = true;
+			this.mnuUpdateManual.Text = "Manually";
+			// 
 			// pnlTop
 			// 
 			this.pnlTop.Controls.Add(this.tbrTool);
@@ -603,7 +603,7 @@
 			this.btnSpan.Enabled = false;
 			this.btnSpan.Name = "btnSpan";
 			this.btnSpan.Spring = true;
-			this.btnSpan.Width = 365;
+			this.btnSpan.Width = 24;
 			// 
 			// btnSoftwareUpdate
 			// 
@@ -746,18 +746,15 @@
 			// 
 			// pnlSearch
 			// 
-			this.pnlSearch.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.pnlSearch.BackColor = System.Drawing.Color.Transparent;
 			this.pnlSearch.Controls.Add(this.txtSearch);
 			this.pnlSearch.Cursor = System.Windows.Forms.Cursors.SizeWE;
-			this.pnlSearch.Location = new System.Drawing.Point(382, 8);
-			this.pnlSearch.MinimumSize = new System.Drawing.Size(64, 0);
+			this.pnlSearch.Location = new System.Drawing.Point(382, 1);
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.pnlSearch.Size = new System.Drawing.Size(114, 22);
 			this.pnlSearch.TabIndex = 3;
 			this.pnlSearch.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlSearch_MouseMove);
-			this.pnlSearch.Resize += new System.EventHandler(this.tbrAction_Resize);
 			// 
 			// txtSearch
 			// 
