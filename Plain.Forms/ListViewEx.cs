@@ -113,8 +113,8 @@ namespace Plain.Forms {
 			}
 		}
 
-		protected override void OnSizeChanged(EventArgs e) {
-			base.OnSizeChanged(e);
+		protected override void OnResize(EventArgs e) {
+			base.OnResize(e);
 			updateEmptyText();
 		}
 
