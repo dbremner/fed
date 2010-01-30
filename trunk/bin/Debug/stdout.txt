@@ -1,0 +1,6 @@
+DOSBox version 0.73
+Copyright 2002-2009 DOSBox Team, published under GNU GPL.
+---
+CONFIG:Loading primary settings from config file C:\Documents and Settings\Administrator\Local Settings\Application Data\DOSBox\dosbox-0.73.conf
+MIXER:Can't open audio: DirectSoundCreate: No audio device found , running in nosound mode.
+MIDI:Opened device:none
