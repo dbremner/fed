@@ -6,29 +6,30 @@
 ===0.5===
   * First public release
   * TODO: Upload to Google Code
-  * ETA: 2010/01/31
+  * ETA : 2010/01/31
+  * Done: 2010/01/30
 
 ===0.6===
   * TODO: Temporary unsaved config
-  * ETA: 2010/02/07
+  * TODO: Game filtering
+  * ETA : 2010/02/07
 
 ===0.7===
-  * TODO: Game filtering
+  * TODO: Software update
+  * ETA : 2010/02
 
 ===0.8===
-  * TODO: Software update
+  * TODO: Game tagging
+  * ETA : 2010/03
 
 ===0.9===
   * TODO: Help pages
+  * TODO: Feedback mechanism
+  * ETA : 2010/03
 
 ===1.0===
   * TODO: Final bug fix and polish
+  * ETA : 2010/04
 
 ===1.1===
-  * TODO: Feedback mechanism
-
-===1.2===
-  * TODO: Game tagging
-
-===1.3===
   * TODO: Misc Windows 7 integrations (e.g. jump list)
