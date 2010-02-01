@@ -53,6 +53,9 @@
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.pcsDosbox = new System.Diagnostics.Process();
 			this.pnlMain = new System.Windows.Forms.Panel();
+			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
+			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
+			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
 			this.tab = new Plain.Forms.TabControlEx();
 			this.pageGames = new System.Windows.Forms.TabPage();
 			this.lvwGame = new Plain.Forms.ListViewEx();
@@ -75,9 +78,6 @@
 			this.txtSendData = new System.Windows.Forms.TextBox();
 			this.lblSendFeedback = new System.Windows.Forms.Label();
 			this.tvwHelp = new Plain.Forms.TreeViewEx();
-			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
-			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
-			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
 			this.pnlTop = new Plain.Forms.RebarPanel();
 			this.tbrTool = new Plain.Forms.ToolBarEx();
 			this.btnOpenCapture = new System.Windows.Forms.ToolBarButton();
@@ -100,7 +100,7 @@
 			this.sepRun = new System.Windows.Forms.ToolBarButton();
 			this.btnRun = new System.Windows.Forms.ToolBarButton();
 			this.pnlSearch = new System.Windows.Forms.Panel();
-			this.txtSearch = new System.Windows.Forms.TextBox();
+			this.txtSearch = new Plain.Forms.TextBoxEx();
 			this.openFileFolderDialog = new Plain.Forms.OpenFileFolderDialog(this.components);
 			((System.ComponentModel.ISupportInitialize) (this.sbpInfo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize) (this.sbpExtra)).BeginInit();
@@ -194,6 +194,25 @@
 			this.pnlMain.Name = "pnlMain";
 			this.pnlMain.Size = new System.Drawing.Size(500, 165);
 			this.pnlMain.TabIndex = 3;
+			// 
+			// mnuSoftwareUpdate
+			// 
+			this.mnuSoftwareUpdate.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuUpdateStartup,
+            this.mnuUpdateManual});
+			// 
+			// mnuUpdateStartup
+			// 
+			this.mnuUpdateStartup.Index = 0;
+			this.mnuUpdateStartup.RadioCheck = true;
+			this.mnuUpdateStartup.Text = "Check on Startup";
+			// 
+			// mnuUpdateManual
+			// 
+			this.mnuUpdateManual.Checked = true;
+			this.mnuUpdateManual.Index = 1;
+			this.mnuUpdateManual.RadioCheck = true;
+			this.mnuUpdateManual.Text = "Manually";
 			// 
 			// tab
 			// 
@@ -538,25 +557,6 @@
 			this.tvwHelp.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvwHelp_BeforeCollapse);
 			this.tvwHelp.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwHelp_AfterSelect);
 			// 
-			// mnuSoftwareUpdate
-			// 
-			this.mnuSoftwareUpdate.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuUpdateStartup,
-            this.mnuUpdateManual});
-			// 
-			// mnuUpdateStartup
-			// 
-			this.mnuUpdateStartup.Index = 0;
-			this.mnuUpdateStartup.RadioCheck = true;
-			this.mnuUpdateStartup.Text = "Check on Startup";
-			// 
-			// mnuUpdateManual
-			// 
-			this.mnuUpdateManual.Checked = true;
-			this.mnuUpdateManual.Index = 1;
-			this.mnuUpdateManual.RadioCheck = true;
-			this.mnuUpdateManual.Text = "Manually";
-			// 
 			// pnlTop
 			// 
 			this.pnlTop.Controls.Add(this.tbrTool);
@@ -603,7 +603,7 @@
 			this.btnSpan.Enabled = false;
 			this.btnSpan.Name = "btnSpan";
 			this.btnSpan.Spring = true;
-			this.btnSpan.Width = 24;
+			this.btnSpan.Width = 365;
 			// 
 			// btnSoftwareUpdate
 			// 
@@ -758,12 +758,15 @@
 			// 
 			// txtSearch
 			// 
-			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.txtSearch.CueBanner = "Search";
+			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtSearch.HideSelection = false;
+			this.txtSearch.InnerMargins = new Plain.Forms.EditMargins(2, 0);
 			this.txtSearch.Location = new System.Drawing.Point(3, 0);
 			this.txtSearch.Name = "txtSearch";
 			this.txtSearch.Size = new System.Drawing.Size(111, 21);
 			this.txtSearch.TabIndex = 2;
+			this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
 			this.txtSearch.Resize += new System.EventHandler(this.txtSearch_Resize);
 			// 
 			// openFileFolderDialog
@@ -822,7 +825,7 @@
 		private Plain.Forms.ToolBarEx tbrProp;
         private System.Windows.Forms.ToolBarButton btnSortCat;
         private System.Windows.Forms.ToolBarButton btnSortAZ;
-		private System.Windows.Forms.TextBox txtSearch;
+		private Plain.Forms.TextBoxEx txtSearch;
         private System.Windows.Forms.ColumnHeader hdrName;
         private System.Windows.Forms.ColumnHeader hdrExe;
         private System.Windows.Forms.ImageList imlSmallList;

@@ -70,7 +70,11 @@
       <DependentUpon>GameListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plain.Design\ListViewGroupExCollectionEditor.cs" />
+    <Compile Include="Plain.Forms\MarginsConverter.cs" />
     <Compile Include="Plain.Design\ToolbarButtonExCollectionEditor.cs" />
+    <Compile Include="Plain.Forms\TextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Plain.Forms\ListViewGroupEx.cs" />
     <Compile Include="Plain.Forms\RebarPanel.cs">
       <SubType>Component</SubType>

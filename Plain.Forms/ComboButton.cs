@@ -162,11 +162,7 @@ namespace Plain.Forms {
 		}
 
 		int getComboButtonWidth() {
-			VScrollBar vsb = new VScrollBar();
-			int width = vsb.Width;
-			vsb.Dispose();
-			vsb = null;
-			return width;
+			return SystemInformation.VerticalScrollBarArrowHeight;
 		}
 
 		Size getPreferredSize() {

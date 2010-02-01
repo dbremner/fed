@@ -40,7 +40,9 @@ namespace DosboxApp {
 				this.Location = (Point) value;
 			}
 			if (base.readProp(ini, "Opacity", out value)) {
-				m_Opacity = (double) value;
+				if (0.2 <= (double) value) {
+					m_Opacity = (double) value;
+				}
 			}
 			if (base.readProp(ini, "Size", out value)) {
 				m_Size = (Size) value;
@@ -139,13 +141,19 @@ namespace DosboxApp {
 			object value;
 			base.LoadFrom(ini);
 			if (base.readProp(ini, "SearchWidth", out value)) {
-				m_SearchWidth = (int) value;
+				if (64 <= (int) value) {
+					m_SearchWidth = (int) value;
+				}
 			}
 			if (base.readProp(ini, "Column0Width", out value)) {
-				m_Column0Width = (int) value;
+				if (32 <= (int) value) {
+					m_Column0Width = (int) value;
+				}
 			}
 			if (base.readProp(ini, "Column1Width", out value)) {
-				m_Column1Width = (int) value;
+				if (32 <= (int) value) {
+					m_Column1Width = (int) value;
+				}
 			}
 		}
 
