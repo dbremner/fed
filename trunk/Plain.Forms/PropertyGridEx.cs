@@ -105,12 +105,14 @@ namespace Plain.Forms {
 
 		public void SetComment(string title, string description) {
 			Control comment = getControl(TYPE_DOCCOMMENT);
-			MethodInfo func = null;
-			try {
-				func = comment.GetType().GetMethod("SetComment", BindingFlags.Instance | BindingFlags.Public);
-				func.Invoke(comment, new object[] { title, description });
+			if (comment != null) {
+				MethodInfo func = null;
+				try {
+					func = comment.GetType().GetMethod("SetComment", BindingFlags.Instance | BindingFlags.Public);
+					func.Invoke(comment, new object[] { title, description });
+				}
+				catch { }
 			}
-			catch { }
 		}
 
 		/// <summary>
@@ -213,6 +215,11 @@ namespace Plain.Forms {
 		LinkedListNode<ChangeInfo> m_Current;
 		LinkedList<CommitInfo> m_Unsaved;
 
+		protected override void OnSystemColorsChanged(EventArgs e) {
+			base.OnSystemColorsChanged(e);
+			fixVScrollbarWidth();
+		}
+
 		protected override void OnPropertyValueChanged(PropertyValueChangedEventArgs e) {
 			if (_Undoing || _Redoing) {
 				return;
@@ -252,14 +259,36 @@ namespace Plain.Forms {
 			}
 		}
 
-		Control getControl(string name) {
+		Control getControl(string typeName) {
 			foreach (Control ctrl in base.Controls) {
-				if (ctrl.GetType().Name == name) {
+				if (ctrl.GetType().Name == typeName) {
 					return ctrl;
 				}
 			}
 			return null;
 		}
+
+		Control getChildControl(Control parent, string typeName) {
+			foreach (Control ctrl in parent.Controls) {
+				Control c = getChildControl(ctrl, typeName);
+				if (c != null) {
+					return c;
+				}
+				if (ctrl.GetType().Name == typeName) {
+					return ctrl;
+				}
+			}
+			return null;
+		}
+
+		void fixVScrollbarWidth() {
+			VScrollBar vsb = getChildControl(this, "VScrollBar") as VScrollBar;
+			if (vsb != null) {
+				vsb.Width = SystemInformation.VerticalScrollBarWidth;
+			}
+		}
+
+
 
 		public class ChangeInfo {
 			internal ChangeInfo() { }

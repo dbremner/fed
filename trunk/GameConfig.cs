@@ -16,10 +16,10 @@ namespace DosboxApp {
 			ini.Section = base.Name;
 			writeProp(ini, KEY_NUMGAMES, m_Games.Count);
 			int i = 0;
-			foreach(GameObject ginfo in m_Games.Values) {
+			foreach(GameObject gobj in m_Games.Values) {
 				ini.Section = CAT_NAME_MORE + i;
-				writeProp(ini, KEY_DIR, ginfo.Directory);
-				writeProp(ini, KEY_EXE, ginfo.Executable);
+				writeProp(ini, KEY_DIR, gobj.Directory);
+				writeProp(ini, KEY_EXE, gobj.Executable);
 				++i;
 			}
 		}
@@ -36,9 +36,9 @@ namespace DosboxApp {
 				string dir = readString(ini, KEY_DIR);
 				if (string.IsNullOrEmpty(dir) == false) {
 					string exe = readString(ini, KEY_EXE);
-					GameObject ginfo = new GameObject(dir);
-					ginfo.Executable = exe;
-					m_Games.Add(ginfo.Directory, ginfo);
+					GameObject gobj = new GameObject(dir);
+					gobj.Executable = exe;
+					m_Games.Add(gobj.Directory, gobj);
 				}
 			}
 		}

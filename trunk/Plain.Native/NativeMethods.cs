@@ -15,76 +15,82 @@ namespace Plain.Native {
 		public static Int16 HIWORD(Int32 dword) {
 			return (Int16) ((dword >> 16) & 0xFFFF);
 		}
+		public static UInt32 MAKELONG(UInt16 a, UInt16 b) {
+			return ((UInt32) (((UInt16) (((UInt64) (a)) & 0xffff)) | ((UInt32) ((UInt16) (((UInt64) (b)) & 0xffff))) << 16));
+		}
 		public static byte LOBYTE(UInt16 w) {
-			return ((byte) (((UInt64) (w)) & 0xff));
+			return ((Byte) (((UInt64) (w)) & 0xff));
 		}
 		public static byte HIBYTE(UInt16 w) {
-			return ((byte) ((((UInt64) (w)) >> 8) & 0xff));
+			return ((Byte) ((((UInt64) (w)) >> 8) & 0xff));
 		}
-		public static UInt16 MAKEWORD(byte a, byte b) {
-			return ((UInt16) (((byte) (((UInt64) (a)) & 0xff)) | ((UInt16) ((byte) (((UInt64) (b)) & 0xff))) << 8));
+		public static UInt16 MAKEWORD(Byte a, Byte b) {
+			return ((UInt16) (((Byte) (((UInt64) (a)) & 0xff)) | ((UInt16) ((Byte) (((UInt64) (b)) & 0xff))) << 8));
 		}
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, Int32 nMaxCount);
 
 		[DllImport("user32.dll")]
-		public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, IntPtr lpszWindow);
+		public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, String lpszClass, IntPtr lpszWindow);
 
 		[DllImport("user32.dll")]
-		public static extern IntPtr GetDlgItem(IntPtr hDlg, int nIDDlgItem);
+		public static extern IntPtr GetDlgItem(IntPtr hDlg, Int32 nIDDlgItem);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, int lParam);
+		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, string lParam);
+		public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, String lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, StringBuilder lParam);
+		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, StringBuilder lParam);
 
 		// Must not be OFNOTIFY or my fake CDN_FILEOK WM_NOTIFY gets everything 0. (Use ref?)
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, UIntPtr wParam, ref OFNOTIFY lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, Int32 Msg, int wParam, ref LVGROUP lParam);
+		public static extern int SendMessage(IntPtr hWnd, Int32 Msg, Int32 wParam, ref LVGROUP lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, ref NMLVEMPTYMARKUP lParam);
+		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, ref NMLVEMPTYMARKUP lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, ref TBBUTTONINFO lParam);
+		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, ref TBBUTTONINFO lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int PostMessage(IntPtr hWnd, UInt32 Msg, int wParam, int lParam);
+		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, StringBuilder wParam, Int32 lParam);
+
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		public static extern int PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam);
 
 		[DllImport("user32.dll")]
-		public static extern IntPtr GetAncestor(IntPtr hwnd, uint gaFlags);
+		public static extern IntPtr GetAncestor(IntPtr hwnd, UInt32 gaFlags);
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetFocus();
 
 		[DllImport("uxtheme.dll", CharSet = CharSet.Auto)]
-		public static extern Int32 SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
+		public static extern Int32 SetWindowTheme(IntPtr hwnd, String pszSubAppName, String pszSubIdList);
 
 		[DllImport("comdlg32.dll")]
 		public static extern int CommDlgExtendedError();
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern bool WritePrivateProfileString(string lpAppName, string lpKeyName, string lpString, string lpFileName);
+		public static extern bool WritePrivateProfileString(String lpAppName, String lpKeyName, String lpString, String lpFileName);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, uint nSize, string lpFileName);
+		public static extern uint GetPrivateProfileString(String lpAppName, String lpKeyName, String lpDefault, StringBuilder lpReturnedString, UInt32 nSize, String lpFileName);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern bool WritePrivateProfileSection(string lpAppName, string lpString, string lpFileName);
+		public static extern bool WritePrivateProfileSection(String lpAppName, String lpString, String lpFileName);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern uint GetPrivateProfileSection(string lpAppName, IntPtr lpReturnedString, uint nSize, string lpFileName);
+		public static extern uint GetPrivateProfileSection(String lpAppName, IntPtr lpReturnedString, UInt32 nSize, String lpFileName);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
-		public static extern uint GetPrivateProfileInt(string lpAppName, string lpKeyName, int nDefault, string lpFileName);
+		public static extern uint GetPrivateProfileInt(String lpAppName, String lpKeyName, Int32 nDefault, String lpFileName);
 
 		[DllImport("dwmapi.dll")]
 		public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
@@ -93,12 +99,12 @@ namespace Plain.Native {
 		public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
 		[DllImport("user32.dll", SetLastError = true)]
-		public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+		public static extern int GetWindowLong(IntPtr hWnd, Int32 nIndex);
 
 		[DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
-		public static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
+		public static extern IntPtr GetWindowLong64(IntPtr hWnd, Int32 nIndex);
 
-		public static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex) {
+		public static IntPtr GetWindowLongPtr(IntPtr hWnd, Int32 nIndex) {
 			if (IntPtr.Size == 4) {
 				return (IntPtr) GetWindowLong(hWnd, nIndex);
 			}
@@ -108,12 +114,12 @@ namespace Plain.Native {
 		}
 
 		[DllImport("user32.dll", SetLastError = true)]
-		public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+		public static extern int SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
 
 		[DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-		public static extern IntPtr SetWindowLong64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+		public static extern IntPtr SetWindowLong64(IntPtr hWnd, Int32 nIndex, IntPtr dwNewLong);
 
-		public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong) {
+		public static IntPtr SetWindowLongPtr(IntPtr hWnd, Int32 nIndex, IntPtr dwNewLong) {
 			if (IntPtr.Size == 4) {
 				return (IntPtr) SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32());
 			}
@@ -167,11 +173,11 @@ namespace Plain.Native {
 			public UInt32 lStructSize;
 			public IntPtr hwndOwner;
 			public IntPtr hInstance;
-			public string lpstrFilter;
+			public String lpstrFilter;
 			public IntPtr lpstrCustomFilter;
 			public UInt32 nMaxCustFilter;
 			public UInt32 nFilterIndex;
-			public string lpstrFile;
+			public String lpstrFile;
 			public UInt32 nMaxFile;
 			public IntPtr lpstrFileTitle;
 			public UInt32 nMaxFileTitle;
@@ -203,10 +209,10 @@ namespace Plain.Native {
 			public UInt32 cbSize;
 			public UInt32 mask;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszHeader;
+			public String pszHeader;
 			public Int32 cchHeader;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszFooter;
+			public String pszFooter;
 			public Int32 cchFooter;
 			public Int32 iGroupId;
 			public UInt32 stateMask;
@@ -219,33 +225,33 @@ namespace Plain.Native {
 			public UInt32 cbSize;
 			public UInt32 mask;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszHeader;
+			public String pszHeader;
 			public Int32 cchHeader;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszFooter;
+			public String pszFooter;
 			public Int32 cchFooter;
 			public Int32 iGroupId;
 			public UInt32 stateMask;
 			public UInt32 state;
 			public UInt32 uAlign;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszSubtitle;
+			public String pszSubtitle;
 			public UInt32 cchSubtitle;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszTask;
+			public String pszTask;
 			public UInt32 cchTask;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszDescriptionTop;
+			public String pszDescriptionTop;
 			public UInt32 cchDescriptionTop;
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszDescriptionBottom;
+			public String pszDescriptionBottom;
 			public UInt32 cchDescriptionBottom;
 			public Int32 iTitleImage;
 			public Int32 iExtendedImage;
 			public Int32 iFirstItem;		// Read only
 			public UInt32 cItems;			// Read only
 			[MarshalAs(UnmanagedType.LPWStr)]
-			public string pszSubsetTitle;	// NULL if group is not subset
+			public String pszSubsetTitle;	// NULL if group is not subset
 			public UInt32 cchSubsetTitle;
 			public LVGROUP(LVGROUP_xp lvgxp) {
 				this.cbSize = (uint) Marshal.SizeOf(typeof(LVGROUP));
@@ -462,5 +468,15 @@ namespace Plain.Native {
 		public const int TB_SETBUTTONINFOW = (WM_USER + 64);
 		public const int TB_GETBUTTONINFOA = (WM_USER + 65);
 		public const int TB_SETBUTTONINFOA = (WM_USER + 66);
+
+		public const int EM_SETMARGINS = 0x00D3;
+		public const int EM_GETMARGINS = 0x00D4;
+		public const int ECM_FIRST = 0x1500;
+		public const int EM_SETCUEBANNER = (ECM_FIRST + 1);
+		public const int EM_GETCUEBANNER = (ECM_FIRST + 2);
+
+		public const int EC_LEFTMARGIN = 0x0001;
+		public const int EC_RIGHTMARGIN = 0x0002;
+		public const int EC_USEFONTINFO = 0xffff;
 	}
 }
