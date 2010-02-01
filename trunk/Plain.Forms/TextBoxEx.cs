@@ -142,7 +142,7 @@ namespace Plain.Forms {
 
 #if DEBUG
 	[Serializable]
-	[TypeConverter(typeof(MarginsConverter))]
+	[TypeConverter(typeof(EditMarginsConverter))]
 #endif
 	public struct EditMargins {
 		static EditMargins() {
