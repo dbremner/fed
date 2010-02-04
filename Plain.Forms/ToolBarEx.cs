@@ -40,26 +40,30 @@ namespace Plain.Forms {
 				int cxEmpty = base.ClientSize.Width;
 				List<ToolBarButtonEx> springs = new List<ToolBarButtonEx>(base.Buttons.Count);
 				foreach (ToolBarButton button in base.Buttons) {
-					bool include = true;
-					ToolBarButtonEx buttonEx = button as ToolBarButtonEx;
-					if (buttonEx != null) {
-						if (buttonEx.Spring) {
-							springs.Add(buttonEx);
-							include = false;
+					if (button.Visible) {
+						bool include = true;
+						ToolBarButtonEx buttonEx = button as ToolBarButtonEx;
+						if (buttonEx != null) {
+							if (buttonEx.Spring) {
+								springs.Add(buttonEx);
+								include = false;
+							}
+							else if (buttonEx == changedButton) {
+								buttonEx.Width = base.ButtonSize.Width;
+							}
 						}
-						else if (buttonEx == changedButton) {
-							buttonEx.Width = base.ButtonSize.Width;
+						if (include) {
+							cxEmpty -= button.Rectangle.Width;
 						}
-					}
-					if (include) {
-						cxEmpty -= button.Rectangle.Width;
 					}
 				}
 				if (springs.Count > 0) {
 					cxEmpty /= springs.Count;
 				}
 				foreach (ToolBarButtonEx buttonEx in springs) {
-					buttonEx.Width = cxEmpty;
+					if (buttonEx.Visible) {
+						buttonEx.Width = cxEmpty;
+					}
 				}
 			}
 		}
