@@ -45,10 +45,12 @@ namespace DosboxApp {
 			tab.TabPages.Remove(pageHelp);
 #endif
 			m_IsInitializationDone = true;
+			txtSearch.InnerMargins = new EditMargins(2, 0);
 		}
 
 		bool m_IsInitializationDone;
 		bool m_IsSelectionScrolling;
+		string m_TemporaryConfigFile;
 
 		protected override void OnHandleCreated(EventArgs e) {
 			base.OnHandleCreated(e);
@@ -129,6 +131,12 @@ namespace DosboxApp {
 			this.Visible = false;
 			// TODO: save grid splitter width.
 			Program.AppConfig.GameListFormConfig.SaveFrom(this);
+			if (m_TemporaryConfigFile != null) {
+				try {
+					File.Delete(m_TemporaryConfigFile);
+				}
+				catch { }
+			}
 		}
 
 		void themeToMatchFonts() {
@@ -166,6 +174,15 @@ namespace DosboxApp {
 				}
 			}
 			return rtn;
+		}
+
+		DosboxInfo getSelectedDosboxVersion() {
+			foreach (MenuItem mi in btnRun.DropDownMenu.MenuItems) {
+				if (mi.Checked) {
+					return mi.Tag as DosboxInfo;
+				}
+			}
+			return null;
 		}
 
 		MenuItem addDosboxMenuItem(string path) {
@@ -231,6 +248,108 @@ namespace DosboxApp {
 			return groupEx;
 		}
 
+		void addMasterGameFolder() {
+			btnAddGameFolder.Enabled = false;
+			btnAddMasterGameFolder.Enabled = false;
+			if (openFileFolderDialog.ShowDialog(this) == DialogResult.OK) {
+				lvwGame.BeginUpdate();
+				foreach (DirectoryInfo diGame in new DirectoryInfo(openFileFolderDialog.OpenFileDialog.FileName).GetDirectories()) {
+					addGameToList(lvwGame, addGameToHash(Program.AppConfig.GameConfig.Games, diGame.FullName, null));
+				}
+				lvwGame.EndUpdate();
+			}
+			btnAddGameFolder.Enabled = true;
+			btnAddMasterGameFolder.Enabled = true;
+		}
+
+		void addGameFolder() {
+			btnAddGameFolder.Enabled = false;
+			btnAddMasterGameFolder.Enabled = false;
+			DialogResult ans = openFileFolderDialog.ShowDialog(this);
+			if (ans == DialogResult.OK) {
+				addGameToList(lvwGame, addGameToHash(Program.AppConfig.GameConfig.Games, openFileFolderDialog.OpenFileDialog.FileName, null));
+			}
+			btnAddGameFolder.Enabled = true;
+			btnAddMasterGameFolder.Enabled = true;
+		}
+
+		void deleteGames() {
+			lvwGame.BeginUpdate();
+			foreach (ListViewItem item in lvwGame.SelectedItems) {
+				GameObject gobj = item.Tag as GameObject;
+				Program.AppConfig.GameConfig.Games.Remove(gobj.Directory);
+				item.Group.Header = Path.GetDirectoryName(gobj.Directory) + " (" + (item.Group.Items.Count - 1) + ")";
+				lvwGame.Items.Remove(item);
+			}
+			lvwGame.EndUpdate();
+		}
+
+		bool prepareTempConfig(DosboxInfo dbinfo) {
+			if (gridConfig.Modified) {
+				try {
+					if (m_TemporaryConfigFile == null) {
+						m_TemporaryConfigFile = Path.GetTempFileName();
+						File.Copy(dbinfo.GetUserConfigFileName(), m_TemporaryConfigFile);
+					}
+					INI ini = new INI(m_TemporaryConfigFile);
+					foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
+						CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(ci.ChangedItem.PropertyDescriptor);
+						if (cat != null) {
+							DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
+						}
+					}
+					return true;
+				}
+				catch { }
+			}
+			return false;
+		}
+
+		void runDosbox() {
+			if (lvwGame.SelectedItems.Count > 0) {
+				DosboxInfo dbinfo = getSelectedDosboxVersion();
+				if (dbinfo != null) {
+					// TODO: run button runs dosbox alone; double click runs the game.
+					GameObject gobj = lvwGame.SelectedItems[0].Tag as GameObject;
+					string args = "\"" + gobj.Directory + "\" -noconsole -c " + gobj.Executable;
+					if (prepareTempConfig(dbinfo)) {
+						args += " -conf " + m_TemporaryConfigFile;
+					}
+					pcsDosbox.StartInfo.FileName = dbinfo.FileName;
+					pcsDosbox.StartInfo.Arguments = args;
+					bool bRemain = (Control.MouseButtons & MouseButtons.Middle) != 0;
+					pcsDosbox.EnableRaisingEvents = bRemain;
+					try {
+						pcsDosbox.Start();
+						if (bRemain) {
+							notifyIcon.Visible = true;
+							this.Visible = false;
+						}
+						else {
+							this.Close();
+						}
+					}
+					catch (Exception ex) {
+						MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + pcsDosbox.StartInfo.FileName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+			}
+		}
+
+		void saveConfig() {
+			DosboxInfo dbinfo = getSelectedDosboxVersion();
+			if (dbinfo != null) {
+				INI ini = dbinfo.GetUserConfigINI();
+				foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
+					CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(ci.ChangedItem.PropertyDescriptor);
+					if (cat != null) {
+						DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
+					}
+				}
+				gridConfig.SetSavePoint();
+			}
+		}
+
 		void moveCombo() {
 			if (lvwGame.SelectedIndices.Count == 1) {
 				ListViewItem item = lvwGame.SelectedItems[0];
@@ -266,21 +385,25 @@ namespace DosboxApp {
 			pnlTop.SuspendLayout();
 			switch (tab.SelectedIndex) {
 			case 0:
+				pnlSearch.Visible = true;
 				tbrAction.Visible = true;
 				tbrProp.Visible = false;
 				tbrTool.Visible = false;
 				break;
 			case 1:
+				pnlSearch.Visible = false;
 				tbrAction.Visible = false;
 				tbrProp.Visible = true;
 				tbrTool.Visible = false;
 				break;
 			case 2:
+				pnlSearch.Visible = false;
 				tbrAction.Visible = false;
 				tbrProp.Visible = false;
 				tbrTool.Visible = true;
 				break;
 			case 3:
+				pnlSearch.Visible = false;
 				tbrAction.Visible = false;
 				tbrProp.Visible = false;
 				tbrTool.Visible = false;
@@ -292,95 +415,17 @@ namespace DosboxApp {
 			}
 		}
 
-		private void tbrAction_ButtonClick(object sender, ToolBarButtonClickEventArgs e) {
-			if (e.Button.Enabled == false) {
+		private void pnlTop_Resize(object sender, EventArgs e) {
+			if (base.WindowState == FormWindowState.Minimized) {
+				pnlSearch.Visible = false;
 				return;
 			}
-			if (e.Button == btnAddMasterGameFolder) {
-				btnAddGameFolder.Enabled = false;
-				btnAddMasterGameFolder.Enabled = false;
-				if (openFileFolderDialog.ShowDialog(this) == DialogResult.OK) {
-					foreach (DirectoryInfo diGame in new DirectoryInfo(openFileFolderDialog.OpenFileDialog.FileName).GetDirectories()) {
-						addGameToList(lvwGame, addGameToHash(Program.AppConfig.GameConfig.Games, diGame.FullName, null));
-					}
-				}
-				btnAddGameFolder.Enabled = true;
-				btnAddMasterGameFolder.Enabled = true;
+			else {
+				pnlSearch.Visible = true;
 			}
-			else if (e.Button == btnAddGameFolder) {
-				btnAddGameFolder.Enabled = false;
-				btnAddMasterGameFolder.Enabled = false;
-				DialogResult ans = openFileFolderDialog.ShowDialog(this);
-				if (ans == DialogResult.OK) {
-					addGameToList(lvwGame, addGameToHash(Program.AppConfig.GameConfig.Games, openFileFolderDialog.OpenFileDialog.FileName, null));
-				}
-				btnAddGameFolder.Enabled = true;
-				btnAddMasterGameFolder.Enabled = true;
-			}
-			else if (e.Button == btnDelete) {
-				foreach (ListViewItem item in lvwGame.SelectedItems) {
-					GameObject gobj = item.Tag as GameObject;
-					Program.AppConfig.GameConfig.Games.Remove(gobj.Directory);
-					item.Group.Header = Path.GetDirectoryName(gobj.Directory) + " (" + (item.Group.Items.Count - 1) + ")";
-					lvwGame.Items.Remove(item);
-				}
-			}
-			else if (e.Button == btnRun) {
-				if (lvwGame.SelectedItems.Count > 0) {
-					GameObject gobj = lvwGame.SelectedItems[0].Tag as GameObject;
-					foreach (MenuItem mi in btnRun.DropDownMenu.MenuItems) {
-						if (mi.Checked) {
-							DosboxInfo dbinfo = (DosboxInfo) mi.Tag;
-							pcsDosbox.StartInfo.FileName = dbinfo.FileName;
-							pcsDosbox.StartInfo.Arguments = "\"" + gobj.FileName + "\" -noconsole";
-							try {
-								bool bRemain = (Control.MouseButtons & MouseButtons.Middle) != 0;
-								pcsDosbox.EnableRaisingEvents = bRemain;
-								pcsDosbox.Start();
-								if (bRemain) {
-									notifyIcon.Visible = true;
-									this.Visible = false;
-								}
-								else {
-									this.Close();
-								}
-							}
-							catch (Exception ex) {
-								MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + pcsDosbox.StartInfo.FileName, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-							}
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		private void tbrAction_MouseMove(object sender, MouseEventArgs e) {
-			foreach (ToolBarButton btn in tbrAction.Buttons) {
-				if (btn.Rectangle.Contains(e.Location)) {
-					sbpInfo.Text = btn.Tag as string;
-					break;
-				}
-			}
-		}
-
-		private void tbrAction_MouseLeave(object sender, EventArgs e) {
-			sbpInfo.Text = string.Empty;
-		}
-
-		private void tbrAction_Resize(object sender, EventArgs e) {
 			if (m_IsInitializationDone) {
-				// TODO: find out why this is called many times.
-				pnlTop.Height = Math.Max(tbrAction.Height, pnlSearch.Height);
-
 				Rectangle rect = pnlSearch.Bounds;
-				Rectangle rectRef;
-				if (tbrAction.Buttons.Count > 0) {
-					rectRef = tbrAction.Buttons[0].Rectangle;
-				}
-				else {
-					rectRef = tbrAction.ClientRectangle;
-				}
+				Rectangle rectRef = tbrAction.ClientRectangle;
 				rect.Y = rectRef.Top + (rectRef.Height - rect.Height) / 2;
 
 				int xLeftBound = (tbrAction.Buttons.Count > 0) ? tbrAction.Buttons[tbrAction.Buttons.Count - 1].Rectangle.Right + 4 : 0;
@@ -436,6 +481,44 @@ namespace DosboxApp {
 					}
 				}
 				lvwGame.EndUpdate();
+			}
+		}
+
+		private void tbrAction_ButtonClick(object sender, ToolBarButtonClickEventArgs e) {
+			if (e.Button.Enabled == false) {
+				return;
+			}
+			if (e.Button == btnAddMasterGameFolder) {
+				addMasterGameFolder();
+			}
+			else if (e.Button == btnAddGameFolder) {
+				addGameFolder();
+			}
+			else if (e.Button == btnDelete) {
+				deleteGames();
+			}
+			else if (e.Button == btnRun) {
+				runDosbox();
+			}
+		}
+
+		private void tbrAction_MouseMove(object sender, MouseEventArgs e) {
+			foreach (ToolBarButton btn in tbrAction.Buttons) {
+				if (btn.Rectangle.Contains(e.Location)) {
+					sbpInfo.Text = btn.Tag as string;
+					break;
+				}
+			}
+		}
+
+		private void tbrAction_MouseLeave(object sender, EventArgs e) {
+			sbpInfo.Text = string.Empty;
+		}
+
+		private void tbrAction_Resize(object sender, EventArgs e) {
+			if (m_IsInitializationDone) {
+				// TODO: find out why this is called many times.
+				pnlTop.Height = Math.Max(tbrAction.Height, pnlSearch.Height);
 			}
 		}
 
@@ -554,20 +637,7 @@ namespace DosboxApp {
 				gridConfig.Redo();
 			}
 			else if (e.Button == btnSaveConfig) {
-				foreach (MenuItem mi in btnRun.DropDownMenu.MenuItems) {
-					if (mi.Checked) {
-						DosboxInfo dinfo = mi.Tag as DosboxInfo;
-						INI ini = dinfo.GetUserConfigINI();
-						foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
-							CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(ci.ChangedItem.PropertyDescriptor);
-							if (cat != null) {
-								DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
-							}
-						}
-						gridConfig.SetSavePoint();
-						break;
-					}
-				}
+				saveConfig();
 			}
 			else if (e.Button == btnSortCat) {
 				btnSortCat.Pushed = true;
@@ -620,6 +690,9 @@ namespace DosboxApp {
 		}
 
 		private void tbrTool_ButtonClick(object sender, ToolBarButtonClickEventArgs e) {
+			if (e.Button.Enabled == false) {
+				return;
+			}
 			if (e.Button == btnOpenCapture) {
 			}
 		}
