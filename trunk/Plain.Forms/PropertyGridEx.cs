@@ -84,8 +84,17 @@ namespace Plain.Forms {
 		/// 
 		/// </summary>
 		public CommitInfo[] GetUnsavedChanges() {
-			CommitInfo[] unsaved = new CommitInfo[m_Unsaved.Count];
-			m_Unsaved.CopyTo(unsaved, 0);
+			Dictionary<PropertyDescriptor, CommitInfo> uniqueCommits = new Dictionary<PropertyDescriptor, CommitInfo>(m_Unsaved.Count);
+			foreach (CommitInfo cinfo in m_Unsaved) {
+				if (uniqueCommits.ContainsKey(cinfo.ChangedItem.PropertyDescriptor)) {
+					uniqueCommits[cinfo.ChangedItem.PropertyDescriptor] = cinfo;
+				}
+				else {
+					uniqueCommits.Add(cinfo.ChangedItem.PropertyDescriptor, cinfo);
+				}
+			}
+			CommitInfo[] unsaved = new CommitInfo[uniqueCommits.Count];
+			uniqueCommits.Values.CopyTo(unsaved, 0);
 			return unsaved;
 		}
 
