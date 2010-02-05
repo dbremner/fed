@@ -81,6 +81,20 @@ namespace DosboxApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Config {
+            get {
+                object obj = ResourceManager.GetObject("Config", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ConfigTemp {
+            get {
+                object obj = ResourceManager.GetObject("ConfigTemp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Delete {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);
@@ -123,9 +137,23 @@ namespace DosboxApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap NotAvailable {
+            get {
+                object obj = ResourceManager.GetObject("NotAvailable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap OpenCapture {
             get {
                 object obj = ResourceManager.GetObject("OpenCapture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Pin {
+            get {
+                object obj = ResourceManager.GetObject("Pin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
