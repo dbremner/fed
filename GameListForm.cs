@@ -11,6 +11,7 @@ using Plain.IO;
 using Plain.Native;
 using Plain.Design;
 using DosboxApp.Properties;
+using System.Diagnostics;
 
 namespace DosboxApp {
 	public partial class GameListForm : Form {
@@ -289,7 +290,7 @@ namespace DosboxApp {
 				try {
 					if (m_TemporaryConfigFile == null) {
 						m_TemporaryConfigFile = Path.GetTempFileName();
-						File.Copy(dbinfo.GetUserConfigFileName(), m_TemporaryConfigFile);
+						File.Copy(dbinfo.GetUserConfigFileName(), m_TemporaryConfigFile, true);
 					}
 					INI ini = new INI(m_TemporaryConfigFile);
 					foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
@@ -298,6 +299,7 @@ namespace DosboxApp {
 							DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
 						}
 					}
+					btnViewTempConfigExtern.Visible = true;
 					return true;
 				}
 				catch { }
@@ -311,13 +313,22 @@ namespace DosboxApp {
 				if (dbinfo != null) {
 					// TODO: run button runs dosbox alone; double click runs the game.
 					GameObject gobj = lvwGame.SelectedItems[0].Tag as GameObject;
-					string args = "\"" + gobj.Directory + "\" -noconsole -c " + gobj.Executable;
+					StringBuilder shortDirName = new StringBuilder(1024);
+					StringBuilder shortExeName = new StringBuilder(1024);
+					NativeMethods.GetShortPathName(gobj.Directory, shortDirName, shortDirName.Capacity);
+					NativeMethods.GetShortPathName(gobj.FileName, shortExeName, shortExeName.Capacity);
+					string args = "-noconsole";
+					args += " -c \"mount c " + "'" + Path.GetDirectoryName(gobj.Directory) + "'\"";
+					args += " -c \"c:\"";
+					args += " -c \"cd " + Path.GetFileName(shortDirName.ToString()) + "\"";
+					args += " -c \"" + Path.GetFileName(shortExeName.ToString()) + "\"";
 					if (prepareTempConfig(dbinfo)) {
-						args += " -conf " + m_TemporaryConfigFile;
+						args += " -conf \"" + m_TemporaryConfigFile + "\"";
 					}
 					pcsDosbox.StartInfo.FileName = dbinfo.FileName;
 					pcsDosbox.StartInfo.Arguments = args;
-					bool bRemain = (Control.MouseButtons & MouseButtons.Middle) != 0;
+					//pcsDosbox.StartInfo.ErrorDialog = true;
+					bool bRemain = btnPin.Pushed;
 					pcsDosbox.EnableRaisingEvents = bRemain;
 					try {
 						pcsDosbox.Start();
@@ -622,7 +633,7 @@ namespace DosboxApp {
 
 		private void pcsDosbox_Exited(object sender, EventArgs e) {
 			this.Show();
-			this.Focus();
+			this.Activate();
 			notifyIcon.Visible = false;
 		}
 
@@ -630,16 +641,7 @@ namespace DosboxApp {
 			if (e.Button.Enabled == false) {
 				return;
 			}
-			if (e.Button == btnUndoConfig) {
-				gridConfig.Undo();
-			}
-			else if (e.Button == btnRedoConfig) {
-				gridConfig.Redo();
-			}
-			else if (e.Button == btnSaveConfig) {
-				saveConfig();
-			}
-			else if (e.Button == btnSortCat) {
+			if (e.Button == btnSortCat) {
 				btnSortCat.Pushed = true;
 				btnSortAZ.Pushed = false;
 				gridConfig.PropertySort = PropertySort.Categorized;
@@ -648,6 +650,39 @@ namespace DosboxApp {
 				btnSortCat.Pushed = false;
 				btnSortAZ.Pushed = true;
 				gridConfig.PropertySort = PropertySort.Alphabetical;
+			}
+			else if (e.Button == btnUndoConfig) {
+				gridConfig.Undo();
+			}
+			else if (e.Button == btnRedoConfig) {
+				gridConfig.Redo();
+			}
+			else if (e.Button == btnSaveConfig) {
+				saveConfig();
+			}
+			else if (e.Button == btnViewConfigExtern) {
+				DosboxInfo dbinfo = getSelectedDosboxVersion();
+				if (dbinfo != null) {
+					string path = dbinfo.GetUserConfigFileName();
+					Clipboard.SetText(path);
+					using (Process process = new Process()) {
+						process.StartInfo.FileName = "notepad.exe";
+						process.StartInfo.Arguments = path;
+						process.StartInfo.ErrorDialog = true;
+						process.Start();
+					}
+				}
+			}
+			else if (e.Button == btnViewTempConfigExtern) {
+				if (m_TemporaryConfigFile != null) {
+					Clipboard.SetText(m_TemporaryConfigFile);
+					using (Process process = new Process()) {
+						process.StartInfo.FileName = "notepad.exe";
+						process.StartInfo.Arguments = m_TemporaryConfigFile;
+						process.StartInfo.ErrorDialog = true;
+						process.Start();
+					}
+				}
 			}
 		}
 
