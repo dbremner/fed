@@ -128,6 +128,12 @@ namespace Plain.Native {
 			}
 		}
 
+		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+		public static extern Int32 GetShortPathName(String lpszLongPath, StringBuilder lpszShortPath, Int32 cchBuffer);
+
+		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+		public static extern Int32 GetLongPathName(String lpszShortPath, StringBuilder lpszLongPath, Int32 cchBuffer);
+
 		[StructLayout(LayoutKind.Sequential)]
 		public struct NMHDR {
 			public IntPtr hwndFrom;
