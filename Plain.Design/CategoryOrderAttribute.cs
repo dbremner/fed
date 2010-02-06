@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Plain.Design {
-	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Event, Inherited = false)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Event, AllowMultiple = false, Inherited = false)]
 	public class CategoryOrderAttribute : System.ComponentModel.CategoryAttribute {
 		static CategoryOrderAttribute() {
 			s_CategoryToOrder = new Dictionary<string, int>();
