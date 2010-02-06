@@ -47,18 +47,19 @@
 			this.mnuOtherLoc = new System.Windows.Forms.MenuItem();
 			this.mnuProp = new System.Windows.Forms.ContextMenu();
 			this.mnuReset = new System.Windows.Forms.MenuItem();
-			this.sbr = new System.Windows.Forms.StatusBar();
-			this.sbpInfo = new System.Windows.Forms.StatusBarPanel();
-			this.sbpExtra = new System.Windows.Forms.StatusBarPanel();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.pcsDosbox = new System.Diagnostics.Process();
 			this.pnlMain = new System.Windows.Forms.Panel();
+			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
+			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
+			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
 			this.tab = new Plain.Forms.TabControlEx();
 			this.pageGames = new System.Windows.Forms.TabPage();
 			this.lvwGame = new Plain.Forms.ListViewEx();
 			this.hdrName = new System.Windows.Forms.ColumnHeader();
 			this.hdrExe = new System.Windows.Forms.ColumnHeader();
 			this.comboButton = new Plain.Forms.ComboButton();
+			this.bmpImageList = new DosboxApp.BitmapImageList(this.components);
 			this.pageConfig = new System.Windows.Forms.TabPage();
 			this.gridConfig = new Plain.Forms.PropertyGridEx();
 			this.pageOptions = new System.Windows.Forms.TabPage();
@@ -75,9 +76,8 @@
 			this.txtSendData = new System.Windows.Forms.TextBox();
 			this.lblSendFeedback = new System.Windows.Forms.Label();
 			this.tvwHelp = new Plain.Forms.TreeViewEx();
-			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
-			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
-			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
+			this.sbr = new Plain.Forms.StatusBarEx();
+			this.sbpInfo = new Plain.Forms.StatusBarPanelEx();
 			this.pnlTop = new Plain.Forms.RebarPanel();
 			this.pnlSearch = new System.Windows.Forms.Panel();
 			this.txtSearch = new Plain.Forms.TextBoxEx();
@@ -87,7 +87,6 @@
 			this.btnSpan = new Plain.Forms.ToolBarButtonEx();
 			this.btnSoftwareUpdate = new System.Windows.Forms.ToolBarButton();
 			this.btnDeleteUserFiles = new System.Windows.Forms.ToolBarButton();
-			this.resourceImageList = new DosboxApp.ResourceImageList(this.components);
 			this.tbrProp = new Plain.Forms.ToolBarEx();
 			this.btnSortCat = new System.Windows.Forms.ToolBarButton();
 			this.btnSortAZ = new System.Windows.Forms.ToolBarButton();
@@ -106,8 +105,6 @@
 			this.btnRun = new System.Windows.Forms.ToolBarButton();
 			this.btnPin = new System.Windows.Forms.ToolBarButton();
 			this.openFileFolderDialog = new Plain.Forms.OpenFileFolderDialog(this.components);
-			((System.ComponentModel.ISupportInitialize) (this.sbpInfo)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.sbpExtra)).BeginInit();
 			this.pnlMain.SuspendLayout();
 			this.tab.SuspendLayout();
 			this.pageGames.SuspendLayout();
@@ -117,6 +114,7 @@
 			this.pageHelp.SuspendLayout();
 			this.pnlEditFeedback.SuspendLayout();
 			this.pnlSendFeedback.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize) (this.sbpInfo)).BeginInit();
 			this.pnlTop.SuspendLayout();
 			this.pnlSearch.SuspendLayout();
 			this.SuspendLayout();
@@ -156,29 +154,6 @@
 			this.mnuReset.Text = "&Reset";
 			this.mnuReset.Click += new System.EventHandler(this.mnuReset_Click);
 			// 
-			// sbr
-			// 
-			this.sbr.Location = new System.Drawing.Point(0, 344);
-			this.sbr.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-			this.sbr.Name = "sbr";
-			this.sbr.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
-            this.sbpInfo,
-            this.sbpExtra});
-			this.sbr.ShowPanels = true;
-			this.sbr.Size = new System.Drawing.Size(422, 25);
-			this.sbr.TabIndex = 2;
-			// 
-			// sbpInfo
-			// 
-			this.sbpInfo.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
-			this.sbpInfo.Name = "sbpInfo";
-			this.sbpInfo.Width = 205;
-			// 
-			// sbpExtra
-			// 
-			this.sbpExtra.Name = "sbpExtra";
-			this.sbpExtra.Width = 200;
-			// 
 			// pcsDosbox
 			// 
 			this.pcsDosbox.StartInfo.Domain = "";
@@ -199,6 +174,25 @@
 			this.pnlMain.Name = "pnlMain";
 			this.pnlMain.Size = new System.Drawing.Size(422, 195);
 			this.pnlMain.TabIndex = 3;
+			// 
+			// mnuSoftwareUpdate
+			// 
+			this.mnuSoftwareUpdate.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuUpdateStartup,
+            this.mnuUpdateManual});
+			// 
+			// mnuUpdateStartup
+			// 
+			this.mnuUpdateStartup.Index = 0;
+			this.mnuUpdateStartup.RadioCheck = true;
+			this.mnuUpdateStartup.Text = "Check on Startup";
+			// 
+			// mnuUpdateManual
+			// 
+			this.mnuUpdateManual.Checked = true;
+			this.mnuUpdateManual.Index = 1;
+			this.mnuUpdateManual.RadioCheck = true;
+			this.mnuUpdateManual.Text = "Manually";
 			// 
 			// tab
 			// 
@@ -249,7 +243,8 @@
 			this.lvwGame.Name = "lvwGame";
 			this.lvwGame.ShowItemToolTips = true;
 			this.lvwGame.Size = new System.Drawing.Size(408, 157);
-			this.lvwGame.SmallImageList = this.imlSmallList;
+			this.lvwGame.SmallImageList = this.bmpImageList.ImageList;
+			this.lvwGame.StateImageList = this.imlSmallList;
 			this.lvwGame.TabIndex = 1;
 			this.lvwGame.UseCompatibleStateImageBehavior = false;
 			this.lvwGame.View = System.Windows.Forms.View.Details;
@@ -296,11 +291,11 @@
 			// pageConfig
 			// 
 			this.pageConfig.Controls.Add(this.gridConfig);
-			this.pageConfig.Location = new System.Drawing.Point(4, 24);
+			this.pageConfig.Location = new System.Drawing.Point(4, 22);
 			this.pageConfig.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.pageConfig.Name = "pageConfig";
 			this.pageConfig.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
-			this.pageConfig.Size = new System.Drawing.Size(414, 167);
+			this.pageConfig.Size = new System.Drawing.Size(414, 169);
 			this.pageConfig.TabIndex = 1;
 			this.pageConfig.Text = "Dosbox Config";
 			this.pageConfig.UseVisualStyleBackColor = true;
@@ -314,7 +309,7 @@
 			this.gridConfig.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.gridConfig.Name = "gridConfig";
 			this.gridConfig.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-			this.gridConfig.Size = new System.Drawing.Size(408, 157);
+			this.gridConfig.Size = new System.Drawing.Size(408, 159);
 			this.gridConfig.TabIndex = 1;
 			this.gridConfig.ToolbarVisible = false;
 			// 
@@ -341,11 +336,11 @@
 			// pageOptions
 			// 
 			this.pageOptions.Controls.Add(this.tvwOptions);
-			this.pageOptions.Location = new System.Drawing.Point(4, 24);
+			this.pageOptions.Location = new System.Drawing.Point(4, 22);
 			this.pageOptions.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.pageOptions.Name = "pageOptions";
 			this.pageOptions.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
-			this.pageOptions.Size = new System.Drawing.Size(414, 167);
+			this.pageOptions.Size = new System.Drawing.Size(414, 169);
 			this.pageOptions.TabIndex = 2;
 			this.pageOptions.Text = "FED Options";
 			this.pageOptions.UseVisualStyleBackColor = true;
@@ -373,7 +368,7 @@
             treeNode2});
 			this.tvwOptions.ShowLines = false;
 			this.tvwOptions.ShowRootLines = false;
-			this.tvwOptions.Size = new System.Drawing.Size(121, 157);
+			this.tvwOptions.Size = new System.Drawing.Size(121, 159);
 			this.tvwOptions.TabIndex = 0;
 			// 
 			// pageHelp
@@ -383,11 +378,11 @@
 			this.pageHelp.Controls.Add(this.pnlSendFeedback);
 			this.pageHelp.Controls.Add(this.tvwHelp);
 			this.pageHelp.ImageKey = "(none)";
-			this.pageHelp.Location = new System.Drawing.Point(4, 24);
+			this.pageHelp.Location = new System.Drawing.Point(4, 22);
 			this.pageHelp.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.pageHelp.Name = "pageHelp";
 			this.pageHelp.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
-			this.pageHelp.Size = new System.Drawing.Size(414, 167);
+			this.pageHelp.Size = new System.Drawing.Size(414, 169);
 			this.pageHelp.TabIndex = 3;
 			this.pageHelp.Text = "Help";
 			this.pageHelp.UseVisualStyleBackColor = true;
@@ -401,7 +396,7 @@
 			this.pnlEditFeedback.Location = new System.Drawing.Point(124, 5);
 			this.pnlEditFeedback.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.pnlEditFeedback.Name = "pnlEditFeedback";
-			this.pnlEditFeedback.Size = new System.Drawing.Size(287, 157);
+			this.pnlEditFeedback.Size = new System.Drawing.Size(287, 159);
 			this.pnlEditFeedback.TabIndex = 5;
 			this.pnlEditFeedback.Visible = false;
 			// 
@@ -418,7 +413,7 @@
 			// btnPreviewFeedback
 			// 
 			this.btnPreviewFeedback.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPreviewFeedback.Location = new System.Drawing.Point(217, 127);
+			this.btnPreviewFeedback.Location = new System.Drawing.Point(217, 129);
 			this.btnPreviewFeedback.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.btnPreviewFeedback.Name = "btnPreviewFeedback";
 			this.btnPreviewFeedback.Size = new System.Drawing.Size(62, 27);
@@ -437,7 +432,7 @@
 			this.txtComment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.txtComment.Multiline = true;
 			this.txtComment.Name = "txtComment";
-			this.txtComment.Size = new System.Drawing.Size(276, 95);
+			this.txtComment.Size = new System.Drawing.Size(276, 97);
 			this.txtComment.TabIndex = 0;
 			// 
 			// pnlHelp
@@ -446,7 +441,7 @@
 			this.pnlHelp.Location = new System.Drawing.Point(124, 5);
 			this.pnlHelp.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.pnlHelp.Name = "pnlHelp";
-			this.pnlHelp.Size = new System.Drawing.Size(287, 157);
+			this.pnlHelp.Size = new System.Drawing.Size(287, 159);
 			this.pnlHelp.TabIndex = 4;
 			// 
 			// pnlSendFeedback
@@ -459,14 +454,14 @@
 			this.pnlSendFeedback.Location = new System.Drawing.Point(124, 5);
 			this.pnlSendFeedback.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.pnlSendFeedback.Name = "pnlSendFeedback";
-			this.pnlSendFeedback.Size = new System.Drawing.Size(287, 157);
+			this.pnlSendFeedback.Size = new System.Drawing.Size(287, 159);
 			this.pnlSendFeedback.TabIndex = 6;
 			this.pnlSendFeedback.Visible = false;
 			// 
 			// btnEditComment
 			// 
 			this.btnEditComment.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnEditComment.Location = new System.Drawing.Point(150, 127);
+			this.btnEditComment.Location = new System.Drawing.Point(150, 129);
 			this.btnEditComment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.btnEditComment.Name = "btnEditComment";
 			this.btnEditComment.Size = new System.Drawing.Size(62, 27);
@@ -478,7 +473,7 @@
 			// btnSendFeedback
 			// 
 			this.btnSendFeedback.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSendFeedback.Location = new System.Drawing.Point(217, 127);
+			this.btnSendFeedback.Location = new System.Drawing.Point(217, 129);
 			this.btnSendFeedback.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.btnSendFeedback.Name = "btnSendFeedback";
 			this.btnSendFeedback.Size = new System.Drawing.Size(62, 27);
@@ -497,7 +492,7 @@
 			this.txtSendData.Multiline = true;
 			this.txtSendData.Name = "txtSendData";
 			this.txtSendData.ReadOnly = true;
-			this.txtSendData.Size = new System.Drawing.Size(276, 95);
+			this.txtSendData.Size = new System.Drawing.Size(276, 97);
 			this.txtSendData.TabIndex = 1;
 			// 
 			// lblSendFeedback
@@ -558,29 +553,30 @@
             treeNode10});
 			this.tvwHelp.ShowLines = false;
 			this.tvwHelp.ShowRootLines = false;
-			this.tvwHelp.Size = new System.Drawing.Size(121, 157);
+			this.tvwHelp.Size = new System.Drawing.Size(121, 159);
 			this.tvwHelp.TabIndex = 3;
 			this.tvwHelp.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvwHelp_BeforeCollapse);
 			this.tvwHelp.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwHelp_AfterSelect);
 			// 
-			// mnuSoftwareUpdate
+			// sbr
 			// 
-			this.mnuSoftwareUpdate.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnuUpdateStartup,
-            this.mnuUpdateManual});
+			this.sbr.Location = new System.Drawing.Point(0, 344);
+			this.sbr.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+			this.sbr.Name = "sbr";
+			this.sbr.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
+            this.sbpInfo});
+			this.sbr.ResourceImageList = this.bmpImageList;
+			this.sbr.ShowPanels = true;
+			this.sbr.Size = new System.Drawing.Size(422, 25);
+			this.sbr.TabIndex = 2;
 			// 
-			// mnuUpdateStartup
+			// sbpInfo
 			// 
-			this.mnuUpdateStartup.Index = 0;
-			this.mnuUpdateStartup.RadioCheck = true;
-			this.mnuUpdateStartup.Text = "Check on Startup";
-			// 
-			// mnuUpdateManual
-			// 
-			this.mnuUpdateManual.Checked = true;
-			this.mnuUpdateManual.Index = 1;
-			this.mnuUpdateManual.RadioCheck = true;
-			this.mnuUpdateManual.Text = "Manually";
+			this.sbpInfo.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
+			this.sbpInfo.BorderStyle = System.Windows.Forms.StatusBarPanelBorderStyle.None;
+			this.sbpInfo.ImageKey = null;
+			this.sbpInfo.Name = "sbpInfo";
+			this.sbpInfo.Width = 405;
 			// 
 			// pnlTop
 			// 
@@ -614,6 +610,7 @@
 			this.txtSearch.CueBanner = "Search";
 			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtSearch.HideSelection = false;
+			this.txtSearch.InnerMargins = new Plain.Forms.EditMargins(0, 0);
 			this.txtSearch.Location = new System.Drawing.Point(2, 0);
 			this.txtSearch.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.txtSearch.Name = "txtSearch";
@@ -632,7 +629,7 @@
             this.btnSoftwareUpdate,
             this.btnDeleteUserFiles});
 			this.tbrTool.DropDownArrows = true;
-			this.tbrTool.ImageList = this.resourceImageList.ImageList;
+			this.tbrTool.ImageList = this.bmpImageList.ImageList;
 			this.tbrTool.Location = new System.Drawing.Point(0, 72);
 			this.tbrTool.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.tbrTool.Name = "tbrTool";
@@ -658,7 +655,7 @@
 			this.btnSpan.Enabled = false;
 			this.btnSpan.Name = "btnSpan";
 			this.btnSpan.Spring = true;
-			this.btnSpan.Width = 24;
+			this.btnSpan.Width = 290;
 			// 
 			// btnSoftwareUpdate
 			// 
@@ -690,7 +687,7 @@
             this.btnViewConfigExtern,
             this.btnViewTempConfigExtern});
 			this.tbrProp.DropDownArrows = true;
-			this.tbrProp.ImageList = this.resourceImageList.ImageList;
+			this.tbrProp.ImageList = this.bmpImageList.ImageList;
 			this.tbrProp.Location = new System.Drawing.Point(0, 36);
 			this.tbrProp.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.tbrProp.Name = "tbrProp";
@@ -778,7 +775,7 @@
             this.btnRun,
             this.btnPin});
 			this.tbrAction.DropDownArrows = true;
-			this.tbrAction.ImageList = this.resourceImageList.ImageList;
+			this.tbrAction.ImageList = this.bmpImageList.ImageList;
 			this.tbrAction.Location = new System.Drawing.Point(0, 0);
 			this.tbrAction.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
 			this.tbrAction.Name = "tbrAction";
@@ -859,8 +856,6 @@
 			this.Name = "GameListForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "FED - FrontEnd for DOSBox";
-			((System.ComponentModel.ISupportInitialize) (this.sbpInfo)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.sbpExtra)).EndInit();
 			this.pnlMain.ResumeLayout(false);
 			this.tab.ResumeLayout(false);
 			this.pageGames.ResumeLayout(false);
@@ -873,6 +868,7 @@
 			this.pnlEditFeedback.PerformLayout();
 			this.pnlSendFeedback.ResumeLayout(false);
 			this.pnlSendFeedback.PerformLayout();
+			((System.ComponentModel.ISupportInitialize) (this.sbpInfo)).EndInit();
 			this.pnlTop.ResumeLayout(false);
 			this.pnlTop.PerformLayout();
 			this.pnlSearch.ResumeLayout(false);
@@ -885,7 +881,7 @@
 
 		private Plain.Forms.ToolBarEx tbrAction;
 		private Plain.Forms.PropertyGridEx gridConfig;
-        private System.Windows.Forms.StatusBar sbr;
+        private Plain.Forms.StatusBarEx sbr;
 		private System.Windows.Forms.ToolBarButton btnRun;
 		internal Plain.Forms.ListViewEx lvwGame;
 		private Plain.Forms.ToolBarEx tbrProp;
@@ -898,8 +894,7 @@
         private System.Windows.Forms.ContextMenu mnuRun;
         private System.Windows.Forms.MenuItem mnuSepOtherLoc;
         private System.Windows.Forms.MenuItem mnuOtherLoc;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
-		private System.Windows.Forms.StatusBarPanel sbpInfo;
+		private System.Windows.Forms.NotifyIcon notifyIcon;
 		private System.Windows.Forms.ToolBarButton sepUndoConfig;
 		private System.Windows.Forms.ToolBarButton btnUndoConfig;
 		private System.Windows.Forms.ToolBarButton btnRedoConfig;
@@ -912,7 +907,6 @@
 		private System.Diagnostics.Process pcsDosbox;
 		private Plain.Forms.OpenFileFolderDialog openFileFolderDialog;
 		private System.Windows.Forms.Panel pnlMain;
-		private System.Windows.Forms.StatusBarPanel sbpExtra;
 		private Plain.Forms.TabControlEx tab;
 		private System.Windows.Forms.TabPage pageGames;
 		private System.Windows.Forms.TabPage pageConfig;
@@ -936,7 +930,7 @@
 		private System.Windows.Forms.TextBox txtSendData;
 		private System.Windows.Forms.Label lblSendFeedback;
 		private System.Windows.Forms.Label lblEditFeedback;
-		private ResourceImageList resourceImageList;
+		private BitmapImageList bmpImageList;
 		private System.Windows.Forms.ToolBarButton btnDeleteUserFiles;
 		private System.Windows.Forms.ToolBarButton sepSpan;
 		private Plain.Forms.ToolBarButtonEx btnSpan;
@@ -948,6 +942,7 @@
 		private System.Windows.Forms.ToolBarButton btnViewConfigExtern;
 		private System.Windows.Forms.ToolBarButton btnViewTempConfigExtern;
 		private System.Windows.Forms.ToolBarButton btnPin;
+		private Plain.Forms.StatusBarPanelEx sbpInfo;
 
     }
 }
