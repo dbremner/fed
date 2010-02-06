@@ -1,4 +1,4 @@
-﻿namespace DosboxApp {
+﻿namespace Plain.Forms {
 	partial class ResourceImageList {
 		/// <summary>
 		/// Required designer variable.

@@ -70,8 +70,22 @@
       <DependentUpon>GameListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plain.Design\ListViewGroupExCollectionEditor.cs" />
+    <Compile Include="Plain.Design\ResourceImageListDesigner.cs" />
     <Compile Include="Plain.Forms\EditMarginsConverter.cs" />
     <Compile Include="Plain.Design\ToolbarButtonExCollectionEditor.cs" />
+    <Compile Include="Plain.Forms\ResourceImageList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Plain.Forms\ResourceImageList.Designer.cs">
+      <DependentUpon>ResourceImageList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plain.Forms\StatusBarEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Plain.Forms\StatusBarPanelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Plain.Design\StatusBarPanelExCollectionEditor.cs" />
     <Compile Include="Plain.Forms\TextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -165,11 +179,8 @@
     <Compile Include="Plain.Native\ShellLink.cs" />
     <Compile Include="Plain.Native\ShellLinkWrapper.cs" />
     <Compile Include="Plain.IO\ShortcutFile.cs" />
-    <Compile Include="ResourceImageList.cs">
+    <Compile Include="BitmapImageList.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ResourceImageList.Designer.cs">
-      <DependentUpon>ResourceImageList.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
