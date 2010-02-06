@@ -1,5 +1,4 @@
-﻿#define USE_EX
-#if DEBUG
+﻿#if DEBUG
 
 using System;
 using System.ComponentModel.Design;
