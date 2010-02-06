@@ -20,6 +20,7 @@ namespace Plain.Forms {
 				m_LabelEmptyText.ForeColor = SystemColors.GrayText;
 				m_LabelEmptyText.TextAlign = ContentAlignment.MiddleCenter;
 				m_LabelEmptyText.Visible = false;
+				m_LabelEmptyText.MouseDown += new MouseEventHandler(LabelEmptyText_MouseDown);
 				base.Controls.Add(m_LabelEmptyText);
 			}
 			m_ColumnWidthChangingIndex = -1;
@@ -315,13 +316,17 @@ namespace Plain.Forms {
 		void updateEmptyText() {
 			if (m_LabelEmptyText != null) {
 				if (base.View != View.Details || base.HeaderStyle == ColumnHeaderStyle.None) {
-					m_LabelEmptyText.SetBounds(0, 0, base.Width, base.Height);
+					m_LabelEmptyText.SetBounds(0, 0, base.ClientSize.Width, base.ClientSize.Height);
 				}
 				else {
-					m_LabelEmptyText.SetBounds(0, this.HeaderHeight, base.Width, base.Height);
+					m_LabelEmptyText.SetBounds(0, this.HeaderHeight, base.ClientSize.Width, base.ClientSize.Height - this.HeaderHeight);
 				}
 				m_LabelEmptyText.SendToBack();
 			}
+		}
+
+		private void LabelEmptyText_MouseDown(object sender, MouseEventArgs e) {
+			base.Focus();
 		}
 	}
 }
