@@ -177,7 +177,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Plain.Native\ShellLink.cs" />
-    <Compile Include="Plain.Native\ShellLinkWrapper.cs" />
     <Compile Include="Plain.IO\ShortcutFile.cs" />
     <Compile Include="BitmapImageList.cs">
       <SubType>Component</SubType>
