@@ -208,6 +208,11 @@ namespace DosboxApp {
 			if (gobj != null) {
 				ListViewItem item = new ListViewItem(Path.GetFileName(gobj.Directory));
 				item.Group = getGameGroup(list, gobj.Directory);
+				if (File.Exists(gobj.FileName)) {
+				}
+				else {
+					item.ImageKey = "NotAvailable";
+				}
 				item.UseItemStyleForSubItems = false;
 				item.SubItems.Add(gobj.Executable, SystemColors.GrayText, list.BackColor, list.Font);
 				item.Tag = gobj;
@@ -327,6 +332,7 @@ namespace DosboxApp {
 					}
 					pcsDosbox.StartInfo.FileName = dbinfo.FileName;
 					pcsDosbox.StartInfo.Arguments = args;
+					pcsDosbox.StartInfo.WorkingDirectory = Path.GetDirectoryName(dbinfo.FileName);
 					//pcsDosbox.StartInfo.ErrorDialog = true;
 					bool bRemain = btnPin.Pushed;
 					pcsDosbox.EnableRaisingEvents = bRemain;
