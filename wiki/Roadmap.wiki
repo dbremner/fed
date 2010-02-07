@@ -13,14 +13,15 @@
   * TODO: Temporary unsaved config
   * TODO: Game filtering
   * ETA : 2010/02/07
+  * Done: 2010/02/06
 
 ===0.7===
   * TODO: Software update
-  * ETA : 2010/02
+  * ETA : 2010/02/20
 
 ===0.8===
   * TODO: Game tagging
-  * ETA : 2010/03
+  * ETA : 2010/03/06
 
 ===0.9===
   * TODO: Help pages
