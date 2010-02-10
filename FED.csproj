@@ -57,6 +57,12 @@
     <Compile Include="AppConfig.cs" />
     <Compile Include="AppInfo.cs" />
     <Compile Include="BaseConfig.cs" />
+    <Compile Include="FEDFormEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FEDFormEx.Designer.cs">
+      <DependentUpon>FEDFormEx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Plain.Design\CategoryOrderAttribute.cs" />
     <Compile Include="DosboxConfig.cs" />
     <Compile Include="DosboxInfo.cs" />
@@ -71,8 +77,10 @@
     </Compile>
     <Compile Include="Plain.Design\ListViewGroupExCollectionEditor.cs" />
     <Compile Include="Plain.Design\ResourceImageListDesigner.cs" />
-    <Compile Include="Plain.Forms\EditMarginsConverter.cs" />
     <Compile Include="Plain.Design\ToolbarButtonExCollectionEditor.cs" />
+    <Compile Include="Plain.Forms\ClickThroughLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Plain.Forms\ResourceImageList.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -113,7 +121,7 @@
     <Compile Include="Plain.Forms\ComboButton.designer.cs">
       <DependentUpon>ComboButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plain.Forms\ComboBoxDropDown.cs">
+    <Compile Include="Plain.Forms\DropDownComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Plain.Forms\ListViewEx.cs">
@@ -139,6 +147,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FEDFormEx.resx">
+      <DependentUpon>FEDFormEx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameListForm.resx">
       <DependentUpon>GameListForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -181,6 +193,8 @@
     <Compile Include="BitmapImageList.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UpdateConfig.cs" />
+    <Compile Include="Updater.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -258,6 +272,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ConfigTemp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Send.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

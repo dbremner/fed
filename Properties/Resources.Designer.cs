@@ -158,6 +158,13 @@ namespace DosboxApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Preview {
+            get {
+                object obj = ResourceManager.GetObject("Preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Redo {
             get {
                 object obj = ResourceManager.GetObject("Redo", resourceCulture);
@@ -168,6 +175,13 @@ namespace DosboxApp.Properties {
         internal static System.Drawing.Bitmap Save {
             get {
                 object obj = ResourceManager.GetObject("Save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Send {
+            get {
+                object obj = ResourceManager.GetObject("Send", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
