@@ -33,8 +33,7 @@ namespace DosboxApp {
 
 		public static string GetRelativePath(string path) {
 			string lowpath = Path.GetFullPath(path);
-			//string apppath = GetAppSearchDirectory();
-			string apppath = @"c:\user\desk\top";
+			string apppath = GetAppSearchDirectory();
 			return PathEx.GetRelativePath(apppath, lowpath);
 		}
 
@@ -62,6 +61,7 @@ namespace DosboxApp {
 				INI ini = new INI(path);
 				config.GameListFormConfig.LoadFrom(ini);
 				config.GameConfig.LoadFrom(ini);
+				config.UpdateConfig.LoadFrom(ini);
 			}
 
 			return config;
@@ -84,6 +84,7 @@ namespace DosboxApp {
 			INI ini = new INI(path);
 			config.GameListFormConfig.SaveTo(ini);
 			config.GameConfig.SaveTo(ini);
+			config.UpdateConfig.SaveTo(ini);
 		}
 
 		public static OperatingMode OperatingMode {
