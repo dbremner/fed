@@ -39,7 +39,7 @@ namespace Plain.Forms {
 		}
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ComboBoxDropDown ComboBox {
+		public DropDownComboBox ComboBox {
 			get { return comboBox; }
 		}
 

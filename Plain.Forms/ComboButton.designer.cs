@@ -24,7 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			this.comboBox = new Plain.Forms.ComboBoxDropDown();
+			this.comboBox = new Plain.Forms.DropDownComboBox();
 			this.label = new System.Windows.Forms.Label();
 			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
@@ -69,7 +69,7 @@
 
 		#endregion
 
-		private Plain.Forms.ComboBoxDropDown comboBox;
+		private Plain.Forms.DropDownComboBox comboBox;
 		private System.Windows.Forms.Label label;
 		private System.Windows.Forms.Timer timer;
 	}
