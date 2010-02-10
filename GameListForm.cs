@@ -33,39 +33,61 @@ using DosboxApp.Properties;
 using System.Diagnostics;
 
 namespace DosboxApp {
-	public partial class GameListForm : Form {
+	public partial class GameListForm : FEDFormEx {
 		public GameListForm() {
 			InitializeComponent();
-
-			DateTime d0;
-			DateTime d1;
-			d0 = DateTime.Now;
 
 			themeToMatchFonts();
 			themeToMatchUserPref();
 			styleToMatchVista();
-			Program.AppConfig.GameListFormConfig.LoadTo(this);
+			this.LoadFrom(Program.AppConfig.GameListFormConfig);
+			this.LoadFrom(Program.AppConfig.UpdateConfig);
 			listFromHash(lvwGame, Program.AppConfig.GameConfig.Games);
-
-			d1 = DateTime.Now;
-			System.Diagnostics.Debug.WriteLine(d1 - d0);
-			d0 = DateTime.Now;
 
 			DosboxInfo dinfo = loadDosboxVersions();
 			if (dinfo != null) {
 				gridConfig.SelectedObject = dinfo.LoadConfig();
 			}
 
-			d1 = DateTime.Now;
-			System.Diagnostics.Debug.WriteLine(d1 - d0);
-
 			tvwHelp.ExpandAll();
-#if true
-			tab.TabPages.Remove(pageOptions);
+#if false
 			tab.TabPages.Remove(pageHelp);
 #endif
 			m_IsInitializationDone = true;
-			txtSearch.InnerMargins = new EditMargins(2, 0);
+		}
+
+		public void SaveTo(GameListFormConfig config) {
+			base.SaveTo(config);
+			config.SearchWidth = pnlSearch.Width;
+			config.Column0Width = lvwGame.Columns[0].Width;
+			config.Column1Width = lvwGame.Columns[1].Width;
+		}
+
+		public void LoadFrom(GameListFormConfig config) {
+			base.LoadFrom(config);
+			pnlSearch.SetBounds(pnlSearch.Parent.ClientSize.Width - config.SearchWidth - 4, 0, config.SearchWidth, 0, BoundsSpecified.X | BoundsSpecified.Width);
+			lvwGame.Columns[0].Width = config.Column0Width;
+			lvwGame.Columns[1].Width = config.Column1Width;
+		}
+
+		public void LoadFrom(UpdateConfig config) {
+			if (config.CheckOnStartup) {
+				// ...
+				mnuUpdateStartup.Checked = true;
+				mnuUpdateManual.Checked = false;
+			}
+			else {
+				mnuUpdateManual.Checked = true;
+				mnuUpdateStartup.Checked = false;
+			}
+			if (config.UpdateInstall) {
+				mnuUpdateInstall.Checked = true;
+				mnuUpdateNotify.Checked = false;
+			}
+			else {
+				mnuUpdateNotify.Checked = true;
+				mnuUpdateInstall.Checked = false;
+			}
 		}
 
 		bool m_IsInitializationDone;
@@ -149,13 +171,21 @@ namespace DosboxApp {
 		protected override void OnFormClosed(FormClosedEventArgs e) {
 			base.OnFormClosed(e);
 			this.Visible = false;
-			// TODO: save grid splitter width.
-			Program.AppConfig.GameListFormConfig.SaveFrom(this);
 			if (m_TemporaryConfigFile != null) {
 				try {
 					File.Delete(m_TemporaryConfigFile);
 				}
 				catch { }
+			}
+			// TODO: save grid splitter width.
+			this.SaveTo(Program.AppConfig.GameListFormConfig);
+
+			if (Program.AppConfig.UpdateConfig.DelayedInstall) {
+				if (Program.Updater.InstallUpdate() == false) {
+					if (e.CloseReason == CloseReason.UserClosing) {
+						MessageBox.Show("Version " + Program.Updater.LatestVersion.ToString() + " failed to be installed.");
+					}
+				}
 			}
 		}
 
@@ -174,9 +204,6 @@ namespace DosboxApp {
 
 		void styleToMatchVista() {
 			if (Environment.OSVersion.Version >= NativeMethods.WindowsVista) {
-				tbrAction.Divider = false;
-				tbrProp.Divider = false;
-				tbrTool.Divider = false;
 				tvwOptions.Indent = 0;
 				tvwHelp.Indent = 0;
 			}
@@ -425,20 +452,24 @@ namespace DosboxApp {
 				tbrAction.Visible = true;
 				tbrProp.Visible = false;
 				tbrTool.Visible = false;
+				tbrHelp.Visible = false;
 				break;
 			case 1:
+				tbrProp.Visible = true;
 				pnlSearch.Visible = false;
 				tbrAction.Visible = false;
-				tbrProp.Visible = true;
 				tbrTool.Visible = false;
+				tbrHelp.Visible = false;
 				break;
 			case 2:
+				tbrTool.Visible = true;
 				pnlSearch.Visible = false;
 				tbrAction.Visible = false;
 				tbrProp.Visible = false;
-				tbrTool.Visible = true;
+				tbrHelp.Visible = false;
 				break;
 			case 3:
+				tbrHelp.Visible = true;
 				pnlSearch.Visible = false;
 				tbrAction.Visible = false;
 				tbrProp.Visible = false;
@@ -755,6 +786,77 @@ namespace DosboxApp {
 			}
 			if (e.Button == btnOpenCapture) {
 			}
+			else if (e.Button == btnSoftwareUpdate) {
+				if (Program.Updater.Check()) {
+					if (Program.Updater.IsUpdateAvailable) {
+						if (Program.AppConfig.UpdateConfig.UpdateInstall) {
+							if (Program.Updater.IsUpdateCompatible) {
+								if (Program.Updater.DownloadAndVerify()) {
+									DialogResult ans = MessageBox.Show("Version " + Program.Updater.LatestVersion.ToString() + " is downloaded. Install and restart now?", "Software Update", MessageBoxButtons.YesNo);
+									if (ans == DialogResult.Yes) {
+										if (Program.Updater.InstallUpdate()) {
+											Application.Restart();
+										}
+										else {
+											MessageBox.Show("Version " + Program.Updater.LatestVersion.ToString() + " failed to be installed.");
+										}
+									}
+									else {
+										Program.AppConfig.UpdateConfig.DelayedInstall = true;
+									}
+								}
+								else {
+									MessageBox.Show("Version " + Program.Updater.LatestVersion.ToString() + " download cannot be completed at this time. Please try again later.");
+								}
+							}
+							else {
+								MessageBox.Show("Update is not compatible with this version of updater. Please go to " + Updater.DOWNLOADSITE + " to download the latest version.");
+							}
+						}
+						else {
+							MessageBox.Show("Version " + Program.Updater.LatestVersion.ToString() + " is available.");
+						}
+					}
+					else {
+						MessageBox.Show("You are running the latest version.");
+					}
+				}
+				else {
+					MessageBox.Show("Update check cannot be completed at this time. Please try again later.");
+				}
+			}
+		}
+
+		private void mnuUpdateWhen_Click(object sender, EventArgs e) {
+			MenuItem menu = sender as MenuItem;
+			if (menu.Checked == false) {
+				if (menu == mnuUpdateManual) {
+					Program.AppConfig.UpdateConfig.CheckOnStartup = false;
+					mnuUpdateManual.Checked = true;
+					mnuUpdateStartup.Checked = false;
+				}
+				else if (menu == mnuUpdateStartup) {
+					Program.AppConfig.UpdateConfig.CheckOnStartup = true;
+					mnuUpdateStartup.Checked = true;
+					mnuUpdateManual.Checked = false;
+				}
+			}
+		}
+
+		private void mnuUpdateHow_Click(object sender, EventArgs e) {
+			MenuItem menu = sender as MenuItem;
+			if (menu.Checked == false) {
+				if (menu == mnuUpdateNotify) {
+					Program.AppConfig.UpdateConfig.UpdateInstall = false;
+					mnuUpdateNotify.Checked = true;
+					mnuUpdateInstall.Checked = false;
+				}
+				else if (menu == mnuUpdateInstall) {
+					Program.AppConfig.UpdateConfig.UpdateInstall = true;
+					mnuUpdateInstall.Checked = true;
+					mnuUpdateNotify.Checked = false;
+				}
+			}
 		}
 
 		private void tvwHelp_AfterSelect(object sender, TreeViewEventArgs e) {
@@ -765,15 +867,27 @@ namespace DosboxApp {
 			if (node.Name == "nodHelp") {
 				if (pnlHelp.Visible == false) {
 					pnlHelp.Visible = true;
-					pnlEditFeedback.Visible = false;
-					pnlSendFeedback.Visible = false;
+					pnlFeedback.Visible = false;
+					pnlAbout.Visible = false;
 				}
 			}
 			else if (node.Name == "nodFeedback") {
-				if (pnlEditFeedback.Visible == false && pnlSendFeedback.Visible == false) {
-					pnlEditFeedback.Visible = true;
-					pnlSendFeedback.Visible = false;
+				if (pnlFeedback.Visible == false) {
+					txtComment.Visible = true;
+					btnPreviewFeedback.Visible = true;
+					btnSendFeedback.Visible = false;
+					btnEditFeedback.Visible = false;
+					txtSendData.Visible = false;
+					pnlFeedback.Visible = true;
 					pnlHelp.Visible = false;
+					pnlAbout.Visible = false;
+				}
+			}
+			else if (node.Name == "nodAbout") {
+				if (pnlAbout.Visible == false) {
+					pnlAbout.Visible = true;
+					pnlHelp.Visible = false;
+					pnlFeedback.Visible = false;
 				}
 			}
 		}
@@ -782,19 +896,26 @@ namespace DosboxApp {
 			e.Cancel = true;
 		}
 
-		private void btnPreviewFeedback_Click(object sender, EventArgs e) {
-			pnlSendFeedback.Visible = true;
-			pnlEditFeedback.Visible = false;
-		}
-
-		private void btnEditComment_Click(object sender, EventArgs e) {
-			pnlEditFeedback.Visible = true;
-			pnlSendFeedback.Visible = false;
-
-		}
-
-		private void btnSendFeedback_Click(object sender, EventArgs e) {
-
+		private void tbrFeedback_ButtonClick(object sender, ToolBarButtonClickEventArgs e) {
+			if (e.Button == btnPreviewFeedback) {
+				txtSendData.Visible = true;
+				btnSendFeedback.Visible = true;
+				btnEditFeedback.Visible = true;
+				btnPreviewFeedback.Visible = false;
+				txtComment.Visible = false;
+			}
+			else if (e.Button == btnSendFeedback) {
+			}
+			else if (e.Button == btnEditFeedback) {
+				if (pnlFeedback.Visible == false) {
+					tvwHelp.SelectedNode = tvwHelp.Nodes["nodFeedback"];
+				}
+				txtComment.Visible = true;
+				btnPreviewFeedback.Visible = true;
+				btnSendFeedback.Visible = false;
+				btnEditFeedback.Visible = false;
+				txtSendData.Visible = false;
+			}
 		}
 	}
 }

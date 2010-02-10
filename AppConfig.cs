@@ -22,6 +22,7 @@ namespace DosboxApp {
 		public AppConfig() {
 			m_GameListFormConfig = new GameListFormConfig();
 			m_GameConfig = new GameConfig();
+			m_UpdateConfig = new UpdateConfig();
 		}
 
 		public FormConfig GameListFormConfig {
@@ -32,7 +33,12 @@ namespace DosboxApp {
 			get { return m_GameConfig; }
 		}
 
+		public UpdateConfig UpdateConfig {
+			get { return m_UpdateConfig; }
+		}
+
 		FormConfig m_GameListFormConfig;
 		GameConfig m_GameConfig;
+		UpdateConfig m_UpdateConfig;
 	}
 }
