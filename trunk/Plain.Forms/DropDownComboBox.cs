@@ -22,8 +22,9 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace Plain.Forms {
-	public class ComboBoxDropDown : System.Windows.Forms.ComboBox {
-		public ComboBoxDropDown()
+	[ToolboxItem(false)]
+	public class DropDownComboBox : System.Windows.Forms.ComboBox {
+		public DropDownComboBox()
 			: base() {
 			base.SetStyle(ControlStyles.Selectable, false);
 			base.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
