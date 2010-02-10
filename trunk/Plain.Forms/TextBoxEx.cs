@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 //#define USE_OWNERDRAWCUEBANNER
 //#define USE_ITALICFONTCUEBANNER
+//#define USE_NATIVECUEBANNER
 
 using System;
 using System.ComponentModel;
@@ -30,11 +31,10 @@ using Plain.Native;
 namespace Plain.Forms {
 	public class TextBoxEx : System.Windows.Forms.TextBox {
 		public TextBoxEx() {
-			m_CueBannerItalicLabel = new Label();
+			m_CueBannerItalicLabel = new ClickThroughLabel();
 			m_CueBannerItalicLabel.Dock = DockStyle.Fill;
 			m_CueBannerItalicLabel.ForeColor = SystemColors.GrayText;
 			m_CueBannerItalicLabel.TextAlign = ContentAlignment.MiddleLeft;
-			m_CueBannerItalicLabel.MouseDown += new MouseEventHandler(CueBannerItalicLabel_MouseDown);
 			m_CueBanner = string.Empty;
 #if USE_ITALICFONTCUEBANNER
 			setFontForCueBanner();
@@ -91,7 +91,7 @@ namespace Plain.Forms {
 						changeFromOwnerDrawToNormal();
 					}
 				}
-#else
+#elif USE_NATIVECUEBANNER
 				NativeMethods.SendMessage(base.Handle, NativeMethods.EM_SETCUEBANNER, 0, m_CueBanner);
 #endif
 				signalCueBannerVisibility();
@@ -107,11 +107,10 @@ namespace Plain.Forms {
 		}
 
 		/// <summary>
-		/// Gets or sets the widths of the left and right margins for a TextBoxEx control. 
+		/// 
 		/// </summary>
-		[Category("Layout")]
-		[Description("The widths of the left and right margins for a TextBoxEx control.")]
-		public EditMargins InnerMargins {
+		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
+		public Padding InnerMargin {
 			set {
 				m_InnerMargins = value;
 #if USE_ITALICFONTCUEBANNER
@@ -136,12 +135,13 @@ namespace Plain.Forms {
 		bool m_IsFontChanging;
 #endif
 		string m_CueBanner;
-		EditMargins m_InnerMargins;
+		Padding m_InnerMargins;
 		bool m_CueBannerVisible;
-		Label m_CueBannerItalicLabel;
+		ClickThroughLabel m_CueBannerItalicLabel;
 
 		protected virtual void OnCueBannerShown(EventArgs e) {
 			base.Controls.Add(m_CueBannerItalicLabel);
+			m_CueBannerItalicLabel.BackColor = Color.Transparent;
 			CueBannerShown(this, e);
 			System.Diagnostics.Debug.WriteLine("CueBannerShown");
 		}
@@ -150,6 +150,11 @@ namespace Plain.Forms {
 			base.Controls.Remove(m_CueBannerItalicLabel);
 			CueBannerHidden(this, e);
 			System.Diagnostics.Debug.WriteLine("CueBannerHidden");
+		}
+
+		protected override void OnMultilineChanged(EventArgs e) {
+			base.OnMultilineChanged(e);
+			m_CueBannerItalicLabel.TextAlign = base.Multiline ? ContentAlignment.TopLeft : ContentAlignment.MiddleLeft;
 		}
 
 		protected override void OnHandleCreated(EventArgs e) {
@@ -211,7 +216,7 @@ namespace Plain.Forms {
 				base.UpdateStyles();
 #elif USE_ITALICFONTCUEBANNER
 				setFontForCueBanner();
-				setInnerMargins(EditMargins.Empty);
+				setInnerMargins(Padding.Empty);
 #endif
 				signalCueBannerVisibility(true);
 			}
@@ -227,7 +232,7 @@ namespace Plain.Forms {
 				}
 #elif USE_ITALICFONTCUEBANNER
 				setFontForCueBanner();
-				setInnerMargins(EditMargins.Empty);
+				setInnerMargins(Padding.Empty);
 #endif
 				signalCueBannerVisibility(true);
 			}
@@ -325,54 +330,10 @@ namespace Plain.Forms {
 		}
 #endif
 
-		void setInnerMargins(EditMargins margins) {
+		void setInnerMargins(Padding margins) {
 			NativeMethods.SendMessage(base.Handle, NativeMethods.EM_SETMARGINS,
 				NativeMethods.EC_LEFTMARGIN | NativeMethods.EC_RIGHTMARGIN,
 				(int) NativeMethods.MAKELONG((ushort) margins.Left, (ushort) margins.Right));
 		}
-
-		private void CueBannerItalicLabel_MouseDown(object sender, MouseEventArgs e) {
-			base.Focus();
-		}
-	}
-
-#if DEBUG
-	[Serializable]
-	[TypeConverter(typeof(EditMarginsConverter))]
-#endif
-	public struct EditMargins {
-		static EditMargins() {
-			Empty = new EditMargins();
-		}
-		public static readonly EditMargins Empty;
-		public EditMargins(int left, int right) {
-			m_Left = left;
-			m_Right = right;
-		}
-		/// <summary>
-		/// The width of the left margin.
-		/// </summary>
-		[Description("Gets or sets the width of the left margin.")]
-		public int Left {
-			set { m_Left = value; }
-			get { return m_Left; }
-		}
-		/// <summary>
-		/// The width of the right margin.
-		/// </summary>
-		[Description("Gets or sets the width of the right margin.")]
-		public int Right {
-			set { m_Right = value; }
-			get { return m_Right; }
-		}
-		/// <summary>
-		/// Gets a value indicating whether this EditMargins is empty.
-		/// </summary>
-		[Browsable(false)]
-		public bool IsEmpty {
-			get { return m_Left == 0 && m_Right == 0; }
-		}
-		int m_Left;
-		int m_Right;
 	}
 }
