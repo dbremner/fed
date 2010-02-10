@@ -3,34 +3,11 @@
 
 = Roadmap =
 
-===0.5===
-  * First public release
-  * TODO: Upload to Google Code
-  * ETA : 2010/01/31
-  * Done: 2010/01/30
-
-===0.6===
-  * TODO: Temporary unsaved config
-  * TODO: Game filtering
-  * ETA : 2010/02/07
-  * Done: 2010/02/06
-
-===0.7===
-  * TODO: Software update
-  * ETA : 2010/02/20
-
-===0.8===
-  * TODO: Game tagging
-  * ETA : 2010/03/06
-
-===0.9===
-  * TODO: Help pages
-  * TODO: Feedback mechanism
-  * ETA : 2010/03
-
-===1.0===
-  * TODO: Final bug fix and polish
-  * ETA : 2010/04
-
-===1.1===
-  * TODO: Misc Windows 7 integrations (e.g. jump list)
+|| *Releases* || *Objectives* || *ETA* || *Completed* ||
+|| 0.5 || Availability on Google Code || 2010/01/31 || 2010/01/30 ||
+|| 0.6 || Temporary unsaved config <br /> Game filtering || 2010/02/07 || 2010/02/06 ||
+|| 0.70 || Software update || 2010/02/20 ||  ||
+|| 0.80 || Game tagging || 2010/03/06 ||  ||
+|| 0.90 || Help pages <br /> Feedback mechanism || 2010/03 ||  ||
+|| 1.00 || Final bug fix and polish || 2010/04 ||  ||
+|| 1.10 || Misc Windows 7 integrations ||  ||  ||
