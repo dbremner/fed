@@ -503,5 +503,8 @@ namespace Plain.Native {
 		public const int EC_LEFTMARGIN = 0x0001;
 		public const int EC_RIGHTMARGIN = 0x0002;
 		public const int EC_USEFONTINFO = 0xffff;
+
+		public const int WM_NCHITTEST = 0x0084;
+		public const int HTTRANSPARENT = (-1);
 	}
 }
