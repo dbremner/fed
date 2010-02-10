@@ -23,45 +23,25 @@ using Plain.IO;
 
 namespace DosboxApp {
 	public class FormConfig : BaseConfig {
-		public static Point CenterInScreen(Size size) {
-			Rectangle rect = Screen.FromPoint(Cursor.Position).WorkingArea;
-			return new Point((rect.Left + rect.Right - size.Width) / 2, (rect.Top + rect.Bottom - size.Height) / 2);
-		}
-
 		public FormConfig() {
+			base.Name = typeof(Form).Name;
 			m_WindowState = FormWindowState.Normal;
 			m_Opacity = 1;
 		}
 
-		// TODO: move these form functions to form.
-		public virtual void SaveFrom(Form form) {
-			m_WindowState = form.WindowState;
-			if (form.WindowState != FormWindowState.Normal) {
-				form.WindowState = FormWindowState.Normal;
-			}
-			m_Location = form.Location;
-			m_Size = form.ClientSize;
-			m_Opacity = form.Opacity;
-		}
-
 		public override void SaveTo(INI ini) {
 			ini.Section = base.Name;
-			base.writeProp(ini, "Location", m_Location);
-			base.writeProp(ini, "Opacity", m_Opacity);
+			base.writeProp(ini, "DesktopBounds", m_DesktopBounds);
 			base.writeProp(ini, "Size", m_Size);
 			base.writeProp(ini, "WindowState", m_WindowState);
+			base.writeProp(ini, "Opacity", m_Opacity);
 		}
 
 		public override void LoadFrom(INI ini) {
 			object value;
 			ini.Section = base.Name;
-			if (base.readProp(ini, "Location", out value)) {
-				this.Location = (Point) value;
-			}
-			if (base.readProp(ini, "Opacity", out value)) {
-				if (0.2 <= (double) value) {
-					m_Opacity = (double) value;
-				}
+			if (base.readProp(ini, "DesktopBounds", out value)) {
+				m_DesktopBounds = (Rectangle) value;
 			}
 			if (base.readProp(ini, "Size", out value)) {
 				m_Size = (Size) value;
@@ -69,45 +49,28 @@ namespace DosboxApp {
 			if (base.readProp(ini, "WindowState", out value)) {
 				m_WindowState = (FormWindowState) value;
 			}
-		}
-
-		public virtual void LoadTo(Form form) {
-			form.ClientSize = m_Size;
-			if (m_LocationSet) {
-				form.Location = m_Location;
-				bool bVisible = false;
-				foreach (Screen sc in Screen.AllScreens) {
-					if (sc.WorkingArea.IntersectsWith(form.Bounds)) {
-						bVisible = true;
-						break;
-					}
-				}
-				if (bVisible == false) {
-					form.Location = FormConfig.CenterInScreen(form.Size);
+			if (base.readProp(ini, "Opacity", out value)) {
+				if (0.2 <= (double) value) {
+					m_Opacity = (double) value;
 				}
 			}
-			else {
-				form.Location = FormConfig.CenterInScreen(form.Size);
-			}
-			form.WindowState = m_WindowState;
-			form.Opacity = m_Opacity;
 		}
 
 		public bool LocationSet {
 			get { return m_LocationSet; }
 		}
 
-		public Point Location {
-			set {
-				m_Location = value;
-				m_LocationSet = true;
-			}
-			get { return m_Location; }
-		}
-
 		public Size Size {
 			set { m_Size = value; }
 			get { return m_Size; }
+		}
+
+		public Rectangle DesktopBounds {
+			set {
+				m_DesktopBounds = value;
+				m_LocationSet = true;
+			}
+			get { return m_DesktopBounds; }
 		}
 
 		public FormWindowState WindowState {
@@ -121,8 +84,8 @@ namespace DosboxApp {
 		}
 
 		bool m_LocationSet;
-		Point m_Location;
-		protected Size m_Size;
+		Rectangle m_DesktopBounds;
+		Size m_Size;
 		FormWindowState m_WindowState;
 		double m_Opacity;
 	}
@@ -131,22 +94,10 @@ namespace DosboxApp {
 		public GameListFormConfig()
 			: base() {
 			base.Name = typeof(GameListForm).Name;
-			m_Size = new Size(500, 400);
+			base.Size = new Size(500, 400);
 			m_SearchWidth = 128;
 			m_Column0Width = 240;
 			m_Column1Width = 120;
-		}
-
-		public override void SaveFrom(Form form) {
-			SaveFrom(form as GameListForm);
-		}
-
-		public void SaveFrom(GameListForm form) {
-			base.SaveFrom(form);
-			m_SearchWidth = form.pnlSearch.Width;
-			m_Column0Width = form.lvwGame.Columns[0].Width;
-			m_Column1Width = form.lvwGame.Columns[1].Width;
-
 		}
 
 		public override void SaveTo(INI ini) {
@@ -174,17 +125,6 @@ namespace DosboxApp {
 					m_Column1Width = (int) value;
 				}
 			}
-		}
-
-		public override void LoadTo(Form form) {
-			LoadTo(form as GameListForm);
-		}
-
-		public void LoadTo(GameListForm form) {
-			base.LoadTo(form);
-			form.pnlSearch.SetBounds(form.pnlSearch.Parent.ClientSize.Width - m_SearchWidth - 4, 0, m_SearchWidth, 0, BoundsSpecified.X | BoundsSpecified.Width);
-			form.lvwGame.Columns[0].Width = m_Column0Width;
-			form.lvwGame.Columns[1].Width = m_Column1Width;
 		}
 
 		public int SearchWidth {
