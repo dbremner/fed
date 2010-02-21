@@ -37,8 +37,9 @@ namespace Plain.Forms {
 
 		protected override void OnHandleCreated(EventArgs e) {
 			base.OnHandleCreated(e);
-			NativeMethods.SetWindowTheme(this.Handle, "explorer", null);
-			NativeMethods.SendMessage(base.Handle, NativeMethods.TB_SETWINDOWTHEME, 0, "SearchButton");
+			//NativeMethods.SetWindowTheme(this.Handle, "explorer", null);
+			//NativeMethods.SendMessage(base.Handle, NativeMethods.TB_SETWINDOWTHEME, 0, "SearchButton");
+			UpdateButtonsWidth(null);
 		}
 		*/
 
@@ -86,5 +87,8 @@ namespace Plain.Forms {
 				}
 			}
 		}
+
+		// TODO:
+		// For better designer support, try catching TB_INSERTBUTTON/TB_SETBUTTONINFO/etc and UpdateButtonsWidth.
 	}
 }
