@@ -204,7 +204,7 @@ namespace DosboxApp {
 				string str = value as string;
 				if (str != null) {
 					str = str.Trim().ToLowerInvariant();
-					if (str.StartsWith(PREFIX_CHAR.ToString()) == false) {
+					if (str.StartsWith(PREFIX_CHAR.ToString(CultureInfo.InvariantCulture)) == false) {
 						value = PREFIX_CHAR + str;
 					}
 				}
@@ -214,7 +214,7 @@ namespace DosboxApp {
 				object obj = base.ConvertTo(context, culture, value, destinationType);
 				string str = obj as string;
 				if (str != null) {
-					if (str.StartsWith(PREFIX_CHAR.ToString())) {
+					if (str.StartsWith(PREFIX_CHAR.ToString(CultureInfo.InvariantCulture))) {
 						return str.TrimStart(PREFIX_CHAR);
 					}
 				}
@@ -232,10 +232,10 @@ namespace DosboxApp {
 				if (str != null) {
 					str = str.Trim().ToLowerInvariant();
 					if (str == CYCLES_MAX) {
-						value = UInt16.MaxValue.ToString();
+						value = UInt16.MaxValue.ToString(CultureInfo.InvariantCulture);
 					}
 					else if (str == CYCLES_AUTO) {
-						value = 0.ToString();
+						value = 0.ToString(CultureInfo.InvariantCulture);
 					}
 				}
 				return base.ConvertFrom(context, culture, value);
@@ -244,10 +244,10 @@ namespace DosboxApp {
 				object obj = base.ConvertTo(context, culture, value, destinationType);
 				string str = obj as string;
 				if (str != null) {
-					if (str == UInt16.MaxValue.ToString()) {
+					if (str == UInt16.MaxValue.ToString(CultureInfo.InvariantCulture)) {
 						return CYCLES_MAX;
 					}
-					else if (str == 0.ToString()) {
+					else if (str == 0.ToString(CultureInfo.InvariantCulture)) {
 						return CYCLES_AUTO;
 					}
 				}
@@ -294,6 +294,9 @@ namespace DosboxApp {
 		}
 
 		static DosboxConfig() {
+#if DEBUG
+			Stopwatch.Mark("before s_AllProperties");
+#endif
 			s_AllProperties = new Dictionary<string, List<ConfigMeta>>();
 			List<ConfigMeta> metalist;
 			foreach (PropertyInfo pi in typeof(DosboxConfig).GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
@@ -321,6 +324,9 @@ namespace DosboxApp {
 				else {
 				}
 			}
+#if DEBUG
+			Stopwatch.Mark("after s_AllProperties");
+#endif
 		}
 
 		public static void SaveTo(INI ini, DosboxConfig config) {
@@ -683,7 +689,7 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_DOSBOX)]
 		[DefaultValue(DEFAULT_CAPTURES)]
 		[Description("Directory where things like music (wave and MIDI) and screenshots are captured when special keys CTRL-F5 and CTRL-F6 are used. Screenshots will be captured and saved as (PNG) files with a resolution of 320x200.")]
-		[Editor(typeof(FileNameEditorEx), typeof(UITypeEditor))]
+		[Editor(typeof(FolderNameEditorEx), typeof(UITypeEditor))]
 		public string captures {
 			set { m_captures = value; }
 			get { return m_captures; }
