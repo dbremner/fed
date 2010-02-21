@@ -94,17 +94,28 @@ namespace DosboxApp {
 		}
 
 		public DosboxConfig LoadConfig() {
-			DosboxConfig config = new DosboxConfig();
+			if (m_Config == null) {
+				m_Config = new DosboxConfig();
+			}
 
 			INI ini = GetUserConfigINI();
-			DosboxConfig.LoadFrom(ini, config);
+			DosboxConfig.LoadFrom(ini, m_Config);
 
-			return config;
+			return m_Config;
 		}
 
 		public void SaveConfig(DosboxConfig config) {
 			INI ini = GetUserConfigINI();
 			DosboxConfig.SaveTo(ini, config);
+		}
+
+		public DosboxConfig Config {
+			get {
+				if (m_Config == null) {
+					m_Config = LoadConfig();
+				}
+				return m_Config;
+			}
 		}
 
 		public string Directory {
@@ -123,6 +134,7 @@ namespace DosboxApp {
 			get { return m_Version; }
 		}
 
+		DosboxConfig m_Config;
 		string m_Directory;
 		string m_VersionString;
 		Version m_Version;
