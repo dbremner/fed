@@ -57,6 +57,50 @@ namespace DosboxApp {
 
 		#endregion
 
+		public bool GUICheck(bool bVerbose) {
+			// FIXME: remove blocking dialog (esp on startup)?
+			// TODO: better message box (custom button text)?
+			if (this.Check()) {
+				if (this.IsUpdateAvailable) {
+					if (Program.AppConfig.UpdateConfig.UpdateInstall) {
+						if (this.IsUpdateCompatible) {
+							if (this.DownloadAndVerify()) {
+								DialogResult ans = MessageBox.Show("Version " + this.LatestVersion.ToString() + " is downloaded. Install and restart now?" + Environment.NewLine + "Otherwise, it will be installed when the program exits.", "Software Update", MessageBoxButtons.YesNoCancel);
+								if (ans == DialogResult.Yes) {
+									if (Program.Updater.InstallUpdate()) {
+										Application.Restart();
+										return true;
+									}
+									else {
+										MessageBox.Show("Version " + this.LatestVersion.ToString() + " failed to be installed.");
+									}
+								}
+								else if (ans == DialogResult.No) {
+									Program.AppConfig.UpdateConfig.DelayedInstall = true;
+								}
+							}
+							else if (bVerbose) {
+								MessageBox.Show("Version " + this.LatestVersion.ToString() + " download cannot be completed at this time. Please try again later.", "Software Update");
+							}
+						}
+						else {
+							MessageBox.Show("Update is not compatible with this version of updater. Please go to " + Updater.DOWNLOADSITE + " to download the latest version.", "Software Update");
+						}
+					}
+					else {
+						MessageBox.Show("Version " + this.LatestVersion.ToString() + " is available.", "Software Update");
+					}
+				}
+				else if (bVerbose) {
+					MessageBox.Show("You are running the latest version.", "Software Update");
+				}
+			}
+			else if (bVerbose) {
+				MessageBox.Show("Update check cannot be completed at this time. Please try again later.", "Software Update");
+			}
+			return false;
+		}
+
 		public bool Check() {
 			HttpWebRequest request = null;
 			HttpWebResponse response = null;
@@ -110,8 +154,9 @@ namespace DosboxApp {
 					long length = 0;
 					BinaryReader reader = null;
 					try {
-						m_DownloadedUpdate.Path = Path.GetTempFileName();
-						File.Move(m_DownloadedUpdate.Path, m_DownloadedUpdate.Path + ".exe");
+						string tmpPath = Path.GetTempFileName();
+						m_DownloadedUpdate.Path = tmpPath + ".exe";
+						File.Move(tmpPath, m_DownloadedUpdate.Path);
 						outStream = new FileStream(m_DownloadedUpdate.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 						request = (HttpWebRequest) WebRequest.Create(m_LatestUpdate.Path);
 						response = (HttpWebResponse) request.GetResponse();
@@ -157,7 +202,8 @@ namespace DosboxApp {
 
 		public bool InstallUpdate() {
 			if (m_DownloadedUpdate.IsCompatible) {
-				string backupPath = Application.ExecutablePath + "." + Application.ProductVersion;
+				string backupPath = Path.GetDirectoryName(Application.ExecutablePath) + Path.DirectorySeparatorChar
+					+ Path.GetFileNameWithoutExtension(Application.ExecutablePath) + "." + Application.ProductVersion + ".exe";
 				try {
 					if (File.Exists(backupPath)) {
 						File.Delete(backupPath);
@@ -168,11 +214,14 @@ namespace DosboxApp {
 						File.Move(m_DownloadedUpdate.Path, path);
 						return true;
 					}
-					catch {
+					catch (Exception ex) {
+						MessageBox.Show(ex.Message, "Inner");
 						File.Move(backupPath, path);
 					}
 				}
-				catch { }
+				catch (Exception ex) {
+					MessageBox.Show(ex.Message, "Outer");
+				}
 			}
 			return false;
 		}
