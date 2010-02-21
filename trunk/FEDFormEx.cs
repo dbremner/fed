@@ -38,40 +38,6 @@ namespace DosboxApp {
 			m_OpacityOnSizeMove = 1;
 		}
 
-		public virtual void SaveTo(FormConfig config) {
-			config.WindowState = base.WindowState;
-			if (base.WindowState != FormWindowState.Normal) {
-				base.WindowState = FormWindowState.Normal;
-			}
-			config.DesktopBounds = base.DesktopBounds;
-			config.Size = base.Size;
-			config.Opacity = base.Opacity;
-		}
-
-		public virtual void LoadFrom(FormConfig config) {
-			if (config.LocationSet) {
-				base.DesktopBounds = config.DesktopBounds;
-				base.Size = config.Size;
-
-				bool bVisible = false;
-				foreach (Screen sc in Screen.AllScreens) {
-					if (sc.WorkingArea.IntersectsWith(base.Bounds)) {
-						bVisible = true;
-						break;
-					}
-				}
-				if (bVisible == false) {
-					base.Location = FEDFormEx.CenterInScreen(base.Size);
-				}
-			}
-			else {
-				base.Size = config.Size;
-				base.Location = FEDFormEx.CenterInScreen(base.Size);
-			}
-			base.WindowState = config.WindowState;
-			base.Opacity = config.Opacity;
-		}
-
 		[DefaultValue(1.0)]
 		[TypeConverter(typeof(OpacityConverter))]
 		public double OpacityNormal {
@@ -99,6 +65,40 @@ namespace DosboxApp {
 		double m_OpacityNormal;
 		double m_OpacityOnSizeMove;
 		bool m_SizingMoving;
+
+		protected void SaveTo(FormConfig config) {
+			config.WindowState = base.WindowState;
+			if (base.WindowState != FormWindowState.Normal) {
+				base.WindowState = FormWindowState.Normal;
+			}
+			config.DesktopBounds = base.DesktopBounds;
+			config.Size = base.Size;
+			config.Opacity = base.Opacity;
+		}
+
+		protected void LoadFrom(FormConfig config) {
+			if (config.LocationSet) {
+				base.DesktopBounds = config.DesktopBounds;
+				base.Size = config.Size;
+
+				bool bVisible = false;
+				foreach (Screen sc in Screen.AllScreens) {
+					if (sc.WorkingArea.IntersectsWith(base.Bounds)) {
+						bVisible = true;
+						break;
+					}
+				}
+				if (bVisible == false) {
+					base.Location = FEDFormEx.CenterInScreen(base.Size);
+				}
+			}
+			else {
+				base.Size = config.Size;
+				base.Location = FEDFormEx.CenterInScreen(base.Size);
+			}
+			base.WindowState = config.WindowState;
+			base.Opacity = config.Opacity;
+		}
 
 		private void FEDFormEx_ResizeBegin(object sender, EventArgs e) {
 			m_SizingMoving = true;
