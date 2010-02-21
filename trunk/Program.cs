@@ -28,7 +28,6 @@ namespace DosboxApp {
 		/// </summary>
 		[STAThread]
 		static void Main(string[] args) {
-			s_Updater = new Updater();
 			foreach (string a in args) {
 				string param = a.ToLowerInvariant();
 				if (param.StartsWith("/mode:")) {
@@ -40,12 +39,27 @@ namespace DosboxApp {
 					}
 				}
 			}
-			s_AppConfig = AppInfo.LoadConfig();
-
-			Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
+#if DEBUG
+			Stopwatch.Mark("updater and command line");
+#endif
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			
+			s_AppConfig = AppInfo.LoadConfig();
+			s_Updater = new Updater();
+
+			if (Program.AppConfig.UpdateConfig.CheckOnStartup) {
+				if (Program.Updater.GUICheck(false)) {
+					// Don't ask me why Application.Restart() or .Exit() doesn't really exit here...
+					return;
+				}
+			}
+
+			Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
+#if DEBUG
+			Stopwatch.Mark("app config before form");
+#endif
 			Application.Run(new GameListForm());
 		}
 
