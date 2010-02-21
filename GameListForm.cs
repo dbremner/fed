@@ -427,16 +427,7 @@ namespace DosboxApp {
 			foreach (ListViewGroup group in lvwGame.Groups) {
 				if (group.Items.Count > 0) {
 					GameObject gobj = group.Items[0].Tag as GameObject;
-					string header = Path.GetDirectoryName(gobj.Directory) + " (" + group.Items.Count + ")";
-					if (group.Header != header) {
-						ListViewGroupEx groupEx = (ListViewGroupEx) group;
-						if (groupEx != null) {
-							groupEx.Header = header;
-						}
-						else {
-							group.Header = header;
-						}
-					}
+					updateGroupItemCount(group, gobj);
 				}
 			}
 		}
@@ -661,13 +652,13 @@ namespace DosboxApp {
 				addMasterGameFolder();
 			}
 			else if (e.Button == btnAddGameFolder) {
-				////addGameFolder();
+				addGameFolder();
 			}
 			else if (e.Button == btnRemove) {
 				deleteGames();
 			}
 			else if (e.Button == btnRun) {
-				////runDosbox();
+				runDosbox();
 			}
 		}
 
