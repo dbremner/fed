@@ -26,6 +26,7 @@ namespace Plain.Forms {
 	[Category("Dialogs")]
 	public partial class OpenFileFolderDialog : Component {
 		public OpenFileFolderDialog() {
+			m_PickFolders = DEFAULT_PICKFOLDERS;
 			_WindowsForms_ = new Reflector("System.Windows.Forms");
 
 			InitializeComponent();
@@ -36,6 +37,8 @@ namespace Plain.Forms {
 			container.Add(this);
 		}
 
+		public event CancelEventHandler FolderOK = delegate { };
+
 		public DialogResult ShowDialog() {
 			return ShowDialog(null);
 		}
@@ -43,20 +46,17 @@ namespace Plain.Forms {
 		public DialogResult ShowDialog(IWin32Window owner) {
 			if (m_PickFolders) {
 				configOpenFileDialogToSelectFolder();
+				DialogResult answer;
 				if ((bool) _WindowsForms_.Get(openFileDialog, "UseVistaDialogInternal") == false) {
-					FileDialogParentForm frmMsg = new FileDialogParentForm();
-					DialogResult ans = frmMsg.ShowFileDialog(owner, openFileDialog);
+					FileDialogParentForm frmMsg = new FileDialogParentForm(this);
+					frmMsg.ShowFileDialog(owner, openFileDialog);
 					frmMsg.Close();
-					if (frmMsg.DialogResult == DialogResult.OK) {
-						if (string.IsNullOrEmpty( openFileDialog.FileName)){
-							openFileDialog.FileName = frmMsg.SelectedFilename;
-						}
-					}
-					return frmMsg.DialogResult;
+					answer = frmMsg.DialogResult;
 				}
 				else {
-					return _RunDialog(owner != null ? owner.Handle : IntPtr.Zero) ? DialogResult.OK : DialogResult.Cancel;
+					answer = _RunDialog(owner != null ? owner.Handle : IntPtr.Zero) ? DialogResult.OK : DialogResult.Cancel;
 				}
+				return answer;
 			}
 			else {
 				return openFileDialog.ShowDialog(owner);
@@ -84,15 +84,19 @@ namespace Plain.Forms {
 		bool m_PickFolders;
 		Reflector _WindowsForms_;
 
+		protected virtual void OnFileOK(CancelEventArgs e) {
+			FolderOK(this, e);
+		}
+
 		void configOpenFileDialogToSelectFolder() {
-			if ((bool) _WindowsForms_.Get(openFileDialog, "UseVistaDialogInternal") == false) {
-				if (m_PickFolders) {
+			if (m_PickFolders) {
+				openFileDialog.AddExtension = false;
+				openFileDialog.CheckFileExists = false;
+				openFileDialog.DereferenceLinks = true;
+				openFileDialog.Multiselect = false;
+				if ((bool) _WindowsForms_.Get(openFileDialog, "UseVistaDialogInternal") == false) {
 					openFileDialog.AddExtension = false;
-					openFileDialog.CheckFileExists = false;
-					openFileDialog.CheckPathExists = true;
-					openFileDialog.DereferenceLinks = true;
 					openFileDialog.Filter = "Folders|\n";
-					openFileDialog.Multiselect = false;
 
 					if (Directory.Exists(openFileDialog.FileName)) {
 						openFileDialog.InitialDirectory = openFileDialog.FileName;
