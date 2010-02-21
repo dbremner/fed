@@ -44,7 +44,7 @@ namespace DosboxApp {
 		protected bool readProp(INI ini, string key, out object value) {
 			try {
 				string v = ini.Read(key);
-				if (v != string.Empty) {
+				if (string.IsNullOrEmpty(v) == false) {
 					Type type = this.GetType().GetProperty(key).PropertyType;
 					value = TypeDescriptor.GetConverter(type).ConvertFromInvariantString(v);
 					return true;
