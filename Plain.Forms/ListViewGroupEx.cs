@@ -52,9 +52,49 @@ namespace Plain.Forms {
 		}
 
 		[TypeConverter(typeof(ExpandableObjectConverter))]
-		public ListViewGroup Base {
+		public ListViewGroup BaseClass {
 			protected set { m_Group = value; }
 			get { return m_Group; }
+		}
+
+		/// <summary>
+		/// Sets the header text for the group.
+		/// </summary>
+		[Description("Sets the header text for the group.")]
+		public string Header {
+			set {
+				m_Header = value;
+				if (m_Group.ListView != null && m_Group.ListView.Created) {
+					IntPtr pszHeader = Marshal.StringToCoTaskMemUni(m_Header);
+					if (pszHeader != IntPtr.Zero) {
+						NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
+						lvg.cbSize = (uint) Marshal.SizeOf(lvg);
+						lvg.mask = NativeMethods.LVGF_HEADER;
+						lvg.cchHeader = m_Header.Length;	// Should be ignored when set.
+						lvg.pszHeader = pszHeader;
+						NativeMethods.SendMessage(m_Group.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, this.ID, ref lvg);
+						Marshal.FreeCoTaskMem(pszHeader);
+					}
+				}
+			}
+			get {
+				return m_Header;
+				string header = string.Empty;
+				if (m_Group.ListView != null && m_Group.ListView.Created) {
+					IntPtr pszHeader = Marshal.AllocCoTaskMem(1024);
+					if (pszHeader != IntPtr.Zero) {
+						NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
+						lvg.cbSize = (uint) Marshal.SizeOf(lvg);
+						lvg.mask = NativeMethods.LVGF_HEADER;
+						lvg.cchHeader = 512;
+						lvg.pszHeader = pszHeader;
+						NativeMethods.SendMessage(m_Group.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, this.ID, ref lvg);
+						header = Marshal.PtrToStringUni(pszHeader);
+						Marshal.FreeCoTaskMem(pszHeader);
+					}
+				}
+				return header;
+			}
 		}
 
 		public int ID {
@@ -69,6 +109,7 @@ namespace Plain.Forms {
 		}
 
 		ListViewGroup m_Group;
+		string m_Header;
 
 		void deserialize(SerializationInfo info, StreamingContext context) {
 			MethodInfo func = null;
@@ -144,7 +185,11 @@ namespace Plain.Forms {
 	[SerializableAttribute]
 	public class ListViewGroupEx : ListViewGroupBase, ISerializable {
 		public static implicit operator ListViewGroup(ListViewGroupEx groupEx) {
-			return groupEx.Base;
+			return groupEx.BaseClass;
+		}
+
+		public static explicit operator ListViewGroupEx(ListViewGroup group) {
+			return group.Tag as ListViewGroupEx;
 		}
 
 		public ListViewGroupEx()
@@ -164,7 +209,7 @@ namespace Plain.Forms {
 			create();
 		}
 		public ListViewGroupEx(ListViewGroup group) {
-			base.Base = group;
+			base.BaseClass = group;
 			create();
 		}
 		private ListViewGroupEx(SerializationInfo info, StreamingContext context)
@@ -188,12 +233,12 @@ namespace Plain.Forms {
 				updateState();
 			}
 			get {
-				if (base.Base.ListView != null && base.Base.ListView.Created) {
+				if (base.BaseClass.ListView != null && base.BaseClass.ListView.Created) {
 					NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
 					lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 					lvg.mask = NativeMethods.LVGF_STATE;
 					lvg.stateMask = NativeMethods.LVGS_COLLAPSED | NativeMethods.LVGS_COLLAPSIBLE;
-					int id = NativeMethods.SendMessage(base.Base.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, base.ID, ref lvg);
+					int id = NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, base.ID, ref lvg);
 					if (id == base.ID) {
 						return (lvg.state & NativeMethods.LVGS_COLLAPSIBLE) != 0;
 					}
@@ -217,12 +262,12 @@ namespace Plain.Forms {
 				updateState();
 			}
 			get {
-				if (base.Base.ListView != null && base.Base.ListView.Created) {
+				if (base.BaseClass.ListView != null && base.BaseClass.ListView.Created) {
 					NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
 					lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 					lvg.mask = NativeMethods.LVGF_STATE;
 					lvg.stateMask = NativeMethods.LVGS_COLLAPSED | NativeMethods.LVGS_COLLAPSIBLE;
-					int id = NativeMethods.SendMessage(base.Base.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, base.ID, ref lvg);
+					int id = NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, base.ID, ref lvg);
 					if (id == base.ID) {
 						return (lvg.state & NativeMethods.LVGS_COLLAPSED) != 0;
 					}
@@ -245,11 +290,11 @@ namespace Plain.Forms {
 		bool m_Collapsed;
 
 		void create() {
-			base.Base.Tag = this;
+			base.BaseClass.Tag = this;
 		}
 
 		void updateState() {
-			if (base.Base.ListView != null && base.Base.ListView.Created) {
+			if (base.BaseClass.ListView != null && base.BaseClass.ListView.Created) {
 				NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
 				lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 				lvg.mask = NativeMethods.LVGF_STATE;
@@ -261,7 +306,7 @@ namespace Plain.Forms {
 				if (m_Collapsed) {
 					lvg.state |= NativeMethods.LVGS_COLLAPSED;
 				}
-				NativeMethods.SendMessage(base.Base.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, base.ID, ref lvg);
+				NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, base.ID, ref lvg);
 			}
 		}
 
