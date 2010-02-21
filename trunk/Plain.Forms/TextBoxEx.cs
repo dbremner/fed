@@ -124,7 +124,7 @@ namespace Plain.Forms {
 			get {
 #if false
 				int ret = NativeMethods.SendMessage(base.Handle, NativeMethods.EM_GETMARGINS, 0, 0);
-				return new Margins(NativeMethods.LOWORD(ret), NativeMethods.HIWORD(ret));
+				return new Padding(NativeMethods.LOWORD(ret), 0, NativeMethods.HIWORD(ret), 0);
 #endif
 				return m_InnerMargins;
 			}
@@ -141,15 +141,12 @@ namespace Plain.Forms {
 
 		protected virtual void OnCueBannerShown(EventArgs e) {
 			base.Controls.Add(m_CueBannerItalicLabel);
-			m_CueBannerItalicLabel.BackColor = Color.Transparent;
 			CueBannerShown(this, e);
-			System.Diagnostics.Debug.WriteLine("CueBannerShown");
 		}
 
 		protected virtual void OnCueBannerHidden(EventArgs e) {
 			base.Controls.Remove(m_CueBannerItalicLabel);
 			CueBannerHidden(this, e);
-			System.Diagnostics.Debug.WriteLine("CueBannerHidden");
 		}
 
 		protected override void OnMultilineChanged(EventArgs e) {
@@ -160,6 +157,12 @@ namespace Plain.Forms {
 		protected override void OnHandleCreated(EventArgs e) {
 			base.OnHandleCreated(e);
 			this.CueBanner = m_CueBanner;
+			setInnerMargins(m_InnerMargins);
+		}
+
+		protected override void OnVisibleChanged(EventArgs e) {
+			base.OnVisibleChanged(e);
+			setInnerMargins(m_InnerMargins);	// Needed, or margins applied but not shown.
 		}
 
 		protected override void OnParentFontChanged(EventArgs e) {
