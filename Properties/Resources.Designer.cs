@@ -137,6 +137,13 @@ namespace DosboxApp.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Keyboard {
+            get {
+                object obj = ResourceManager.GetObject("Keyboard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap NotAvailable {
             get {
                 object obj = ResourceManager.GetObject("NotAvailable", resourceCulture);
@@ -210,6 +217,13 @@ namespace DosboxApp.Properties {
         internal static System.Drawing.Bitmap Undo {
             get {
                 object obj = ResourceManager.GetObject("Undo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ViewWeb {
+            get {
+                object obj = ResourceManager.GetObject("ViewWeb", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
