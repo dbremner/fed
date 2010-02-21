@@ -35,7 +35,7 @@ namespace DosboxApp {
 
 		public override void Refresh() {
 			base.Refresh();
-			foreach (DictionaryEntry entry in Resources.ResourceManager.GetResourceSet(CultureInfo.CurrentCulture, true, true)) {
+			foreach (DictionaryEntry entry in Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, false)) {
 				Bitmap png = entry.Value as Bitmap;
 				if (png != null) {
 					base.ImageList.Images.Add(entry.Key as string, png);
