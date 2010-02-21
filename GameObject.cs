@@ -27,13 +27,15 @@ namespace DosboxApp {
 			List<string> exes = new List<string>();
 			try {
 				DirectoryInfo diGame = new DirectoryInfo(path);
-				foreach (FileInfo fi in diGame.GetFiles()) {
-					string ext = Path.GetExtension(fi.Name).ToLowerInvariant();
-					if (ext == ".bat" || ext == ".exe" || ext == ".com") {
-						exes.Add(fi.Name);
+				if (diGame.Exists) {
+					foreach (FileInfo fi in diGame.GetFiles()) {
+						string ext = Path.GetExtension(fi.Name).ToLowerInvariant();
+						if (ext == ".bat" || ext == ".exe" || ext == ".com") {
+							exes.Add(fi.Name);
+						}
 					}
+					exes.Sort();
 				}
-				exes.Sort();
 			}
 			catch (Exception) {
 			}
