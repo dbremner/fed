@@ -23,10 +23,6 @@ using Plain.IO;
 
 namespace DosboxApp {
 	public static class AppInfo {
-		static AppInfo() {
-			s_Mode = OperatingMode.MultiUser;
-		}
-
 		public static string GetAppSearchDirectory() {
 			return Path.GetFullPath(System.Windows.Forms.Application.StartupPath);
 		}
@@ -56,7 +52,7 @@ namespace DosboxApp {
 
 		public static AppConfig LoadConfig(string path) {
 			AppConfig config = new AppConfig();
-
+			
 			if (File.Exists(path)) {
 				INI ini = new INI(path);
 				config.GameListFormConfig.LoadFrom(ini);
@@ -92,7 +88,7 @@ namespace DosboxApp {
 			get { return s_Mode; }
 		}
 
-		static OperatingMode s_Mode;
+		static OperatingMode s_Mode = OperatingMode.MultiUser;
 	}
 
 	public enum OperatingMode {
