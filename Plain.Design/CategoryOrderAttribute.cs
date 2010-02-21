@@ -24,14 +24,11 @@ using System.Text;
 namespace Plain.Design {
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Event, AllowMultiple = false, Inherited = false)]
 	public class CategoryOrderAttribute : System.ComponentModel.CategoryAttribute {
-		static CategoryOrderAttribute() {
-			s_CategoryToOrder = new Dictionary<string, int>();
-		}
 		const string PREFIX_FOR_ORDER = "\u001f";
 		// NOTE: Obviously this has the problem of same attribute 
 		//	describing different targets overriding the order, but
 		//	it's a balance between that and ease of use.
-		static Dictionary<string, int> s_CategoryToOrder;
+		static Dictionary<string, int> s_CategoryToOrder = new Dictionary<string, int>();
 		static string CategoryOrder(string category) {
 			int order;
 			if (s_CategoryToOrder.TryGetValue(category, out order)) {
