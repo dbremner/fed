@@ -35,5 +35,13 @@ namespace Plain.Forms {
 			NativeMethods.SetWindowTheme(base.Handle, "explorer", null);
 			base.Indent = 0;
 		}
+
+		protected override void OnMouseDown(MouseEventArgs e) {
+			base.OnMouseDown(e);
+			TreeViewHitTestInfo htinfo = base.HitTest(e.Location);
+			if (htinfo.Node != null) {
+				base.SelectedNode = htinfo.Node;
+			}
+		}
 	}
 }
