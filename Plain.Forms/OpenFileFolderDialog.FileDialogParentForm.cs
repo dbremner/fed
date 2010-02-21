@@ -26,7 +26,7 @@ using Plain.Native;
 namespace Plain.Forms {
 	partial class OpenFileFolderDialog {
 		private class FileDialogParentForm : System.Windows.Forms.Form {
-			public FileDialogParentForm() {
+			public FileDialogParentForm(OpenFileFolderDialog openFileFolderDialog) {
 				this.ControlBox = false;
 				this.DialogResult = DialogResult.Cancel;
 				this.FormBorderStyle = FormBorderStyle.None;
@@ -38,8 +38,8 @@ namespace Plain.Forms {
 				this.Size = Size.Empty;
 				this.StartPosition = FormStartPosition.CenterParent;
 
+				m_OpenFileFolderDialog = openFileFolderDialog;
 				m_FileDialogWindow = null;
-				m_SelectedFilename = string.Empty;
 			}
 
 			public DialogResult ShowFileDialog(IWin32Window owner, FileDialog fileDialog) {
@@ -47,12 +47,8 @@ namespace Plain.Forms {
 				return fileDialog.ShowDialog(this);
 			}
 
-			public string SelectedFilename {
-				get { return m_SelectedFilename; }
-			}
-
+			OpenFileFolderDialog m_OpenFileFolderDialog;
 			FileDialogWindow m_FileDialogWindow;
-			string m_SelectedFilename;
 
 			protected override void WndProc(ref Message m) {
 				switch (m.Msg) {
@@ -61,7 +57,7 @@ namespace Plain.Forms {
 						StringBuilder sb = new StringBuilder(7);
 						if (NativeMethods.GetClassName(m.LParam, sb, sb.Capacity) != 0) {
 							if (sb.ToString() == "#32770") {
-								m_FileDialogWindow = new FileDialogWindow(m.LParam);
+								m_FileDialogWindow = new FileDialogWindow(m.LParam, m_OpenFileFolderDialog);
 								System.Diagnostics.Debug.WriteLine("Found FileDialog 0x" + m.LParam.ToString("X"), "FileDialogParentForm.WndProc");
 							}
 						}
@@ -74,9 +70,8 @@ namespace Plain.Forms {
 			protected override void OnClosed(EventArgs e) {
 				base.OnClosed(e);
 				if (m_FileDialogWindow != null) {
-					if (m_FileDialogWindow.FakedOK) {
-						this.DialogResult = DialogResult.OK;
-						m_SelectedFilename = m_FileDialogWindow.SelectedFilename;
+					if (m_FileDialogWindow.AcceptedFolderOK) {
+						base.DialogResult = DialogResult.OK;
 					}
 				}
 			}
