@@ -50,8 +50,8 @@ namespace Plain.Native {
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, Int32 nMaxCount);
 
-		[DllImport("user32.dll")]
-		public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, String lpszClass, IntPtr lpszWindow);
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, String lpszClass, String lpszWindow);
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetDlgItem(IntPtr hDlg, Int32 nIDDlgItem);
@@ -153,6 +153,12 @@ namespace Plain.Native {
 		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
 		public static extern Int32 GetLongPathName(String lpszShortPath, StringBuilder lpszLongPath, Int32 cchBuffer);
 
+		[DllImport("user32.dll")]
+		public static extern Boolean SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, Int32 X, Int32 Y, Int32 cx, Int32 cy, UInt32 uFlags);
+
+		[DllImport("user32.dll")]
+		public static extern UInt32 GetWindowThreadProcessId(IntPtr hWnd, out UInt32 lpdwProcessId);
+
 		[StructLayout(LayoutKind.Sequential)]
 		public struct NMHDR {
 			public IntPtr hwndFrom;
@@ -233,8 +239,7 @@ namespace Plain.Native {
 		public struct LVGROUP_xp {
 			public UInt32 cbSize;
 			public UInt32 mask;
-			[MarshalAs(UnmanagedType.LPWStr)]
-			public String pszHeader;
+			public IntPtr pszHeader;
 			public Int32 cchHeader;
 			[MarshalAs(UnmanagedType.LPWStr)]
 			public String pszFooter;
@@ -249,8 +254,7 @@ namespace Plain.Native {
 		public struct LVGROUP {
 			public UInt32 cbSize;
 			public UInt32 mask;
-			[MarshalAs(UnmanagedType.LPWStr)]
-			public String pszHeader;
+			public IntPtr pszHeader;
 			public Int32 cchHeader;
 			[MarshalAs(UnmanagedType.LPWStr)]
 			public String pszFooter;
@@ -401,6 +405,7 @@ namespace Plain.Native {
 		public const int LVM_DELETEITEM = (LVM_FIRST + 8);
 		public const int LVM_DELETEALLITEMS = (LVM_FIRST + 9);
 		public const int LVM_GETHEADER = (LVM_FIRST + 31);
+		public const int LVM_GETTOPINDEX = (LVM_FIRST+39);
 		public const int LVM_SETEXTENDEDLISTVIEWSTYLE = (LVM_FIRST + 54);
 		public const int LVM_GETEXTENDEDLISTVIEWSTYLE = (LVM_FIRST + 55);
 		public const int LVM_SETVIEW = (LVM_FIRST + 142);
@@ -506,5 +511,17 @@ namespace Plain.Native {
 
 		public const int WM_NCHITTEST = 0x0084;
 		public const int HTTRANSPARENT = (-1);
+
+		public const UInt32 SWP_NOSIZE = 0x0001;
+		public const UInt32 SWP_NOMOVE = 0x0002;
+		public const UInt32 SWP_NOZORDER = 0x0004;
+		public const UInt32 SWP_NOREDRAW = 0x0008;
+		public const UInt32 SWP_NOACTIVATE = 0x0010;
+		public const UInt32 SWP_FRAMECHANGED = 0x0020;
+		public const UInt32 SWP_SHOWWINDOW = 0x0040;
+		public const UInt32 SWP_HIDEWINDOW = 0x0080;
+		public const UInt32 SWP_NOCOPYBITS = 0x0100;
+		public const UInt32 SWP_NOOWNERZORDER = 0x0200;
+		public const UInt32 SWP_NOSENDCHANGING = 0x0400;
 	}
 }

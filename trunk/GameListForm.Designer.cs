@@ -24,25 +24,24 @@
         /// </summary>
         private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Search Results", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Dosbox Versions");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Software Update");
+			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Dosbox Versions");
+			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Software Update");
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameListForm));
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Getting Started");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adding Games");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Running Games");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Dosbox Configurations");
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Miscellaneous Options");
-			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Needing More Help");
-			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Help Topics", new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8});
-			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Feedback");
-			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("About");
+			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Getting Started");
+			System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Adding Games");
+			System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Running Games");
+			System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Dosbox Configurations");
+			System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Miscellaneous Options");
+			System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Needing More Help");
+			System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Help Topics", new System.Windows.Forms.TreeNode[] {
+            treeNode14,
+            treeNode15,
+            treeNode16,
+            treeNode17,
+            treeNode18,
+            treeNode19});
+			System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Feedback");
+			System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("About");
 			this.imlSmallList = new System.Windows.Forms.ImageList(this.components);
 			this.mnuRun = new System.Windows.Forms.ContextMenu();
 			this.mnuSepOtherLoc = new System.Windows.Forms.MenuItem();
@@ -50,18 +49,21 @@
 			this.mnuProp = new System.Windows.Forms.ContextMenu();
 			this.mnuReset = new System.Windows.Forms.MenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.pcsDosbox = new System.Diagnostics.Process();
 			this.pnlMain = new System.Windows.Forms.Panel();
 			this.tab = new Plain.Forms.TabControlEx();
 			this.pageGames = new System.Windows.Forms.TabPage();
 			this.lvwGame = new Plain.Forms.ListViewEx();
 			this.hdrName = new System.Windows.Forms.ColumnHeader();
+			this.hdrDir = new System.Windows.Forms.ColumnHeader();
 			this.hdrExe = new System.Windows.Forms.ColumnHeader();
 			this.comboButton = new Plain.Forms.ComboButton();
 			this.bmpImageList = new DosboxApp.BitmapImageList(this.components);
 			this.pageConfig = new System.Windows.Forms.TabPage();
 			this.gridConfig = new Plain.Forms.PropertyGridEx();
 			this.pageOptions = new System.Windows.Forms.TabPage();
+			this.pnlDosboxVersions = new System.Windows.Forms.Panel();
+			this.lblNotImplemented = new System.Windows.Forms.Label();
+			this.pnlUpdate = new System.Windows.Forms.Panel();
 			this.tvwOptions = new Plain.Forms.TreeViewEx();
 			this.pageHelp = new System.Windows.Forms.TabPage();
 			this.pnlFeedback = new System.Windows.Forms.Panel();
@@ -76,6 +78,8 @@
 			this.btnPreviewFeedback = new System.Windows.Forms.ToolBarButton();
 			this.btnSendFeedback = new System.Windows.Forms.ToolBarButton();
 			this.btnEditFeedback = new System.Windows.Forms.ToolBarButton();
+			this.sepVisitHomepage = new System.Windows.Forms.ToolBarButton();
+			this.btnVisitHomepage = new System.Windows.Forms.ToolBarButton();
 			this.mnuSoftwareUpdate = new System.Windows.Forms.ContextMenu();
 			this.mnuUpdateManual = new System.Windows.Forms.MenuItem();
 			this.mnuUpdateStartup = new System.Windows.Forms.MenuItem();
@@ -88,10 +92,9 @@
 			this.pnlSearch = new System.Windows.Forms.Panel();
 			this.txtSearch = new Plain.Forms.TextBoxEx();
 			this.tbrTool = new Plain.Forms.ToolBarEx();
-			this.btnOpenCapture = new System.Windows.Forms.ToolBarButton();
+			this.btnSoftwareUpdate = new System.Windows.Forms.ToolBarButton();
 			this.sepSpan = new System.Windows.Forms.ToolBarButton();
 			this.btnSpan = new Plain.Forms.ToolBarButtonEx();
-			this.btnSoftwareUpdate = new System.Windows.Forms.ToolBarButton();
 			this.btnDeleteUserFiles = new System.Windows.Forms.ToolBarButton();
 			this.tbrProp = new Plain.Forms.ToolBarEx();
 			this.btnSortCat = new System.Windows.Forms.ToolBarButton();
@@ -100,23 +103,32 @@
 			this.btnUndoConfig = new System.Windows.Forms.ToolBarButton();
 			this.btnRedoConfig = new System.Windows.Forms.ToolBarButton();
 			this.btnSaveConfig = new System.Windows.Forms.ToolBarButton();
+			this.sepOpenCapture = new System.Windows.Forms.ToolBarButton();
+			this.btnOpenCapture = new System.Windows.Forms.ToolBarButton();
+			this.btnOpenKeyMap = new System.Windows.Forms.ToolBarButton();
 			this.btnSpanOpenConfigExtern = new Plain.Forms.ToolBarButtonEx();
 			this.btnViewConfigExtern = new System.Windows.Forms.ToolBarButton();
 			this.btnViewTempConfigExtern = new System.Windows.Forms.ToolBarButton();
 			this.tbrAction = new Plain.Forms.ToolBarEx();
 			this.btnAddMasterGameFolder = new System.Windows.Forms.ToolBarButton();
 			this.btnAddGameFolder = new System.Windows.Forms.ToolBarButton();
-			this.btnDelete = new System.Windows.Forms.ToolBarButton();
+			this.btnRemove = new System.Windows.Forms.ToolBarButton();
 			this.sepRun = new System.Windows.Forms.ToolBarButton();
 			this.btnRun = new System.Windows.Forms.ToolBarButton();
 			this.btnPin = new System.Windows.Forms.ToolBarButton();
 			this.openFileFolderDialog = new Plain.Forms.OpenFileFolderDialog(this.components);
+			this.mnuGame = new System.Windows.Forms.ContextMenu();
+			this.mnuRunGame = new System.Windows.Forms.MenuItem();
+			this.mnuOpenGameDirectory = new System.Windows.Forms.MenuItem();
+			this.mnuSepRemove = new System.Windows.Forms.MenuItem();
+			this.mnuRemove = new System.Windows.Forms.MenuItem();
 			this.pnlMain.SuspendLayout();
 			this.tab.SuspendLayout();
 			this.pageGames.SuspendLayout();
 			this.lvwGame.SuspendLayout();
 			this.pageConfig.SuspendLayout();
 			this.pageOptions.SuspendLayout();
+			this.pnlDosboxVersions.SuspendLayout();
 			this.pageHelp.SuspendLayout();
 			this.pnlFeedback.SuspendLayout();
 			this.pnlAbout.SuspendLayout();
@@ -160,17 +172,6 @@
 			this.mnuReset.Text = "&Reset";
 			this.mnuReset.Click += new System.EventHandler(this.mnuReset_Click);
 			// 
-			// pcsDosbox
-			// 
-			this.pcsDosbox.StartInfo.Domain = "";
-			this.pcsDosbox.StartInfo.LoadUserProfile = false;
-			this.pcsDosbox.StartInfo.Password = null;
-			this.pcsDosbox.StartInfo.StandardErrorEncoding = null;
-			this.pcsDosbox.StartInfo.StandardOutputEncoding = null;
-			this.pcsDosbox.StartInfo.UserName = "";
-			this.pcsDosbox.SynchronizingObject = this;
-			this.pcsDosbox.Exited += new System.EventHandler(this.pcsDosbox_Exited);
-			// 
 			// pnlMain
 			// 
 			this.pnlMain.Controls.Add(this.tab);
@@ -191,6 +192,7 @@
 			this.tab.Multiline = true;
 			this.tab.Name = "tab";
 			this.tab.SelectedIndex = 0;
+			this.tab.ShowToolTips = true;
 			this.tab.Size = new System.Drawing.Size(422, 174);
 			this.tab.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
 			this.tab.TabIndex = 2;
@@ -205,21 +207,19 @@
 			this.pageGames.Size = new System.Drawing.Size(414, 146);
 			this.pageGames.TabIndex = 0;
 			this.pageGames.Text = "Games";
+			this.pageGames.ToolTipText = "(Alt+1)";
 			this.pageGames.UseVisualStyleBackColor = true;
 			// 
 			// lvwGame
 			// 
 			this.lvwGame.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.hdrName,
+            this.hdrDir,
             this.hdrExe});
 			this.lvwGame.Controls.Add(this.comboButton);
 			this.lvwGame.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvwGame.EmptyText = "Click on \'Add Master Game Folder\' or \'Add Game Folder\'";
 			this.lvwGame.FullRowSelect = true;
-			listViewGroup1.Header = "Search Results";
-			listViewGroup1.Name = null;
-			this.lvwGame.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1});
 			this.lvwGame.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvwGame.HideSelection = false;
 			this.lvwGame.Location = new System.Drawing.Point(2, 2);
@@ -231,20 +231,25 @@
 			this.lvwGame.TabIndex = 1;
 			this.lvwGame.UseCompatibleStateImageBehavior = false;
 			this.lvwGame.View = System.Windows.Forms.View.Details;
-			this.lvwGame.EndScroll += new System.EventHandler(this.lvwGame_EndScroll);
 			this.lvwGame.ItemActivate += new System.EventHandler(this.lvwGame_ItemActivate);
-			this.lvwGame.BeginScroll += new System.EventHandler(this.lvwGame_BeginScroll);
+			this.lvwGame.ScrollBegin += new System.EventHandler(this.lvwGame_ScrollBegin);
 			this.lvwGame.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lvwGame_Scroll);
 			this.lvwGame.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.lvwGame_ColumnWidthChanged);
 			this.lvwGame.SelectedIndexChanged += new System.EventHandler(this.lvwGame_SelectedIndexChanged);
 			this.lvwGame.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvwGame_MouseDown);
+			this.lvwGame.ScrollEnd += new System.EventHandler(this.lvwGame_ScrollEnd);
+			this.lvwGame.ColumnReordered += new System.Windows.Forms.ColumnReorderedEventHandler(this.lvwGame_ColumnReordered);
 			this.lvwGame.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.lvwGame_ColumnWidthChanging);
-			this.lvwGame.LostFocus += new System.EventHandler(this.lvwGame_LostFocus);
 			// 
 			// hdrName
 			// 
 			this.hdrName.Text = "Name";
-			this.hdrName.Width = 240;
+			this.hdrName.Width = 200;
+			// 
+			// hdrDir
+			// 
+			this.hdrDir.Text = "Directory";
+			this.hdrDir.Width = 120;
 			// 
 			// hdrExe
 			// 
@@ -262,6 +267,7 @@
 			this.comboButton.ComboBox.Location = new System.Drawing.Point(-104, -2);
 			this.comboButton.ComboBox.Name = "comboBox";
 			this.comboButton.ComboBox.TabIndex = 0;
+			this.comboButton.ComboBox.DropDown += new System.EventHandler(this.comboButton_ComboBox_DropDown);
 			this.comboButton.ComboBox.SelectedIndexChanged += new System.EventHandler(this.comboButton_ComboBox_SelectedIndexChanged);
 			this.comboButton.Location = new System.Drawing.Point(292, 67);
 			this.comboButton.Name = "comboButton";
@@ -278,7 +284,8 @@
 			this.pageConfig.Padding = new System.Windows.Forms.Padding(2);
 			this.pageConfig.Size = new System.Drawing.Size(414, 146);
 			this.pageConfig.TabIndex = 1;
-			this.pageConfig.Text = "Dosbox Config";
+			this.pageConfig.Text = "DOSBox Config";
+			this.pageConfig.ToolTipText = "(Alt+2)";
 			this.pageConfig.UseVisualStyleBackColor = true;
 			// 
 			// gridConfig
@@ -315,6 +322,8 @@
 			// 
 			// pageOptions
 			// 
+			this.pageOptions.Controls.Add(this.pnlDosboxVersions);
+			this.pageOptions.Controls.Add(this.pnlUpdate);
 			this.pageOptions.Controls.Add(this.tvwOptions);
 			this.pageOptions.Location = new System.Drawing.Point(4, 24);
 			this.pageOptions.Name = "pageOptions";
@@ -322,7 +331,38 @@
 			this.pageOptions.Size = new System.Drawing.Size(414, 146);
 			this.pageOptions.TabIndex = 2;
 			this.pageOptions.Text = "FED Options";
+			this.pageOptions.ToolTipText = "(Alt+3)";
 			this.pageOptions.UseVisualStyleBackColor = true;
+			// 
+			// pnlDosboxVersions
+			// 
+			this.pnlDosboxVersions.Controls.Add(this.lblNotImplemented);
+			this.pnlDosboxVersions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlDosboxVersions.Location = new System.Drawing.Point(123, 2);
+			this.pnlDosboxVersions.Name = "pnlDosboxVersions";
+			this.pnlDosboxVersions.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+			this.pnlDosboxVersions.Size = new System.Drawing.Size(289, 142);
+			this.pnlDosboxVersions.TabIndex = 2;
+			// 
+			// lblNotImplemented
+			// 
+			this.lblNotImplemented.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblNotImplemented.Location = new System.Drawing.Point(2, 0);
+			this.lblNotImplemented.Name = "lblNotImplemented";
+			this.lblNotImplemented.Size = new System.Drawing.Size(287, 142);
+			this.lblNotImplemented.TabIndex = 0;
+			this.lblNotImplemented.Text = "Not Yet Implemented";
+			this.lblNotImplemented.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// pnlUpdate
+			// 
+			this.pnlUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlUpdate.Location = new System.Drawing.Point(123, 2);
+			this.pnlUpdate.Name = "pnlUpdate";
+			this.pnlUpdate.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+			this.pnlUpdate.Size = new System.Drawing.Size(289, 142);
+			this.pnlUpdate.TabIndex = 1;
+			this.pnlUpdate.Visible = false;
 			// 
 			// tvwOptions
 			// 
@@ -333,21 +373,20 @@
 			this.tvwOptions.ItemHeight = 20;
 			this.tvwOptions.Location = new System.Drawing.Point(2, 2);
 			this.tvwOptions.Name = "tvwOptions";
-			treeNode1.ImageKey = "dosbox.ico";
-			treeNode1.Name = "Node0";
-			treeNode1.SelectedImageKey = "dosbox.ico";
-			treeNode1.Text = "Dosbox Versions";
-			treeNode2.ImageKey = "update.ico";
-			treeNode2.Name = "Node1";
-			treeNode2.SelectedImageKey = "update.ico";
-			treeNode2.Text = "Software Update";
+			treeNode12.ForeColor = System.Drawing.SystemColors.GrayText;
+			treeNode12.Name = "nodDosboxVersions";
+			treeNode12.Text = "Dosbox Versions";
+			treeNode13.Name = "nodUpdate";
+			treeNode13.Text = "Software Update";
 			this.tvwOptions.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            treeNode12,
+            treeNode13});
 			this.tvwOptions.ShowLines = false;
 			this.tvwOptions.ShowRootLines = false;
 			this.tvwOptions.Size = new System.Drawing.Size(121, 142);
 			this.tvwOptions.TabIndex = 0;
+			this.tvwOptions.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvwOptions_BeforeCollapse);
+			this.tvwOptions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwOptions_AfterSelect);
 			// 
 			// pageHelp
 			// 
@@ -362,6 +401,7 @@
 			this.pageHelp.Size = new System.Drawing.Size(414, 146);
 			this.pageHelp.TabIndex = 3;
 			this.pageHelp.Text = "Help";
+			this.pageHelp.ToolTipText = "(Alt+4)";
 			this.pageHelp.UseVisualStyleBackColor = true;
 			// 
 			// pnlFeedback
@@ -435,44 +475,28 @@
 			this.tvwHelp.ItemHeight = 20;
 			this.tvwHelp.Location = new System.Drawing.Point(2, 2);
 			this.tvwHelp.Name = "tvwHelp";
-			treeNode3.ImageKey = "helpfile.ico";
-			treeNode3.Name = "Node3";
-			treeNode3.SelectedImageKey = "helpfile.ico";
-			treeNode3.Text = "Getting Started";
-			treeNode4.ImageKey = "helpfile.ico";
-			treeNode4.Name = "Node4";
-			treeNode4.SelectedImageKey = "helpfile.ico";
-			treeNode4.Text = "Adding Games";
-			treeNode5.ImageKey = "helpfile.ico";
-			treeNode5.Name = "Node5";
-			treeNode5.SelectedImageKey = "helpfile.ico";
-			treeNode5.Text = "Running Games";
-			treeNode6.ImageKey = "helpfile.ico";
-			treeNode6.Name = "Node6";
-			treeNode6.SelectedImageKey = "helpfile.ico";
-			treeNode6.Text = "Dosbox Configurations";
-			treeNode7.ImageKey = "helpfile.ico";
-			treeNode7.Name = "Node7";
-			treeNode7.SelectedImageKey = "helpfile.ico";
-			treeNode7.Text = "Miscellaneous Options";
-			treeNode8.ImageKey = "helpfile.ico";
-			treeNode8.Name = "Node8";
-			treeNode8.SelectedImageKey = "helpfile.ico";
-			treeNode8.Text = "Needing More Help";
-			treeNode9.ImageKey = "helptoc.ico";
-			treeNode9.Name = "nodHelp";
-			treeNode9.SelectedImageKey = "helptoc.ico";
-			treeNode9.Text = "Help Topics";
-			treeNode10.ImageKey = "CommentHS0.ico";
-			treeNode10.Name = "nodFeedback";
-			treeNode10.SelectedImageKey = "CommentHS0.ico";
-			treeNode10.Text = "Feedback";
-			treeNode11.Name = "nodAbout";
-			treeNode11.Text = "About";
+			treeNode14.Name = "nodStart";
+			treeNode14.Text = "Getting Started";
+			treeNode15.Name = "nodAddGame";
+			treeNode15.Text = "Adding Games";
+			treeNode16.Name = "nodRunGame";
+			treeNode16.Text = "Running Games";
+			treeNode17.Name = "nodDosboxConfig";
+			treeNode17.Text = "Dosbox Configurations";
+			treeNode18.Name = "nodMiscOptions";
+			treeNode18.Text = "Miscellaneous Options";
+			treeNode19.Name = "nodNeedMoreHelp";
+			treeNode19.Text = "Needing More Help";
+			treeNode20.Name = "nodHelp";
+			treeNode20.Text = "Help Topics";
+			treeNode21.Name = "nodFeedback";
+			treeNode21.Text = "Feedback";
+			treeNode22.Name = "nodAbout";
+			treeNode22.Text = "About";
 			this.tvwHelp.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode10,
-            treeNode11});
+            treeNode20,
+            treeNode21,
+            treeNode22});
 			this.tvwHelp.ShowLines = false;
 			this.tvwHelp.ShowRootLines = false;
 			this.tvwHelp.Size = new System.Drawing.Size(121, 142);
@@ -487,7 +511,9 @@
             this.sepPreviewFeedback,
             this.btnPreviewFeedback,
             this.btnSendFeedback,
-            this.btnEditFeedback});
+            this.btnEditFeedback,
+            this.sepVisitHomepage,
+            this.btnVisitHomepage});
 			this.tbrHelp.Divider = false;
 			this.tbrHelp.DropDownArrows = true;
 			this.tbrHelp.ImageList = this.bmpImageList.ImageList;
@@ -496,7 +522,10 @@
 			this.tbrHelp.ShowToolTips = true;
 			this.tbrHelp.Size = new System.Drawing.Size(422, 26);
 			this.tbrHelp.TabIndex = 3;
-			this.tbrHelp.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbrFeedback_ButtonClick);
+			this.tbrHelp.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
+			this.tbrHelp.Visible = false;
+			this.tbrHelp.Wrappable = false;
+			this.tbrHelp.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbrHelp_ButtonClick);
 			// 
 			// sepPreviewFeedback
 			// 
@@ -507,7 +536,8 @@
 			// 
 			this.btnPreviewFeedback.ImageKey = "Preview";
 			this.btnPreviewFeedback.Name = "btnPreviewFeedback";
-			this.btnPreviewFeedback.ToolTipText = "Preview";
+			this.btnPreviewFeedback.Text = "Preview";
+			this.btnPreviewFeedback.ToolTipText = "Preview outgoing message";
 			this.btnPreviewFeedback.Visible = false;
 			// 
 			// btnSendFeedback
@@ -522,6 +552,18 @@
 			this.btnEditFeedback.ImageKey = "Comment";
 			this.btnEditFeedback.Name = "btnEditFeedback";
 			this.btnEditFeedback.ToolTipText = "Edit";
+			// 
+			// sepVisitHomepage
+			// 
+			this.sepVisitHomepage.ImageKey = "(none)";
+			this.sepVisitHomepage.Name = "sepVisitHomepage";
+			this.sepVisitHomepage.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			// 
+			// btnVisitHomepage
+			// 
+			this.btnVisitHomepage.ImageKey = "ViewWeb";
+			this.btnVisitHomepage.Name = "btnVisitHomepage";
+			this.btnVisitHomepage.ToolTipText = "Visit FED Homepage";
 			// 
 			// mnuSoftwareUpdate
 			// 
@@ -629,10 +671,9 @@
 			// 
 			this.tbrTool.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
 			this.tbrTool.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
-            this.btnOpenCapture,
+            this.btnSoftwareUpdate,
             this.sepSpan,
             this.btnSpan,
-            this.btnSoftwareUpdate,
             this.btnDeleteUserFiles});
 			this.tbrTool.Divider = false;
 			this.tbrTool.DropDownArrows = true;
@@ -643,13 +684,18 @@
 			this.tbrTool.Size = new System.Drawing.Size(422, 34);
 			this.tbrTool.TabIndex = 3;
 			this.tbrTool.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
+			this.tbrTool.Visible = false;
+			this.tbrTool.Wrappable = false;
 			this.tbrTool.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.tbrTool_ButtonClick);
 			// 
-			// btnOpenCapture
+			// btnSoftwareUpdate
 			// 
-			this.btnOpenCapture.ImageKey = "OpenCapture";
-			this.btnOpenCapture.Name = "btnOpenCapture";
-			this.btnOpenCapture.ToolTipText = "Open Capture Folder (F4)";
+			this.btnSoftwareUpdate.DropDownMenu = this.mnuSoftwareUpdate;
+			this.btnSoftwareUpdate.ImageKey = "SoftwareUpdate";
+			this.btnSoftwareUpdate.Name = "btnSoftwareUpdate";
+			this.btnSoftwareUpdate.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
+			this.btnSoftwareUpdate.Text = "Update";
+			this.btnSoftwareUpdate.ToolTipText = "Check for Update";
 			// 
 			// sepSpan
 			// 
@@ -663,21 +709,14 @@
 			this.btnSpan.Spring = true;
 			this.btnSpan.Width = 24;
 			// 
-			// btnSoftwareUpdate
-			// 
-			this.btnSoftwareUpdate.DropDownMenu = this.mnuSoftwareUpdate;
-			this.btnSoftwareUpdate.ImageKey = "SoftwareUpdate";
-			this.btnSoftwareUpdate.Name = "btnSoftwareUpdate";
-			this.btnSoftwareUpdate.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
-			this.btnSoftwareUpdate.Text = "Update";
-			this.btnSoftwareUpdate.ToolTipText = "Check for Update";
-			// 
 			// btnDeleteUserFiles
 			// 
+			this.btnDeleteUserFiles.Enabled = false;
 			this.btnDeleteUserFiles.ImageKey = "DeleteUserFiles";
 			this.btnDeleteUserFiles.Name = "btnDeleteUserFiles";
 			this.btnDeleteUserFiles.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.btnDeleteUserFiles.ToolTipText = "Schedule User Files Deletion";
+			this.btnDeleteUserFiles.Tag = "Delete FED settings file when program exits.";
+			this.btnDeleteUserFiles.ToolTipText = "Schedule User File Deletion";
 			// 
 			// tbrProp
 			// 
@@ -689,6 +728,9 @@
             this.btnUndoConfig,
             this.btnRedoConfig,
             this.btnSaveConfig,
+            this.sepOpenCapture,
+            this.btnOpenCapture,
+            this.btnOpenKeyMap,
             this.btnSpanOpenConfigExtern,
             this.btnViewConfigExtern,
             this.btnViewTempConfigExtern});
@@ -731,6 +773,7 @@
 			this.btnUndoConfig.ImageKey = "Undo";
 			this.btnUndoConfig.Name = "btnUndoConfig";
 			this.btnUndoConfig.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
+			this.btnUndoConfig.Text = "Undo";
 			this.btnUndoConfig.ToolTipText = "Undo Configuration Change (Ctrl+Z)";
 			// 
 			// btnRedoConfig
@@ -745,8 +788,24 @@
 			// 
 			this.btnSaveConfig.ImageKey = "Save";
 			this.btnSaveConfig.Name = "btnSaveConfig";
-			this.btnSaveConfig.Text = "Save";
-			this.btnSaveConfig.ToolTipText = "Save Current Configuration (Ctrl+S)";
+			this.btnSaveConfig.ToolTipText = "Save Configuration (Ctrl+S)";
+			// 
+			// sepOpenCapture
+			// 
+			this.sepOpenCapture.Name = "sepOpenCapture";
+			this.sepOpenCapture.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			// 
+			// btnOpenCapture
+			// 
+			this.btnOpenCapture.ImageKey = "OpenCapture";
+			this.btnOpenCapture.Name = "btnOpenCapture";
+			this.btnOpenCapture.ToolTipText = "Open Capture Folder (Ctrl+P)";
+			// 
+			// btnOpenKeyMap
+			// 
+			this.btnOpenKeyMap.ImageKey = "Keyboard";
+			this.btnOpenKeyMap.Name = "btnOpenKeyMap";
+			this.btnOpenKeyMap.ToolTipText = "Open Key Mapper File (Ctrl+K)";
 			// 
 			// btnSpanOpenConfigExtern
 			// 
@@ -760,14 +819,14 @@
 			this.btnViewConfigExtern.ImageKey = "Config";
 			this.btnViewConfigExtern.Name = "btnViewConfigExtern";
 			this.btnViewConfigExtern.Tag = "View config in Notepad and copy path to clipboard.";
-			this.btnViewConfigExtern.ToolTipText = "View Config";
+			this.btnViewConfigExtern.ToolTipText = "View Config (Ctrl+E)";
 			// 
 			// btnViewTempConfigExtern
 			// 
 			this.btnViewTempConfigExtern.ImageKey = "ConfigTemp";
 			this.btnViewTempConfigExtern.Name = "btnViewTempConfigExtern";
 			this.btnViewTempConfigExtern.Tag = "View temporary config in Notepad and copy path to clipboard.";
-			this.btnViewTempConfigExtern.ToolTipText = "View Temporary Config";
+			this.btnViewTempConfigExtern.ToolTipText = "View Temporary Config (Ctrl+T)";
 			this.btnViewTempConfigExtern.Visible = false;
 			// 
 			// tbrAction
@@ -776,7 +835,7 @@
 			this.tbrAction.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.btnAddMasterGameFolder,
             this.btnAddGameFolder,
-            this.btnDelete,
+            this.btnRemove,
             this.sepRun,
             this.btnRun,
             this.btnPin});
@@ -805,14 +864,15 @@
 			// 
 			this.btnAddGameFolder.ImageKey = "AddGameFolder";
 			this.btnAddGameFolder.Name = "btnAddGameFolder";
+			this.btnAddGameFolder.Text = "Add Game";
 			this.btnAddGameFolder.ToolTipText = "Add Game Folder (F3)";
 			// 
-			// btnDelete
+			// btnRemove
 			// 
-			this.btnDelete.Enabled = false;
-			this.btnDelete.ImageKey = "Delete";
-			this.btnDelete.Name = "btnDelete";
-			this.btnDelete.ToolTipText = "Delete Selected Game (Delete)";
+			this.btnRemove.Enabled = false;
+			this.btnRemove.ImageKey = "Delete";
+			this.btnRemove.Name = "btnRemove";
+			this.btnRemove.ToolTipText = "Remove Selected Game (Delete)";
 			// 
 			// sepRun
 			// 
@@ -833,10 +893,9 @@
 			// 
 			this.btnPin.ImageKey = "Pin";
 			this.btnPin.Name = "btnPin";
-			this.btnPin.Pushed = true;
 			this.btnPin.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.btnPin.Tag = "Minimize the GUI to notification area when DOSBox is running.";
-			this.btnPin.ToolTipText = "Keep GUI in Memory";
+			this.btnPin.Tag = "Minimize FED to notification area when DOSBox is running.";
+			this.btnPin.ToolTipText = "Keep FED in Memory (ScrLk)";
 			// 
 			// openFileFolderDialog
 			// 
@@ -847,6 +906,37 @@
 			this.openFileFolderDialog.OpenFileDialog.CheckFileExists = false;
 			this.openFileFolderDialog.OpenFileDialog.FileName = " ";
 			this.openFileFolderDialog.OpenFileDialog.Filter = "Folders|*.arbitrary-unique-{401D4D69-935B-452b-9C73-DEAA59526D7F}";
+			// 
+			// mnuGame
+			// 
+			this.mnuGame.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnuRunGame,
+            this.mnuOpenGameDirectory,
+            this.mnuSepRemove,
+            this.mnuRemove});
+			// 
+			// mnuRunGame
+			// 
+			this.mnuRunGame.DefaultItem = true;
+			this.mnuRunGame.Index = 0;
+			this.mnuRunGame.Text = "&Run";
+			this.mnuRunGame.Click += new System.EventHandler(this.mnuRunGame_Click);
+			// 
+			// mnuOpenGameDirectory
+			// 
+			this.mnuOpenGameDirectory.Index = 1;
+			this.mnuOpenGameDirectory.Text = "&Open Directory";
+			this.mnuOpenGameDirectory.Click += new System.EventHandler(this.mnuOpenGameDirectory_Click);
+			// 
+			// mnuSepRemove
+			// 
+			this.mnuSepRemove.Index = 2;
+			this.mnuSepRemove.Text = "-";
+			// 
+			// mnuRemove
+			// 
+			this.mnuRemove.Index = 3;
+			this.mnuRemove.Text = "Re&move";
 			// 
 			// GameListForm
 			// 
@@ -868,6 +958,7 @@
 			this.lvwGame.PerformLayout();
 			this.pageConfig.ResumeLayout(false);
 			this.pageOptions.ResumeLayout(false);
+			this.pnlDosboxVersions.ResumeLayout(false);
 			this.pageHelp.ResumeLayout(false);
 			this.pnlFeedback.ResumeLayout(false);
 			this.pnlFeedback.PerformLayout();
@@ -887,7 +978,7 @@
 		private Plain.Forms.PropertyGridEx gridConfig;
         private Plain.Forms.StatusBarEx sbr;
 		private System.Windows.Forms.ToolBarButton btnRun;
-		internal Plain.Forms.ListViewEx lvwGame;
+		private Plain.Forms.ListViewEx lvwGame;
 		private Plain.Forms.ToolBarEx tbrProp;
         private System.Windows.Forms.ToolBarButton btnSortCat;
         private System.Windows.Forms.ToolBarButton btnSortAZ;
@@ -907,8 +998,6 @@
 		private System.Windows.Forms.ToolBarButton btnAddMasterGameFolder;
 		private System.Windows.Forms.ToolBarButton btnAddGameFolder;
 		private System.Windows.Forms.ToolBarButton sepRun;
-		private System.Windows.Forms.ToolBarButton btnDelete;
-		private System.Diagnostics.Process pcsDosbox;
 		private Plain.Forms.OpenFileFolderDialog openFileFolderDialog;
 		private System.Windows.Forms.Panel pnlMain;
 		private Plain.Forms.TabControlEx tab;
@@ -934,7 +1023,7 @@
 		private System.Windows.Forms.ContextMenu mnuSoftwareUpdate;
 		private System.Windows.Forms.MenuItem mnuUpdateStartup;
 		private System.Windows.Forms.MenuItem mnuUpdateManual;
-		internal System.Windows.Forms.Panel pnlSearch;
+		private System.Windows.Forms.Panel pnlSearch;
 		private Plain.Forms.ToolBarButtonEx btnSpanOpenConfigExtern;
 		private System.Windows.Forms.ToolBarButton btnViewConfigExtern;
 		private System.Windows.Forms.ToolBarButton btnViewTempConfigExtern;
@@ -951,6 +1040,20 @@
 		private System.Windows.Forms.ToolBarButton btnSendFeedback;
 		private System.Windows.Forms.ToolBarButton btnEditFeedback;
 		private System.Windows.Forms.ToolBarButton sepPreviewFeedback;
+		private System.Windows.Forms.ToolBarButton sepVisitHomepage;
+		private System.Windows.Forms.ToolBarButton btnVisitHomepage;
+		private System.Windows.Forms.ContextMenu mnuGame;
+		private System.Windows.Forms.MenuItem mnuRunGame;
+		private System.Windows.Forms.MenuItem mnuOpenGameDirectory;
+		private System.Windows.Forms.MenuItem mnuSepRemove;
+		private System.Windows.Forms.MenuItem mnuRemove;
+		private System.Windows.Forms.ToolBarButton btnRemove;
+		private System.Windows.Forms.ColumnHeader hdrDir;
+		private System.Windows.Forms.Panel pnlUpdate;
+		private System.Windows.Forms.ToolBarButton btnOpenKeyMap;
+		private System.Windows.Forms.ToolBarButton sepOpenCapture;
+		private System.Windows.Forms.Panel pnlDosboxVersions;
+		private System.Windows.Forms.Label lblNotImplemented;
 
     }
 }
