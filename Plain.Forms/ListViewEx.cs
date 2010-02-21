@@ -39,7 +39,7 @@ namespace Plain.Forms {
 				m_LabelEmptyText.ForeColor = SystemColors.GrayText;
 				m_LabelEmptyText.TextAlign = ContentAlignment.MiddleCenter;
 				m_LabelEmptyText.Visible = false;
-				m_LabelEmptyText.MouseDown += new MouseEventHandler(LabelEmptyText_MouseDown);
+				////m_LabelEmptyText.MouseDown += new MouseEventHandler(LabelEmptyText_MouseDown);
 				base.Controls.Add(m_LabelEmptyText);
 			}
 			m_ColumnWidthChangingIndex = -1;
@@ -51,8 +51,38 @@ namespace Plain.Forms {
 		[Description("Occurs when the user or code scrolls through the client area.")]
 		public event ScrollEventHandler Scroll = delegate { };
 
-		public event EventHandler BeginScroll = delegate { };
-		public event EventHandler EndScroll = delegate { };
+		/// <summary>
+		/// Occurs when the user or code scrolls through the client area.
+		/// </summary>
+		[Description("Occurs when the user begins scrolling in the list view.")]
+		public event EventHandler ScrollBegin = delegate { };
+		/// <summary>
+		/// Occurs when the user or code scrolls through the client area.
+		/// </summary>
+		[Description("Occurs when the user finishes scrolling in the list view.")]
+		public event EventHandler ScrollEnd = delegate { };
+
+		public void UpdateGroupsExtra() {
+			foreach (ListViewGroup group in base.Groups) {
+				ListViewGroupEx groupEx = (ListViewGroupEx) group;
+				if (groupEx != null) {
+					if (groupEx.Collapsed != groupEx.ShouldBeCollapsed) {
+						groupEx.Collapsed = groupEx.ShouldBeCollapsed;
+					}
+					if (groupEx.Collapsible != groupEx.ShouldBeCollapsible) {
+						groupEx.Collapsible = groupEx.ShouldBeCollapsible;
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Resumes drawing of the list view control after drawing is suspended by the System.Windows.Forms.ListView.BeginUpdate() method.
+		/// </summary>
+		public new void EndUpdate() {
+			UpdateGroupsExtra();
+			base.EndUpdate();
+		}
 		
 #if DEBUG
 		[Editor(typeof(ListViewGroupExCollectionEditor), typeof(UITypeEditor))]
@@ -70,7 +100,7 @@ namespace Plain.Forms {
 				m_EmptyText = value;
 				if (m_LabelEmptyText != null) {
 					m_LabelEmptyText.Text = m_EmptyText;
-					m_LabelEmptyText.Visible = string.IsNullOrEmpty(m_EmptyText) == false;
+					m_LabelEmptyText.Visible = (string.IsNullOrEmpty(m_EmptyText) == false && base.Items.Count == 0);
 				}
 			}
 			get {
@@ -101,17 +131,17 @@ namespace Plain.Forms {
 		string m_EmptyText;
 		Label m_LabelEmptyText;
 		int m_ColumnWidthChangingIndex;
-
+		
 		protected virtual void OnScroll(ScrollEventArgs e) {
 			Scroll(this, e);
 		}
 
 		protected virtual void OnBeginScroll(EventArgs e) {
-			BeginScroll(this, e);
+			ScrollBegin(this, e);
 		}
 
 		protected virtual void OnEndScroll(EventArgs e) {
-			EndScroll(this, e);
+			ScrollEnd(this, e);
 		}
 
 		protected override void OnHandleCreated(EventArgs e) {
@@ -140,35 +170,48 @@ namespace Plain.Forms {
 
 		protected override void OnKeyDown(KeyEventArgs e) {
 			base.OnKeyDown(e);
-			switch (e.KeyCode) {
-			case Keys.Down:
-			case Keys.Up:
-			case Keys.PageDown:
-			case Keys.PageUp:
-			case Keys.Home:
-			case Keys.End:
-				OnBeginScroll(EventArgs.Empty);
-				break;
-			case Keys.Escape:
-				if (m_ColumnWidthChangingIndex != -1) {
-					base.OnColumnWidthChanging(new ColumnWidthChangingEventArgs(m_ColumnWidthChangingIndex, base.Columns[m_ColumnWidthChangingIndex].Width));
-					m_ColumnWidthChangingIndex = -1;
+			if (e.Handled == false) {
+				switch (e.KeyCode) {
+				case Keys.Down:
+				case Keys.Up:
+				case Keys.PageDown:
+				case Keys.PageUp:
+				case Keys.Home:
+				case Keys.End:
+					OnBeginScroll(EventArgs.Empty);
+					break;
+				case Keys.Escape:
+					if (m_ColumnWidthChangingIndex != -1) {
+						base.OnColumnWidthChanging(new ColumnWidthChangingEventArgs(m_ColumnWidthChangingIndex, base.Columns[m_ColumnWidthChangingIndex].Width));
+						m_ColumnWidthChangingIndex = -1;
+					}
+					break;
+				case Keys.A:
+					if (e.Modifiers == Keys.Control) {
+						if (base.MultiSelect) {
+							foreach (ListViewItem item in base.Items) {
+								item.Selected = true;
+							}
+						}
+					}
+					break;
 				}
-				break;
 			}
 		}
 
 		protected override void OnKeyUp(KeyEventArgs e) {
 			base.OnKeyUp(e);
-			switch (e.KeyData) {
-			case Keys.Down:
-			case Keys.Up:
-			case Keys.PageDown:
-			case Keys.PageUp:
-			case Keys.Home:
-			case Keys.End:
-				OnEndScroll(EventArgs.Empty);
-				break;
+			if (e.Handled == false) {
+				switch (e.KeyData) {
+				case Keys.Down:
+				case Keys.Up:
+				case Keys.PageDown:
+				case Keys.PageUp:
+				case Keys.Home:
+				case Keys.End:
+					OnEndScroll(EventArgs.Empty);
+					break;
+				}
 			}
 		}
 
@@ -306,27 +349,32 @@ namespace Plain.Forms {
 					OnScroll(e);
 				}
 				break;
-			case NativeMethods.LVM_SETVIEW:
-				base.WndProc(ref m);
-				updateEmptyText();
-				return;
-			// TODO: Check LVM_INSERTGROUPSORTED
-			case NativeMethods.LVM_INSERTGROUP:
-				NativeMethods.LVGROUP_xp lvgxp = (NativeMethods.LVGROUP_xp) m.GetLParam(typeof(NativeMethods.LVGROUP_xp));
-				foreach (ListViewGroup group in base.Groups) {
-					ListViewGroupEx groupEx = group.Tag as ListViewGroupEx;
-					if (groupEx != null && groupEx.ID == lvgxp.iGroupId) {
-						base.WndProc(ref m);
-						groupEx.Collapsed = groupEx.ShouldBeCollapsed;
-						groupEx.Collapsible = groupEx.ShouldBeCollapsible;
-						return;
-					}
-				}
-				break;
 			case NativeMethods.WM_LBUTTONUP:
 				//case NativeMethods.WM_LBUTTONDOWN:
 				//case NativeMethods.WM_LBUTTONDBLCLK:
 				base.DefWndProc(ref m);
+				break;
+			case NativeMethods.LVM_SETVIEW:
+				base.WndProc(ref m);
+				updateEmptyText();
+				return;
+			// TODO: Check LVM_INSERTGROUPSORTED.
+			case NativeMethods.LVM_INSERTGROUP:
+				NativeMethods.LVGROUP_xp lvgxp = (NativeMethods.LVGROUP_xp) m.GetLParam(typeof(NativeMethods.LVGROUP_xp));
+				foreach (ListViewGroup group in base.Groups) {
+					ListViewGroupEx groupEx = (ListViewGroupEx) group;
+					if (groupEx != null && groupEx.ID == lvgxp.iGroupId) {
+						base.WndProc(ref m);
+						if (groupEx.Collapsed != groupEx.ShouldBeCollapsed) {
+							groupEx.Collapsed = groupEx.ShouldBeCollapsed;
+						}
+						if (groupEx.Collapsible != groupEx.ShouldBeCollapsible) {
+							groupEx.Collapsible = groupEx.ShouldBeCollapsible;
+						}
+						groupEx.Header = groupEx.Header;
+						return;
+					}
+				}
 				break;
 			}
 			base.WndProc(ref m);
