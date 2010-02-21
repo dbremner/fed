@@ -33,7 +33,7 @@ namespace Plain.Design {
 
 		protected override string GetDisplayText(object value) {
 			string prefix = string.Empty;
-			ListViewGroupEx groupEx = (value as ListViewGroup).Tag as ListViewGroupEx;
+			ListViewGroupEx groupEx = (ListViewGroupEx) (value as ListViewGroup);
 			if (groupEx != null) {
 				prefix = "(" + groupEx.GetType().Name + ")";
 			}
@@ -52,7 +52,7 @@ namespace Plain.Design {
 			object[] value = base.GetItems(editValue);
 #if USE_EX
 			for (int i = 0; i < value.Length; ++i) {
-				ListViewGroupEx groupEx = (value[i] as ListViewGroup).Tag as ListViewGroupEx;
+				ListViewGroupEx groupEx = (ListViewGroupEx) (value[i] as ListViewGroup);
 				if (groupEx != null) {
 					value[i] = groupEx;
 				}
@@ -66,7 +66,7 @@ namespace Plain.Design {
 			for (int i = 0; i < value.Length; ++i) {
 				ListViewGroupEx groupEx = value[i] as ListViewGroupEx;
 				if (groupEx != null) {
-					value[i] = groupEx.Base;
+					value[i] = groupEx.BaseClass;
 				}
 			}
 #endif
