@@ -32,7 +32,6 @@
 			this.ClientSize = new System.Drawing.Size(292, 266);
 			this.Name = "FEDFormEx";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "FEDFormEx";
 			this.ResizeBegin += new System.EventHandler(this.FEDFormEx_ResizeBegin);
 			this.ResizeEnd += new System.EventHandler(this.FEDFormEx_ResizeEnd);
 			this.ResumeLayout(false);
