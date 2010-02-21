@@ -41,7 +41,7 @@ namespace DosboxApp {
 			object value;
 			ini.Section = base.Name;
 			if (base.readProp(ini, "DesktopBounds", out value)) {
-				m_DesktopBounds = (Rectangle) value;
+				this.DesktopBounds = (Rectangle) value;
 			}
 			if (base.readProp(ini, "Size", out value)) {
 				m_Size = (Size) value;
@@ -96,8 +96,9 @@ namespace DosboxApp {
 			base.Name = typeof(GameListForm).Name;
 			base.Size = new Size(500, 400);
 			m_SearchWidth = 128;
-			m_Column0Width = 240;
+			m_Column0Width = 200;
 			m_Column1Width = 120;
+			m_Column2Width = 120;
 		}
 
 		public override void SaveTo(INI ini) {
@@ -105,6 +106,8 @@ namespace DosboxApp {
 			base.writeProp(ini, "SearchWidth", m_SearchWidth);
 			base.writeProp(ini, "Column0Width", m_Column0Width);
 			base.writeProp(ini, "Column1Width", m_Column1Width);
+			base.writeProp(ini, "Column2Width", m_Column2Width);
+			base.writeProp(ini, "FEDPinned", m_FEDPinned);
 		}
 
 		public override void LoadFrom(INI ini) {
@@ -125,6 +128,14 @@ namespace DosboxApp {
 					m_Column1Width = (int) value;
 				}
 			}
+			if (base.readProp(ini, "Column2Width", out value)) {
+				if (32 <= (int) value) {
+					m_Column2Width = (int) value;
+				}
+			}
+			if (base.readProp(ini, "FEDPinned", out value)) {
+				m_FEDPinned = (bool) value;
+			}
 		}
 
 		public int SearchWidth {
@@ -142,8 +153,20 @@ namespace DosboxApp {
 			get { return m_Column1Width; }
 		}
 
+		public int Column2Width {
+			set { m_Column2Width = value; }
+			get { return m_Column2Width; }
+		}
+
+		public bool FEDPinned {
+			set { m_FEDPinned = value; }
+			get { return m_FEDPinned; }
+		}
+
 		int m_SearchWidth;
 		int m_Column0Width;
 		int m_Column1Width;
+		int m_Column2Width;
+		bool m_FEDPinned;
 	}
 }
