@@ -25,7 +25,7 @@ namespace DosboxApp {
 			m_UpdateConfig = new UpdateConfig();
 		}
 
-		public FormConfig GameListFormConfig {
+		public GameListFormConfig GameListFormConfig {
 			get { return m_GameListFormConfig; }
 		}
 
@@ -37,7 +37,7 @@ namespace DosboxApp {
 			get { return m_UpdateConfig; }
 		}
 
-		FormConfig m_GameListFormConfig;
+		GameListFormConfig m_GameListFormConfig;
 		GameConfig m_GameConfig;
 		UpdateConfig m_UpdateConfig;
 	}
