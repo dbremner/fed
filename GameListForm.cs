@@ -630,9 +630,11 @@ namespace DosboxApp {
 			if (string.IsNullOrEmpty(filter)) {
 				listFromHash(Program.AppConfig.GameConfig.Games);
 				lvwGame.EmptyText = "Click on 'Add Master Game Folder' or 'Add Game Folder'";
+				lblSearchAction.Image = DosboxApp.Properties.Resources.Search;
 			}
 			else {
 				lvwGame.EmptyText = "No game matches the search criteria";
+				lblSearchAction.Image = DosboxApp.Properties.Resources.Cancel;
 				foreach (GameObject gobj in Program.AppConfig.GameConfig.Games.Values) {
 					if (Path.GetFileName(gobj.Directory).ToLowerInvariant().Contains(filter)) {
 						addGameToList(gobj);
@@ -642,6 +644,42 @@ namespace DosboxApp {
 			}
 			comboButton.Visible = false;
 			lvwGame.EndUpdate();
+		}
+
+		private void lblSearchAction_MouseDown(object sender, MouseEventArgs e) {
+			if (txtSearch.Focused == false) {
+				txtSearch.Focus();
+			}
+			if (e.Button == MouseButtons.Left) {
+				if (txtSearch.TextLength != 0) {
+					lblSearchAction.Padding = new Padding(1, 2, 0, 0);
+				}
+			}
+		}
+
+		private void lblSearchAction_MouseMove(object sender, MouseEventArgs e) {
+			if (e.Button == MouseButtons.Left) {
+				if (txtSearch.TextLength != 0) {
+					if (lblSearchAction.ClientRectangle.Contains(e.Location)) {
+						lblSearchAction.Padding = new Padding(1, 2, 0, 0);
+					}
+					else {
+						lblSearchAction.Padding = new Padding(0, 1, 0, 0);
+					}
+				}
+			}
+		}
+
+		private void lblSearchAction_MouseUp(object sender, MouseEventArgs e) {
+			if (e.Button == MouseButtons.Left) {
+				if (txtSearch.TextLength != 0) {
+					lblSearchAction.Padding = new Padding(0, 1, 0, 0);
+				}
+			}
+		}
+
+		private void lblSearchAction_Click(object sender, EventArgs e) {
+			txtSearch.Clear();
 		}
 
 		private void tbrAction_ButtonClick(object sender, ToolBarButtonClickEventArgs e) {
