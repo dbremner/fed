@@ -91,6 +91,7 @@
 			this.pnlTop = new Plain.Forms.RebarPanel();
 			this.pnlSearch = new System.Windows.Forms.Panel();
 			this.txtSearch = new Plain.Forms.TextBoxEx();
+			this.lblSearchAction = new System.Windows.Forms.Label();
 			this.tbrTool = new Plain.Forms.ToolBarEx();
 			this.btnSoftwareUpdate = new System.Windows.Forms.ToolBarButton();
 			this.sepSpan = new System.Windows.Forms.ToolBarButton();
@@ -135,6 +136,7 @@
 			((System.ComponentModel.ISupportInitialize) (this.sbpInfo)).BeginInit();
 			this.pnlTop.SuspendLayout();
 			this.pnlSearch.SuspendLayout();
+			this.txtSearch.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// imlSmallList
@@ -650,22 +652,38 @@
 			this.pnlSearch.Location = new System.Drawing.Point(324, 9);
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-			this.pnlSearch.Size = new System.Drawing.Size(95, 25);
+			this.pnlSearch.Size = new System.Drawing.Size(95, 35);
 			this.pnlSearch.TabIndex = 3;
 			this.pnlSearch.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlSearch_MouseMove);
 			// 
 			// txtSearch
 			// 
+			this.txtSearch.Controls.Add(this.lblSearchAction);
 			this.txtSearch.CueBanner = "Search";
 			this.txtSearch.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtSearch.HideSelection = false;
-			this.txtSearch.InnerMargin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+			this.txtSearch.InnerMargin = new System.Windows.Forms.Padding(2, 0, 22, 0);
 			this.txtSearch.Location = new System.Drawing.Point(2, 0);
 			this.txtSearch.Name = "txtSearch";
 			this.txtSearch.Size = new System.Drawing.Size(93, 21);
 			this.txtSearch.TabIndex = 2;
 			this.txtSearch.Resize += new System.EventHandler(this.txtSearch_Resize);
 			this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+			// 
+			// lblSearchAction
+			// 
+			this.lblSearchAction.Cursor = System.Windows.Forms.Cursors.Default;
+			this.lblSearchAction.Dock = System.Windows.Forms.DockStyle.Right;
+			this.lblSearchAction.Image = global::DosboxApp.Properties.Resources.Search;
+			this.lblSearchAction.Location = new System.Drawing.Point(73, 0);
+			this.lblSearchAction.Name = "lblSearchAction";
+			this.lblSearchAction.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
+			this.lblSearchAction.Size = new System.Drawing.Size(16, 17);
+			this.lblSearchAction.TabIndex = 3;
+			this.lblSearchAction.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblSearchAction_MouseMove);
+			this.lblSearchAction.Click += new System.EventHandler(this.lblSearchAction_Click);
+			this.lblSearchAction.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblSearchAction_MouseDown);
+			this.lblSearchAction.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblSearchAction_MouseUp);
 			// 
 			// tbrTool
 			// 
@@ -895,7 +913,7 @@
 			this.btnPin.Name = "btnPin";
 			this.btnPin.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
 			this.btnPin.Tag = "Minimize FED to notification area when DOSBox is running.";
-			this.btnPin.ToolTipText = "Keep FED in Memory (ScrLk)";
+			this.btnPin.ToolTipText = "Keep FED in Memory (Scroll Lock)";
 			// 
 			// openFileFolderDialog
 			// 
@@ -968,6 +986,7 @@
 			this.pnlTop.PerformLayout();
 			this.pnlSearch.ResumeLayout(false);
 			this.pnlSearch.PerformLayout();
+			this.txtSearch.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -1054,6 +1073,7 @@
 		private System.Windows.Forms.ToolBarButton sepOpenCapture;
 		private System.Windows.Forms.Panel pnlDosboxVersions;
 		private System.Windows.Forms.Label lblNotImplemented;
+		private System.Windows.Forms.Label lblSearchAction;
 
     }
 }
