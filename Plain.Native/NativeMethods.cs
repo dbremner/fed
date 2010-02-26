@@ -340,6 +340,13 @@ namespace Plain.Native {
 			public Int32 cchTest;
 		}
 
+		[StructLayout(LayoutKind.Sequential)]
+		public struct NMLVSCROLL {
+			public NMHDR hdr;
+			public int dx;
+			public int dy;
+		}
+
 		[Flags]
 		public enum SLGP_FLAGS {
 			SLGP_SHORTPATH = 0x1,

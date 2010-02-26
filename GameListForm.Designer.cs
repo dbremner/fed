@@ -24,24 +24,24 @@
         /// </summary>
         private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Dosbox Versions");
-			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Software Update");
+			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Dosbox Versions");
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Software Update");
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameListForm));
-			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Getting Started");
-			System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Adding Games");
-			System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Running Games");
-			System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Dosbox Configurations");
-			System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Miscellaneous Options");
-			System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Needing More Help");
-			System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Help Topics", new System.Windows.Forms.TreeNode[] {
-            treeNode14,
-            treeNode15,
-            treeNode16,
-            treeNode17,
-            treeNode18,
-            treeNode19});
-			System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Feedback");
-			System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("About");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Getting Started");
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adding Games");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Running Games");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Dosbox Configurations");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Miscellaneous Options");
+			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Needing More Help");
+			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Help Topics", new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7,
+            treeNode8});
+			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Feedback");
+			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("About");
 			this.imlSmallList = new System.Windows.Forms.ImageList(this.components);
 			this.mnuRun = new System.Windows.Forms.ContextMenu();
 			this.mnuSepOtherLoc = new System.Windows.Forms.MenuItem();
@@ -375,14 +375,14 @@
 			this.tvwOptions.ItemHeight = 20;
 			this.tvwOptions.Location = new System.Drawing.Point(2, 2);
 			this.tvwOptions.Name = "tvwOptions";
-			treeNode12.ForeColor = System.Drawing.SystemColors.GrayText;
-			treeNode12.Name = "nodDosboxVersions";
-			treeNode12.Text = "Dosbox Versions";
-			treeNode13.Name = "nodUpdate";
-			treeNode13.Text = "Software Update";
+			treeNode1.ForeColor = System.Drawing.SystemColors.GrayText;
+			treeNode1.Name = "nodDosboxVersions";
+			treeNode1.Text = "Dosbox Versions";
+			treeNode2.Name = "nodUpdate";
+			treeNode2.Text = "Software Update";
 			this.tvwOptions.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13});
+            treeNode1,
+            treeNode2});
 			this.tvwOptions.ShowLines = false;
 			this.tvwOptions.ShowRootLines = false;
 			this.tvwOptions.Size = new System.Drawing.Size(121, 142);
@@ -477,28 +477,28 @@
 			this.tvwHelp.ItemHeight = 20;
 			this.tvwHelp.Location = new System.Drawing.Point(2, 2);
 			this.tvwHelp.Name = "tvwHelp";
-			treeNode14.Name = "nodStart";
-			treeNode14.Text = "Getting Started";
-			treeNode15.Name = "nodAddGame";
-			treeNode15.Text = "Adding Games";
-			treeNode16.Name = "nodRunGame";
-			treeNode16.Text = "Running Games";
-			treeNode17.Name = "nodDosboxConfig";
-			treeNode17.Text = "Dosbox Configurations";
-			treeNode18.Name = "nodMiscOptions";
-			treeNode18.Text = "Miscellaneous Options";
-			treeNode19.Name = "nodNeedMoreHelp";
-			treeNode19.Text = "Needing More Help";
-			treeNode20.Name = "nodHelp";
-			treeNode20.Text = "Help Topics";
-			treeNode21.Name = "nodFeedback";
-			treeNode21.Text = "Feedback";
-			treeNode22.Name = "nodAbout";
-			treeNode22.Text = "About";
+			treeNode3.Name = "nodStart";
+			treeNode3.Text = "Getting Started";
+			treeNode4.Name = "nodAddGame";
+			treeNode4.Text = "Adding Games";
+			treeNode5.Name = "nodRunGame";
+			treeNode5.Text = "Running Games";
+			treeNode6.Name = "nodDosboxConfig";
+			treeNode6.Text = "Dosbox Configurations";
+			treeNode7.Name = "nodMiscOptions";
+			treeNode7.Text = "Miscellaneous Options";
+			treeNode8.Name = "nodNeedMoreHelp";
+			treeNode8.Text = "Needing More Help";
+			treeNode9.Name = "nodHelp";
+			treeNode9.Text = "Help Topics";
+			treeNode10.Name = "nodFeedback";
+			treeNode10.Text = "Feedback";
+			treeNode11.Name = "nodAbout";
+			treeNode11.Text = "About";
 			this.tvwHelp.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode20,
-            treeNode21,
-            treeNode22});
+            treeNode9,
+            treeNode10,
+            treeNode11});
 			this.tvwHelp.ShowLines = false;
 			this.tvwHelp.ShowRootLines = false;
 			this.tvwHelp.Size = new System.Drawing.Size(121, 142);
@@ -675,9 +675,9 @@
 			this.lblSearchAction.Cursor = System.Windows.Forms.Cursors.Default;
 			this.lblSearchAction.Dock = System.Windows.Forms.DockStyle.Right;
 			this.lblSearchAction.Image = global::DosboxApp.Properties.Resources.Search;
+			this.lblSearchAction.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
 			this.lblSearchAction.Location = new System.Drawing.Point(73, 0);
 			this.lblSearchAction.Name = "lblSearchAction";
-			this.lblSearchAction.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
 			this.lblSearchAction.Size = new System.Drawing.Size(16, 17);
 			this.lblSearchAction.TabIndex = 3;
 			this.lblSearchAction.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblSearchAction_MouseMove);
