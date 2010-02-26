@@ -130,7 +130,7 @@
     <value>375, 17</value>
   </metadata>
   <metadata name="bmpImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>677, 17</value>
+    <value>572, 17</value>
   </metadata>
   <data name="lblCopyright.Text" xml:space="preserve">
     <value>FED version 0.6.0.73, Copyright (C) 2009 pWonders
@@ -138,13 +138,13 @@
 FED comes with ABSOLUTELY NO WARRANTY. This is free software, and under certain conditions, you are welcome to redistribute it; see the GNU General Public License for details.</value>
   </data>
   <metadata name="mnuSoftwareUpdate.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>799, 17</value>
+    <value>694, 17</value>
   </metadata>
   <metadata name="openFileFolderDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <metadata name="mnuGame.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>952, 17</value>
+    <value>847, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>59</value>

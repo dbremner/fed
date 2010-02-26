@@ -123,9 +123,9 @@ namespace DosboxApp.Properties {
             }
         }
         
-        internal static System.Drawing.Icon Game {
+        internal static System.Drawing.Icon FED {
             get {
-                object obj = ResourceManager.GetObject("Game", resourceCulture);
+                object obj = ResourceManager.GetObject("FED", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

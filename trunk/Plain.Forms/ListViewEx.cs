@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+//#define USE_BEGINENDSCRLL
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -166,6 +168,7 @@ namespace Plain.Forms {
 		protected override void OnResize(EventArgs e) {
 			base.OnResize(e);
 			updateEmptyText();
+			// FIXME: When scrollbar is needed and the height (and width?) changes, there's no scroll events.
 		}
 
 		protected override void OnKeyDown(KeyEventArgs e) {
@@ -178,7 +181,11 @@ namespace Plain.Forms {
 				case Keys.PageUp:
 				case Keys.Home:
 				case Keys.End:
+#if USE_BEGINENDSCRLL
 					OnBeginScroll(EventArgs.Empty);
+#else
+					OnScroll(new ScrollEventArgs(ScrollEventType.ThumbTrack, 0));
+#endif
 					break;
 				case Keys.Escape:
 					if (m_ColumnWidthChangingIndex != -1) {
@@ -209,7 +216,11 @@ namespace Plain.Forms {
 				case Keys.PageUp:
 				case Keys.Home:
 				case Keys.End:
+#if USE_BEGINENDSCRLL
 					OnEndScroll(EventArgs.Empty);
+#else
+					OnScroll(new ScrollEventArgs(ScrollEventType.EndScroll, 0));
+#endif
 					break;
 				}
 			}
@@ -258,10 +269,18 @@ namespace Plain.Forms {
 					}
 					break;
 				case NativeMethods.LVN_BEGINSCROLL:
+#if USE_BEGINENDSCRLL
 					OnBeginScroll(EventArgs.Empty);
+#else
+					OnScroll(new ScrollEventArgs(ScrollEventType.ThumbTrack, 0));
+#endif
 					break;
 				case NativeMethods.LVN_ENDSCROLL:
-					OnEndScroll(EventArgs.Empty);
+#if USE_BEGINENDSCRLL
+					OnBeginScroll(EventArgs.Empty);
+#else
+					OnScroll(new ScrollEventArgs(ScrollEventType.EndScroll, 0));
+#endif
 					break;
 				}
 				break;

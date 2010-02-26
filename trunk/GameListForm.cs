@@ -40,6 +40,8 @@ namespace DosboxApp {
 			Stopwatch.Mark("InitializeComponent");
 #endif
 
+			base.Icon = Resources.FED;
+			notifyIcon.Icon = new Icon(Resources.FED, new Size(16, 16));
 			themeToMatchFonts();
 			themeToMatchUserPref();
 			styleToMatchVista();
@@ -108,12 +110,6 @@ namespace DosboxApp {
 			lvwGame.Columns[1].Width = config.Column1Width;
 			lvwGame.Columns[2].Width = config.Column2Width;
 			btnPin.Pushed = config.FEDPinned;
-		}
-
-		protected override void OnHandleCreated(EventArgs e) {
-			base.OnHandleCreated(e);
-			base.Icon = Resources.Game;
-			notifyIcon.Icon = Resources.Game;
 		}
 
 		protected override void OnSystemColorsChanged(EventArgs e) {
@@ -304,9 +300,12 @@ namespace DosboxApp {
 
 		void listFromHash(Dictionary<string, GameObject> hash) {
 			lvwGame.BeginUpdate();
+			ListViewItem[] items = new ListViewItem[hash.Values.Count];
+			int i = 0;
 			foreach (GameObject gobj in hash.Values) {
-				addGameToList(gobj);
+				items[i++] = addGameToList(gobj);
 			}
+			lvwGame.Items.AddRange(items);
 			updateGroupsItemCount();
 			lvwGame.EndUpdate();
 		}
@@ -316,16 +315,15 @@ namespace DosboxApp {
 				string dirName = Path.GetFileName(gobj.Directory);
 				ListViewItem item = new ListViewItem(dirName);
 				item.Group = getGameGroup(gobj.Directory);
-				if (Directory.Exists(gobj.Directory) && File.Exists(gobj.FileName)) {
+				/*if (Directory.Exists(gobj.Directory) && File.Exists(gobj.FileName)) {
 				}
 				else {
 					item.ImageKey = "NotAvailable";
-				}
+				}*/
 				item.UseItemStyleForSubItems = false;
 				item.SubItems.Add(dirName, SystemColors.GrayText, lvwGame.BackColor, lvwGame.Font);
 				item.SubItems.Add(gobj.Executable, SystemColors.GrayText, lvwGame.BackColor, lvwGame.Font);
 				item.Tag = gobj;
-				lvwGame.Items.Add(item);
 				return item;
 			}
 			return null;
@@ -492,6 +490,7 @@ namespace DosboxApp {
 		void moveCombo() {
 			if (lvwGame.SelectedIndices.Count == 1) {
 				ListViewItem item = lvwGame.SelectedItems[0];
+				item = lvwGame.FocusedItem;
 				int index = hdrExe.Index;
 				if (item.SubItems[index].Bounds.Top >= lvwGame.HeaderHeight && item.SubItems[index].Bounds.Width >= comboButton.Width) {
 					comboButton.ComboBox.Width = item.SubItems[index].Bounds.Width - 2;
@@ -618,9 +617,9 @@ namespace DosboxApp {
 		}
 
 		private void txtSearch_Resize(object sender, EventArgs e) {
-			if (true || m_IsInitializationDone) {
+			////if (m_IsInitializationDone) {
 				pnlSearch.Height = txtSearch.Height;
-			}
+			////}
 		}
 
 		private void txtSearch_TextChanged(object sender, EventArgs e) {
@@ -635,11 +634,13 @@ namespace DosboxApp {
 			else {
 				lvwGame.EmptyText = "No game matches the search criteria";
 				lblSearchAction.Image = DosboxApp.Properties.Resources.Cancel;
+				List<ListViewItem> items = new List<ListViewItem>(Program.AppConfig.GameConfig.Games.Values.Count);
 				foreach (GameObject gobj in Program.AppConfig.GameConfig.Games.Values) {
 					if (Path.GetFileName(gobj.Directory).ToLowerInvariant().Contains(filter)) {
-						addGameToList(gobj);
+						items.Add(addGameToList(gobj));
 					}
 				}
+				lvwGame.Items.AddRange(items.ToArray());
 				updateGroupsItemCount();
 			}
 			comboButton.Visible = false;
@@ -652,7 +653,7 @@ namespace DosboxApp {
 			}
 			if (e.Button == MouseButtons.Left) {
 				if (txtSearch.TextLength != 0) {
-					lblSearchAction.Padding = new Padding(1, 2, 0, 0);
+					lblSearchAction.Padding = new Padding(1, 1, 0, 0);
 				}
 			}
 		}
@@ -661,10 +662,10 @@ namespace DosboxApp {
 			if (e.Button == MouseButtons.Left) {
 				if (txtSearch.TextLength != 0) {
 					if (lblSearchAction.ClientRectangle.Contains(e.Location)) {
-						lblSearchAction.Padding = new Padding(1, 2, 0, 0);
+						lblSearchAction.Padding = new Padding(1, 1, 0, 0);
 					}
 					else {
-						lblSearchAction.Padding = new Padding(0, 1, 0, 0);
+						lblSearchAction.Padding = new Padding(0, 0, 0, 0);
 					}
 				}
 			}
@@ -672,9 +673,7 @@ namespace DosboxApp {
 
 		private void lblSearchAction_MouseUp(object sender, MouseEventArgs e) {
 			if (e.Button == MouseButtons.Left) {
-				if (txtSearch.TextLength != 0) {
-					lblSearchAction.Padding = new Padding(0, 1, 0, 0);
-				}
+				lblSearchAction.Padding = new Padding(0, 0, 0, 0);
 			}
 		}
 

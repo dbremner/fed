@@ -32,6 +32,7 @@ namespace Plain.Forms {
 	public class TextBoxEx : System.Windows.Forms.TextBox {
 		public TextBoxEx() {
 			m_CueBannerItalicLabel = new ClickThroughLabel();
+			m_CueBannerItalicLabel.AutoSize = false;
 			m_CueBannerItalicLabel.Dock = DockStyle.Fill;
 			m_CueBannerItalicLabel.ForeColor = SystemColors.GrayText;
 			m_CueBannerItalicLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -119,7 +120,7 @@ namespace Plain.Forms {
 				}
 #endif
 				setInnerMargins(m_InnerMargins);
-				m_CueBannerItalicLabel.Padding = new Padding(m_InnerMargins.Left, 0, m_InnerMargins.Right, 0);
+				m_CueBannerItalicLabel.Padding = new Padding(m_InnerMargins.Left, 0, m_InnerMargins.Right, 2);
 			}
 			get {
 #if false
