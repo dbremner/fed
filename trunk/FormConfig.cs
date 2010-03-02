@@ -108,6 +108,7 @@ namespace DosboxApp {
 			base.writeProp(ini, "Column1Width", m_Column1Width);
 			base.writeProp(ini, "Column2Width", m_Column2Width);
 			base.writeProp(ini, "FEDPinned", m_FEDPinned);
+			base.writeProp(ini, "SearchPhrase", m_SearchPhrase);
 		}
 
 		public override void LoadFrom(INI ini) {
@@ -136,6 +137,9 @@ namespace DosboxApp {
 			if (base.readProp(ini, "FEDPinned", out value)) {
 				m_FEDPinned = (bool) value;
 			}
+			if (base.readProp(ini, "SearchPhrase", out value)) {
+				m_SearchPhrase = (string) value;
+			}
 		}
 
 		public int SearchWidth {
@@ -163,10 +167,16 @@ namespace DosboxApp {
 			get { return m_FEDPinned; }
 		}
 
+		public string SearchPhrase {
+			set { m_SearchPhrase = value; }
+			get { return m_SearchPhrase; }
+		}
+
 		int m_SearchWidth;
 		int m_Column0Width;
 		int m_Column1Width;
 		int m_Column2Width;
 		bool m_FEDPinned;
+		string m_SearchPhrase;
 	}
 }
