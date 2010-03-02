@@ -34,10 +34,13 @@ using System.Threading;
 namespace DosboxApp {
 	public partial class GameListForm : FEDFormEx {
 		public GameListForm() {
+#if DEBUG
+			Stopwatch.Mark("Before InitializeComponent");
+#endif
 			InitializeComponent();
 			DosboxLauncher.ProcessStarted += new EventHandler(DosboxProcess_Started);
 #if DEBUG
-			Stopwatch.Mark("InitializeComponent");
+			Stopwatch.Mark("After InitializeComponent");
 #endif
 
 			base.Icon = Resources.FED;
@@ -48,9 +51,9 @@ namespace DosboxApp {
 #if DEBUG
 			Stopwatch.Mark("theme");
 #endif
+			listFromHash(Program.AppConfig.GameConfig.Games);
 			this.LoadFrom(Program.AppConfig.GameListFormConfig);
 			this.LoadFrom(Program.AppConfig.UpdateConfig);
-			listFromHash(Program.AppConfig.GameConfig.Games);
 #if DEBUG
 			Stopwatch.Mark("form config");
 #endif
@@ -63,7 +66,7 @@ namespace DosboxApp {
 #if true
 			tab.TabPages.Remove(pageHelp);
 #endif
-			base.Text += " - " + DateTime.Now.ToShortTimeString();
+			base.Text = "FED - FrontEnd for DOSBox - " + DateTime.Now.ToShortTimeString();
 			m_IsInitializationDone = true;
 #if DEBUG
 			Stopwatch.Report();
@@ -101,6 +104,7 @@ namespace DosboxApp {
 			config.Column1Width = lvwGame.Columns[1].Width;
 			config.Column2Width = lvwGame.Columns[2].Width;
 			config.FEDPinned = btnPin.Pushed;
+			config.SearchPhrase = txtSearch.Text;
 		}
 
 		protected void LoadFrom(GameListFormConfig config) {
@@ -110,6 +114,7 @@ namespace DosboxApp {
 			lvwGame.Columns[1].Width = config.Column1Width;
 			lvwGame.Columns[2].Width = config.Column2Width;
 			btnPin.Pushed = config.FEDPinned;
+			txtSearch.Text = config.SearchPhrase;
 		}
 
 		protected override void OnSystemColorsChanged(EventArgs e) {
@@ -368,9 +373,12 @@ namespace DosboxApp {
 			if (openFileFolderDialog.ShowDialog(this) == DialogResult.OK) {
 				txtSearch.Clear();
 				lvwGame.BeginUpdate();
-				foreach (DirectoryInfo diGame in new DirectoryInfo(openFileFolderDialog.OpenFileDialog.FileName).GetDirectories()) {
-					addGameToList(addGameToHash(Program.AppConfig.GameConfig.Games, diGame.FullName, null));
+				DirectoryInfo[] dirs = new DirectoryInfo(openFileFolderDialog.OpenFileDialog.FileName).GetDirectories();
+				ListViewItem[] items = new ListViewItem[dirs.Length];
+				for (int i = 0; i < dirs.Length; ++i) {
+					items[i] = addGameToList(addGameToHash(Program.AppConfig.GameConfig.Games, dirs[i].FullName, null));
 				}
+				lvwGame.Items.AddRange(items);
 				updateGroupsItemCount();
 				lvwGame.EndUpdate();
 			}
@@ -385,6 +393,7 @@ namespace DosboxApp {
 				txtSearch.Clear();
 				GameObject gobj = addGameToHash(Program.AppConfig.GameConfig.Games, openFileFolderDialog.OpenFileDialog.FileName, null);
 				ListViewItem item = addGameToList(gobj);
+				lvwGame.Items.Add(item);
 				updateGroupItemCount(item.Group, gobj);
 			}
 			btnAddGameFolder.Enabled = true;
@@ -618,7 +627,7 @@ namespace DosboxApp {
 
 		private void txtSearch_Resize(object sender, EventArgs e) {
 			////if (m_IsInitializationDone) {
-				pnlSearch.Height = txtSearch.Height;
+			pnlSearch.Height = txtSearch.Height;
 			////}
 		}
 
@@ -840,7 +849,15 @@ namespace DosboxApp {
 		}
 
 		private void DosboxProcess_Started(object sender, EventArgs e) {
-			NativeMethods.SetWindowPos(DosboxLauncher.WindowHandle, IntPtr.Zero, base.Left, base.Top, 0, 0, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOSIZE);
+			DosboxInfo dbinfo = getSelectedDosboxVersion();
+			if (dbinfo != null) {
+				if (dbinfo.Config.fullscreen == false) {
+					for (int i = 0; i < 2; ++i) {
+						Thread.CurrentThread.Join(500);
+						NativeMethods.SetWindowPos(DosboxLauncher.WindowHandle, IntPtr.Zero, base.Left, base.Top, 0, 0, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOSIZE);
+					}
+				}
+			}
 		}
 
 		private void DosboxProcess_Exited(object sender, EventArgs e) {
