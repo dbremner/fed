@@ -22,7 +22,10 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+		private void InitializeComponent() {
+#if DEBUG
+			Stopwatch.Mark("Real InitializeComponent");
+#endif
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Dosbox Versions");
 			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Software Update");
@@ -178,9 +181,13 @@
 			// 
 			this.pnlMain.Controls.Add(this.tab);
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.pnlMain.Location = new System.Drawing.Point(0, 149);
+#endif
 			this.pnlMain.Name = "pnlMain";
+#if DEBUG
 			this.pnlMain.Size = new System.Drawing.Size(422, 174);
+#endif
 			this.pnlMain.TabIndex = 3;
 			// 
 			// tab
@@ -190,12 +197,16 @@
 			this.tab.Controls.Add(this.pageOptions);
 			this.tab.Controls.Add(this.pageHelp);
 			this.tab.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.tab.Location = new System.Drawing.Point(0, 0);
+#endif
 			this.tab.Multiline = true;
 			this.tab.Name = "tab";
 			this.tab.SelectedIndex = 0;
 			this.tab.ShowToolTips = true;
+#if DEBUG
 			this.tab.Size = new System.Drawing.Size(422, 174);
+#endif
 			this.tab.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
 			this.tab.TabIndex = 2;
 			this.tab.SelectedIndexChanged += new System.EventHandler(this.tab_SelectedIndexChanged);
@@ -203,10 +214,14 @@
 			// pageGames
 			// 
 			this.pageGames.Controls.Add(this.lvwGame);
+#if DEBUG
 			this.pageGames.Location = new System.Drawing.Point(4, 24);
+#endif
 			this.pageGames.Name = "pageGames";
 			this.pageGames.Padding = new System.Windows.Forms.Padding(2);
+#if DEBUG
 			this.pageGames.Size = new System.Drawing.Size(414, 146);
+#endif
 			this.pageGames.TabIndex = 0;
 			this.pageGames.Text = "Games";
 			this.pageGames.ToolTipText = "(Alt+1)";
@@ -224,10 +239,14 @@
 			this.lvwGame.FullRowSelect = true;
 			this.lvwGame.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvwGame.HideSelection = false;
+#if DEBUG
 			this.lvwGame.Location = new System.Drawing.Point(2, 2);
+#endif
 			this.lvwGame.Name = "lvwGame";
 			this.lvwGame.ShowItemToolTips = true;
+#if DEBUG
 			this.lvwGame.Size = new System.Drawing.Size(410, 142);
+#endif
 			this.lvwGame.SmallImageList = this.bmpImageList.ImageList;
 			this.lvwGame.StateImageList = this.imlSmallList;
 			this.lvwGame.TabIndex = 1;
@@ -246,17 +265,23 @@
 			// hdrName
 			// 
 			this.hdrName.Text = "Name";
+#if DEBUG
 			this.hdrName.Width = 200;
+#endif
 			// 
 			// hdrDir
 			// 
 			this.hdrDir.Text = "Directory";
+#if DEBUG
 			this.hdrDir.Width = 120;
+#endif
 			// 
 			// hdrExe
 			// 
 			this.hdrExe.Text = "Executable";
+#if DEBUG
 			this.hdrExe.Width = 120;
+#endif
 			// 
 			// comboButton
 			// 
@@ -271,9 +296,13 @@
 			this.comboButton.ComboBox.TabIndex = 0;
 			this.comboButton.ComboBox.DropDown += new System.EventHandler(this.comboButton_ComboBox_DropDown);
 			this.comboButton.ComboBox.SelectedIndexChanged += new System.EventHandler(this.comboButton_ComboBox_SelectedIndexChanged);
+#if DEBUG
 			this.comboButton.Location = new System.Drawing.Point(292, 67);
+#endif
 			this.comboButton.Name = "comboButton";
+#if DEBUG
 			this.comboButton.Size = new System.Drawing.Size(17, 21);
+#endif
 			this.comboButton.TabIndex = 2;
 			this.comboButton.Visible = false;
 			this.comboButton.LostFocus += new System.EventHandler(this.comboButton_LostFocus);
@@ -281,10 +310,14 @@
 			// pageConfig
 			// 
 			this.pageConfig.Controls.Add(this.gridConfig);
+#if DEBUG
 			this.pageConfig.Location = new System.Drawing.Point(4, 24);
+#endif
 			this.pageConfig.Name = "pageConfig";
 			this.pageConfig.Padding = new System.Windows.Forms.Padding(2);
+#if DEBUG
 			this.pageConfig.Size = new System.Drawing.Size(414, 146);
+#endif
 			this.pageConfig.TabIndex = 1;
 			this.pageConfig.Text = "DOSBox Config";
 			this.pageConfig.ToolTipText = "(Alt+2)";
@@ -295,15 +328,20 @@
 			this.gridConfig.CategoryForeColor = System.Drawing.SystemColors.GrayText;
 			this.gridConfig.ContextMenu = this.mnuProp;
 			this.gridConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.gridConfig.Location = new System.Drawing.Point(2, 2);
+#endif
 			this.gridConfig.Name = "gridConfig";
 			this.gridConfig.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+#if DEBUG
 			this.gridConfig.Size = new System.Drawing.Size(410, 142);
+#endif
 			this.gridConfig.TabIndex = 1;
 			this.gridConfig.ToolbarVisible = false;
 			// 
 			// 
 			// 
+#if DEBUG
 			this.gridConfig.ToolStrip.AccessibleName = "ToolBar";
 			this.gridConfig.ToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
 			this.gridConfig.ToolStrip.AllowMerge = false;
@@ -318,6 +356,7 @@
 			this.gridConfig.ToolStrip.TabStop = true;
 			this.gridConfig.ToolStrip.Text = "PropertyGridToolBar";
 			this.gridConfig.ToolStrip.Visible = false;
+#endif
 			this.gridConfig.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.gridConfig_SelectedGridItemChanged);
 			this.gridConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridConfig_PropertyValueChanged);
 			this.gridConfig.ModifiedChanged += new System.EventHandler(this.gridConfig_ModifiedChanged);
@@ -327,10 +366,14 @@
 			this.pageOptions.Controls.Add(this.pnlDosboxVersions);
 			this.pageOptions.Controls.Add(this.pnlUpdate);
 			this.pageOptions.Controls.Add(this.tvwOptions);
+#if DEBUG
 			this.pageOptions.Location = new System.Drawing.Point(4, 24);
+#endif
 			this.pageOptions.Name = "pageOptions";
 			this.pageOptions.Padding = new System.Windows.Forms.Padding(2);
+#if DEBUG
 			this.pageOptions.Size = new System.Drawing.Size(414, 146);
+#endif
 			this.pageOptions.TabIndex = 2;
 			this.pageOptions.Text = "FED Options";
 			this.pageOptions.ToolTipText = "(Alt+3)";
@@ -340,18 +383,26 @@
 			// 
 			this.pnlDosboxVersions.Controls.Add(this.lblNotImplemented);
 			this.pnlDosboxVersions.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.pnlDosboxVersions.Location = new System.Drawing.Point(123, 2);
+#endif
 			this.pnlDosboxVersions.Name = "pnlDosboxVersions";
 			this.pnlDosboxVersions.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+#if DEBUG
 			this.pnlDosboxVersions.Size = new System.Drawing.Size(289, 142);
+#endif
 			this.pnlDosboxVersions.TabIndex = 2;
 			// 
 			// lblNotImplemented
 			// 
 			this.lblNotImplemented.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.lblNotImplemented.Location = new System.Drawing.Point(2, 0);
+#endif
 			this.lblNotImplemented.Name = "lblNotImplemented";
+#if DEBUG
 			this.lblNotImplemented.Size = new System.Drawing.Size(287, 142);
+#endif
 			this.lblNotImplemented.TabIndex = 0;
 			this.lblNotImplemented.Text = "Not Yet Implemented";
 			this.lblNotImplemented.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -359,10 +410,14 @@
 			// pnlUpdate
 			// 
 			this.pnlUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.pnlUpdate.Location = new System.Drawing.Point(123, 2);
+#endif
 			this.pnlUpdate.Name = "pnlUpdate";
 			this.pnlUpdate.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+#if DEBUG
 			this.pnlUpdate.Size = new System.Drawing.Size(289, 142);
+#endif
 			this.pnlUpdate.TabIndex = 1;
 			this.pnlUpdate.Visible = false;
 			// 
@@ -373,7 +428,9 @@
 			this.tvwOptions.HideSelection = false;
 			this.tvwOptions.Indent = 15;
 			this.tvwOptions.ItemHeight = 20;
+#if DEBUG
 			this.tvwOptions.Location = new System.Drawing.Point(2, 2);
+#endif
 			this.tvwOptions.Name = "tvwOptions";
 			treeNode1.ForeColor = System.Drawing.SystemColors.GrayText;
 			treeNode1.Name = "nodDosboxVersions";
@@ -397,10 +454,14 @@
 			this.pageHelp.Controls.Add(this.pnlHelp);
 			this.pageHelp.Controls.Add(this.tvwHelp);
 			this.pageHelp.ImageKey = "(none)";
+#if DEBUG
 			this.pageHelp.Location = new System.Drawing.Point(4, 24);
+#endif
 			this.pageHelp.Name = "pageHelp";
 			this.pageHelp.Padding = new System.Windows.Forms.Padding(2);
+#if DEBUG
 			this.pageHelp.Size = new System.Drawing.Size(414, 146);
+#endif
 			this.pageHelp.TabIndex = 3;
 			this.pageHelp.Text = "Help";
 			this.pageHelp.ToolTipText = "(Alt+4)";
@@ -411,10 +472,14 @@
 			this.pnlFeedback.Controls.Add(this.txtComment);
 			this.pnlFeedback.Controls.Add(this.txtSendData);
 			this.pnlFeedback.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.pnlFeedback.Location = new System.Drawing.Point(123, 2);
+#endif
 			this.pnlFeedback.Name = "pnlFeedback";
 			this.pnlFeedback.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+#if DEBUG
 			this.pnlFeedback.Size = new System.Drawing.Size(289, 142);
+#endif
 			this.pnlFeedback.TabIndex = 6;
 			this.pnlFeedback.Visible = false;
 			// 
@@ -422,20 +487,28 @@
 			// 
 			this.txtComment.CueBanner = "Write your comment here.";
 			this.txtComment.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.txtComment.Location = new System.Drawing.Point(2, 0);
+#endif
 			this.txtComment.Multiline = true;
 			this.txtComment.Name = "txtComment";
+#if DEBUG
 			this.txtComment.Size = new System.Drawing.Size(287, 142);
+#endif
 			this.txtComment.TabIndex = 5;
 			// 
 			// txtSendData
 			// 
 			this.txtSendData.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.txtSendData.Location = new System.Drawing.Point(2, 0);
+#endif
 			this.txtSendData.Multiline = true;
 			this.txtSendData.Name = "txtSendData";
 			this.txtSendData.ReadOnly = true;
+#if DEBUG
 			this.txtSendData.Size = new System.Drawing.Size(287, 142);
+#endif
 			this.txtSendData.TabIndex = 1;
 			this.txtSendData.Visible = false;
 			// 
@@ -443,28 +516,40 @@
 			// 
 			this.pnlAbout.Controls.Add(this.lblCopyright);
 			this.pnlAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.pnlAbout.Location = new System.Drawing.Point(123, 2);
+#endif
 			this.pnlAbout.Name = "pnlAbout";
 			this.pnlAbout.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+#if DEBUG
 			this.pnlAbout.Size = new System.Drawing.Size(289, 142);
+#endif
 			this.pnlAbout.TabIndex = 7;
 			this.pnlAbout.Visible = false;
 			// 
 			// lblCopyright
 			// 
 			this.lblCopyright.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.lblCopyright.Location = new System.Drawing.Point(2, 0);
+#endif
 			this.lblCopyright.Name = "lblCopyright";
+#if DEBUG
 			this.lblCopyright.Size = new System.Drawing.Size(287, 142);
+#endif
 			this.lblCopyright.TabIndex = 0;
 			this.lblCopyright.Text = resources.GetString("lblCopyright.Text");
 			// 
 			// pnlHelp
 			// 
 			this.pnlHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+#if DEBUG
 			this.pnlHelp.Location = new System.Drawing.Point(123, 2);
+#endif
 			this.pnlHelp.Name = "pnlHelp";
+#if DEBUG
 			this.pnlHelp.Size = new System.Drawing.Size(289, 142);
+#endif
 			this.pnlHelp.TabIndex = 4;
 			// 
 			// tvwHelp
@@ -475,7 +560,9 @@
 			this.tvwHelp.HotTracking = true;
 			this.tvwHelp.Indent = 15;
 			this.tvwHelp.ItemHeight = 20;
+#if DEBUG
 			this.tvwHelp.Location = new System.Drawing.Point(2, 2);
+#endif
 			this.tvwHelp.Name = "tvwHelp";
 			treeNode3.Name = "nodStart";
 			treeNode3.Text = "Getting Started";
@@ -522,7 +609,9 @@
 			this.tbrHelp.Location = new System.Drawing.Point(0, 102);
 			this.tbrHelp.Name = "tbrHelp";
 			this.tbrHelp.ShowToolTips = true;
+#if DEBUG
 			this.tbrHelp.Size = new System.Drawing.Size(422, 26);
+#endif
 			this.tbrHelp.TabIndex = 3;
 			this.tbrHelp.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrHelp.Visible = false;
@@ -619,7 +708,9 @@
             this.sbpInfo});
 			this.sbr.ResourceImageList = this.bmpImageList;
 			this.sbr.ShowPanels = true;
+#if DEBUG
 			this.sbr.Size = new System.Drawing.Size(422, 25);
+#endif
 			this.sbr.TabIndex = 2;
 			// 
 			// sbpInfo
@@ -640,7 +731,9 @@
 			this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pnlTop.Location = new System.Drawing.Point(0, 0);
 			this.pnlTop.Name = "pnlTop";
+#if DEBUG
 			this.pnlTop.Size = new System.Drawing.Size(422, 149);
+#endif
 			this.pnlTop.TabIndex = 4;
 			this.pnlTop.Resize += new System.EventHandler(this.pnlTop_Resize);
 			// 
@@ -649,7 +742,9 @@
 			this.pnlSearch.BackColor = System.Drawing.Color.Transparent;
 			this.pnlSearch.Controls.Add(this.txtSearch);
 			this.pnlSearch.Cursor = System.Windows.Forms.Cursors.SizeWE;
+#if DEBUG
 			this.pnlSearch.Location = new System.Drawing.Point(324, 9);
+#endif
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
 			this.pnlSearch.Size = new System.Drawing.Size(95, 35);
@@ -665,7 +760,9 @@
 			this.txtSearch.InnerMargin = new System.Windows.Forms.Padding(2, 0, 22, 0);
 			this.txtSearch.Location = new System.Drawing.Point(2, 0);
 			this.txtSearch.Name = "txtSearch";
+#if DEBUG
 			this.txtSearch.Size = new System.Drawing.Size(93, 21);
+#endif
 			this.txtSearch.TabIndex = 2;
 			this.txtSearch.Resize += new System.EventHandler(this.txtSearch_Resize);
 			this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
@@ -699,7 +796,9 @@
 			this.tbrTool.Location = new System.Drawing.Point(0, 68);
 			this.tbrTool.Name = "tbrTool";
 			this.tbrTool.ShowToolTips = true;
+#if DEBUG
 			this.tbrTool.Size = new System.Drawing.Size(422, 34);
+#endif
 			this.tbrTool.TabIndex = 3;
 			this.tbrTool.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrTool.Visible = false;
@@ -725,7 +824,9 @@
 			this.btnSpan.Enabled = false;
 			this.btnSpan.Name = "btnSpan";
 			this.btnSpan.Spring = true;
+#if DEBUG
 			this.btnSpan.Width = 24;
+#endif
 			// 
 			// btnDeleteUserFiles
 			// 
@@ -755,10 +856,14 @@
 			this.tbrProp.Divider = false;
 			this.tbrProp.DropDownArrows = true;
 			this.tbrProp.ImageList = this.bmpImageList.ImageList;
+#if DEBUG
 			this.tbrProp.Location = new System.Drawing.Point(0, 34);
+#endif
 			this.tbrProp.Name = "tbrProp";
 			this.tbrProp.ShowToolTips = true;
+#if DEBUG
 			this.tbrProp.Size = new System.Drawing.Size(422, 34);
+#endif
 			this.tbrProp.TabIndex = 2;
 			this.tbrProp.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrProp.Visible = false;
@@ -863,7 +968,9 @@
 			this.tbrAction.Location = new System.Drawing.Point(0, 0);
 			this.tbrAction.Name = "tbrAction";
 			this.tbrAction.ShowToolTips = true;
+#if DEBUG
 			this.tbrAction.Size = new System.Drawing.Size(422, 34);
+#endif
 			this.tbrAction.TabIndex = 0;
 			this.tbrAction.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrAction.Wrappable = false;
@@ -914,6 +1021,7 @@
 			this.btnPin.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
 			this.btnPin.Tag = "Minimize FED to notification area when DOSBox is running.";
 			this.btnPin.ToolTipText = "Keep FED in Memory (Scroll Lock)";
+#if DEBUG
 			// 
 			// openFileFolderDialog
 			// 
@@ -924,6 +1032,7 @@
 			this.openFileFolderDialog.OpenFileDialog.CheckFileExists = false;
 			this.openFileFolderDialog.OpenFileDialog.FileName = " ";
 			this.openFileFolderDialog.OpenFileDialog.Filter = "Folders|*.arbitrary-unique-{401D4D69-935B-452b-9C73-DEAA59526D7F}";
+#endif
 			// 
 			// mnuGame
 			// 
@@ -964,11 +1073,12 @@
 			this.Controls.Add(this.pnlMain);
 			this.Controls.Add(this.sbr);
 			this.Controls.Add(this.pnlTop);
+#if DEBUG
 			this.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+#endif
 			this.KeyPreview = true;
 			this.Name = "GameListForm";
 			this.OpacityOnSizeMove = 0.5;
-			this.Text = "FED - FrontEnd for DOSBox";
 			this.pnlMain.ResumeLayout(false);
 			this.tab.ResumeLayout(false);
 			this.pageGames.ResumeLayout(false);
