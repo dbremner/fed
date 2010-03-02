@@ -35,13 +35,12 @@ namespace Plain.Forms {
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 			if (Environment.OSVersion.Version < NativeMethods.WindowsVista) {
-				m_LabelEmptyText = new Label();
+				m_LabelEmptyText = new ClickThroughLabel();
 				m_LabelEmptyText.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 				m_LabelEmptyText.AutoSize = false;
 				m_LabelEmptyText.ForeColor = SystemColors.GrayText;
 				m_LabelEmptyText.TextAlign = ContentAlignment.MiddleCenter;
 				m_LabelEmptyText.Visible = false;
-				////m_LabelEmptyText.MouseDown += new MouseEventHandler(LabelEmptyText_MouseDown);
 				base.Controls.Add(m_LabelEmptyText);
 			}
 			m_ColumnWidthChangingIndex = -1;
@@ -52,7 +51,7 @@ namespace Plain.Forms {
 		/// </summary>
 		[Description("Occurs when the user or code scrolls through the client area.")]
 		public event ScrollEventHandler Scroll = delegate { };
-
+		
 		/// <summary>
 		/// Occurs when the user or code scrolls through the client area.
 		/// </summary>
@@ -131,13 +130,14 @@ namespace Plain.Forms {
 		}
 
 		string m_EmptyText;
-		Label m_LabelEmptyText;
+		ClickThroughLabel m_LabelEmptyText;
 		int m_ColumnWidthChangingIndex;
 		
 		protected virtual void OnScroll(ScrollEventArgs e) {
 			Scroll(this, e);
 		}
-
+		
+#if USE_BEGINENDSCRLL
 		protected virtual void OnBeginScroll(EventArgs e) {
 			ScrollBegin(this, e);
 		}
@@ -145,6 +145,7 @@ namespace Plain.Forms {
 		protected virtual void OnEndScroll(EventArgs e) {
 			ScrollEnd(this, e);
 		}
+#endif
 
 		protected override void OnHandleCreated(EventArgs e) {
 			base.OnHandleCreated(e);
@@ -409,10 +410,6 @@ namespace Plain.Forms {
 				}
 				m_LabelEmptyText.SendToBack();
 			}
-		}
-
-		private void LabelEmptyText_MouseDown(object sender, MouseEventArgs e) {
-			base.Focus();
 		}
 	}
 }
