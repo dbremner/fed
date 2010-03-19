@@ -146,7 +146,7 @@ namespace Plain.Forms {
 		/// <summary>
 		/// Gets the internal ToolStrip.
 		/// </summary>
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public ToolStrip ToolStrip {
 			get { return getControl(TYPE_TOOLSTRIP) as ToolStrip; }
 		}
