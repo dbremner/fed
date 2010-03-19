@@ -94,8 +94,8 @@ namespace DosboxApp {
 		}
 
 		bool m_IsInitializationDone;
-		bool m_IsSelectionScrolling;
 		string m_TemporaryConfigFile;
+		ListViewItem m_LastComboItem;
 
 		protected void SaveTo(GameListFormConfig config) {
 			base.SaveTo(config);
@@ -496,38 +496,41 @@ namespace DosboxApp {
 			}
 		}
 
-		void moveCombo() {
-			if (lvwGame.SelectedIndices.Count == 1) {
-				ListViewItem item = lvwGame.SelectedItems[0];
-				item = lvwGame.FocusedItem;
-				int index = hdrExe.Index;
-				if (item.SubItems[index].Bounds.Top >= lvwGame.HeaderHeight && item.SubItems[index].Bounds.Width >= comboButton.Width) {
-					comboButton.ComboBox.Width = item.SubItems[index].Bounds.Width - 2;
-					comboButton.Location = new Point(item.SubItems[index].Bounds.Right - comboButton.Width, item.SubItems[index].Bounds.Top);
-					comboButton.Visible = true;
-				}
-				else {
-					comboButton.Visible = false;
+		void moveCombo(ListViewItem.ListViewSubItem subitem) {
+			if (subitem != null) {
+				comboButton.Visible = true;
+				// Even if the header is too narrow, the subitem's width is still 16.
+				if (subitem.Bounds.Width >= comboButton.Width) {
+					if (subitem.Bounds.Top >= lvwGame.HeaderHeight) {
+						comboButton.ComboBox.Width = subitem.Bounds.Width - 2;
+						comboButton.Location = new Point(subitem.Bounds.Right - comboButton.Width, subitem.Bounds.Top);
+						comboButton.VirtualRectangle = Rectangle.Empty;
+						comboButton.AutoSize = true;
+					}
+					else {
+						Size size = new Size(subitem.Bounds.Width, subitem.Bounds.Bottom - lvwGame.HeaderHeight);
+						comboButton.Location = new Point(subitem.Bounds.Left, lvwGame.HeaderHeight);
+						comboButton.VirtualRectangle = new Rectangle(new Point(size.Width - comboButton.PreferredSize.Width, size.Height - comboButton.PreferredSize.Height), comboButton.PreferredSize);
+						comboButton.AutoSize = false;
+						comboButton.Size = size;
+					}
+					return;
 				}
 			}
+			comboButton.Visible = false;
 		}
 
-		void popuCombo() {
-			if (lvwGame.SelectedIndices.Count == 1) {
-				int index = hdrExe.Index;
-				ListViewItem item = lvwGame.SelectedItems[0];
-				comboButton.ComboBox.Items.Clear();
-				comboButton.ComboBox.Items.AddRange(GameObject.GetExecutables((item.Tag as GameObject).Directory).ToArray());
-				if (comboButton.ComboBox.Items.Contains(item.SubItems[index].Text) == false) {
-					comboButton.ComboBox.Items.Add(item.SubItems[index].Text);
+		void popuCombo(ListViewItem.ListViewSubItem subitem, GameObject gobj) {
+			comboButton.ComboBox.Items.Clear();
+			comboButton.ComboBox.Items.AddRange(GameObject.GetExecutables(gobj.Directory).ToArray());
+			string exeName = subitem.Text.Trim();
+			if (string.IsNullOrEmpty(exeName) == false) {
+				if (comboButton.ComboBox.Items.Contains(exeName) == false) {
+					comboButton.ComboBox.Items.Add(exeName);
 				}
-				comboButton.ComboBox.Items.Add("(Select...)");
-				comboButton.ComboBox.Text = item.SubItems[index].Text;
-				moveCombo();
 			}
-			else {
-				comboButton.Visible = false;
-			}
+			comboButton.ComboBox.Items.Add("(Select...)");
+			comboButton.ComboBox.Text = subitem.Text;
 		}
 
 		private void tab_SelectedIndexChanged(object sender, EventArgs e) {
@@ -757,46 +760,52 @@ namespace DosboxApp {
 			}
 		}
 
-		private void lvwGame_ColumnReordered(object sender, ColumnReorderedEventArgs e) {
-			//
-			moveCombo();
-		}
-
-		private void lvwGame_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e) {
-			moveCombo();
-		}
-
-		private void lvwGame_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e) {
-			moveCombo();
-		}
-
 		private void lvwGame_ItemActivate(object sender, EventArgs e) {
 			tbrAction_ButtonClick(sender, new ToolBarButtonClickEventArgs(btnRun));
 		}
 
-		private void lvwGame_Scroll(object sender, ScrollEventArgs e) {
-			moveCombo();
-		}
-
-		private void lvwGame_ScrollBegin(object sender, EventArgs e) {
-			m_IsSelectionScrolling = true;
-			comboButton.Visible = false;
-		}
-
-		private void lvwGame_ScrollEnd(object sender, EventArgs e) {
-			popuCombo();
-			m_IsSelectionScrolling = false;
-		}
-
 		private void lvwGame_MouseDown(object sender, MouseEventArgs e) {
-			// TODO: check if this event is necessary, or call popupCombo directly.
-			lvwGame_SelectedIndexChanged(sender, e);
 			ListViewHitTestInfo htinfo = lvwGame.HitTest(e.Location);
 			if (htinfo.Item != null || lvwGame.SelectedIndices.Count > 0) {
 				//lvwGame.ContextMenu = mnuGame;
 			}
 			else {
 				lvwGame.ContextMenu = null;
+			}
+		}
+
+		private void lvwGame_MouseMove(object sender, MouseEventArgs e) {
+			Rectangle bounds;
+			if (lvwGame.View == View.Details) {
+				bounds = new Rectangle(lvwGame.ClientRectangle.Left, lvwGame.ClientRectangle.Top + lvwGame.HeaderHeight, lvwGame.ClientRectangle.Width, lvwGame.ClientRectangle.Height - lvwGame.HeaderHeight);
+			}
+			else {
+				bounds = lvwGame.ClientRectangle;
+			}
+			if (bounds.Contains(e.Location)) {
+				ListViewItem.ListViewSubItem subitem = null;
+				ListViewHitTestInfo htinfo = lvwGame.HitTest(e.Location);
+				if (htinfo.Item != null) {
+					if (htinfo.SubItem == htinfo.Item.SubItems[hdrExe.Index]) {
+						subitem = htinfo.SubItem;
+					}
+					if (subitem != null) {
+						if (m_LastComboItem != htinfo.Item) {
+							m_LastComboItem = htinfo.Item;
+							popuCombo(subitem, m_LastComboItem.Tag as GameObject);
+						}
+					}
+				}
+				moveCombo(subitem);
+			}
+			else {
+				comboButton.Visible = false;
+			}
+		}
+
+		private void lvwGame_MouseLeave(object sender, EventArgs e) {
+			if (lvwGame.RectangleToScreen(lvwGame.ClientRectangle).Contains(Control.MousePosition) == false) {
+				comboButton.Visible = false;
 			}
 		}
 
@@ -807,9 +816,10 @@ namespace DosboxApp {
 			else {
 				btnRemove.Enabled = false;
 			}
-			if (m_IsSelectionScrolling == false) {
-				popuCombo();
-			}
+		}
+
+		private void lvwGame_ScrollBegin(object sender, EventArgs e) {
+			comboButton.Visible = false;
 		}
 
 		private void mnuRunGame_Click(object sender, EventArgs e) {
@@ -825,9 +835,10 @@ namespace DosboxApp {
 		}
 
 		private void comboButton_ComboBox_DropDown(object sender, EventArgs e) {
-			if (lvwGame.Focused == false) {
+			/*if (lvwGame.Focused == false) {
 				lvwGame.Focus();
-			}
+				m_LastComboItem.Focused = true;
+			}*/
 		}
 
 		private void comboButton_ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -844,7 +855,7 @@ namespace DosboxApp {
 				else {
 					gobj.Executable = comboButton.ComboBox.Text;
 				}
-				lvwGame.SelectedItems[0].SubItems[hdrExe.Index].Text = gobj.Executable;
+				m_LastComboItem.SubItems[hdrExe.Index].Text = gobj.Executable;
 			}
 		}
 

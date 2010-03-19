@@ -75,9 +75,22 @@ namespace Plain.Forms {
 			get { return base.Height; }
 		}
 
+		public Rectangle VirtualRectangle {
+			set { m_VirtualRectangle = value; }
+			get { return m_VirtualRectangle; }
+		}
+
 		Size m_PreferredSize;
+		Rectangle m_VirtualRectangle;
 		bool _IsMouseDown;
 		bool _HasMouse;
+
+		protected override void OnAutoSizeChanged(EventArgs e) {
+			base.OnAutoSizeChanged(e);
+			if (base.AutoSize) {
+				base.Size = m_PreferredSize;
+			}
+		}
 
 		protected override void OnLayout(LayoutEventArgs e) {
 			base.OnLayout(e);
@@ -93,14 +106,14 @@ namespace Plain.Forms {
 		}
 
 		private void comboBox_SelectedIndexChanged(object sender, EventArgs e) {
-			Control ctrl = base.Parent;
+			/*Control ctrl = base.Parent;
 			while (ctrl != null) {
 				if (ctrl.CanSelect) {
 					ctrl.Select();
 					break;
 				}
 				ctrl = ctrl.Parent;
-			}
+			}*/
 		}
 
 		private void label_MouseEnter(object sender, EventArgs e) {
@@ -150,11 +163,12 @@ namespace Plain.Forms {
 				cboState = ComboBoxState.Normal;
 				btnState = ButtonState.Normal;
 			}
+			Rectangle r = m_VirtualRectangle.IsEmpty ? label.Bounds : m_VirtualRectangle;
 			if (ComboBoxRenderer.IsSupported) {
-				ComboBoxRenderer.DrawDropDownButton(e.Graphics, label.Bounds, cboState);
+				ComboBoxRenderer.DrawDropDownButton(e.Graphics, r, cboState);
 			}
 			else {
-				ControlPaint.DrawComboButton(e.Graphics, label.Bounds, btnState);
+				ControlPaint.DrawComboButton(e.Graphics, r, btnState);
 			}
 		}
 
