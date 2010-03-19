@@ -120,18 +120,27 @@ namespace DosboxApp {
 				}
 			}
 			if (base.readProp(ini, "Column0Width", out value)) {
-				if (32 <= (int) value) {
+				if (8 <= (int) value) {
 					m_Column0Width = (int) value;
+				}
+				else {
+					m_Column0Width = 8;
 				}
 			}
 			if (base.readProp(ini, "Column1Width", out value)) {
-				if (32 <= (int) value) {
+				if (8 <= (int) value) {
 					m_Column1Width = (int) value;
+				}
+				else {
+					m_Column1Width = 8;
 				}
 			}
 			if (base.readProp(ini, "Column2Width", out value)) {
-				if (32 <= (int) value) {
+				if (8 <= (int) value) {
 					m_Column2Width = (int) value;
+				}
+				else {
+					m_Column2Width = 8;
 				}
 			}
 			if (base.readProp(ini, "FEDPinned", out value)) {
