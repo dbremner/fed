@@ -30,6 +30,13 @@ namespace Plain.Forms {
 		/// </summary>
 		public PropertyGridEx()
 			: base() {
+			Control comment = getControl(TYPE_DOCCOMMENT);
+			if (comment != null) {
+				comment.TextChanged += new EventHandler(DocComment_TextChanged);
+				foreach (Control ctrl in comment.Controls) {
+					ctrl.TextChanged += new EventHandler(DocComment_TextChanged);
+				}
+			}
 			m_Changes = new LinkedList<ChangeInfo>();
 			initChangeQueue();
 			m_Unsaved = new LinkedList<CommitInfo>();
@@ -41,6 +48,12 @@ namespace Plain.Forms {
 		/// </summary>
 		[Description("Occurs when the value of the Modified property has changed.")]
 		public event EventHandler ModifiedChanged = delegate { };
+
+		/// <summary>
+		/// Occurs when the text of the DocComment control has changed.
+		/// </summary>
+		[Description("Occurs when the text of the DocComment control has changed.")]
+		public event EventHandler CommentChanged = delegate { };
 
 		/// <summary>
 		/// Undoes the last edit operation in the PropertyGridEx.
@@ -252,6 +265,9 @@ namespace Plain.Forms {
 			if (_Undoing || _Redoing) {
 				return;
 			}
+			if (object.Equals(e.OldValue, e.ChangedItem.Value)) {
+				return;
+			}
 			removeAfter(m_Current);
 			m_Changes.AddLast(new ChangeInfo(e.ChangedItem, e.OldValue, e.ChangedItem.Value));
 			m_Current = m_Current.Next;
@@ -269,6 +285,10 @@ namespace Plain.Forms {
 
 		protected virtual void OnModifiedChanged(EventArgs e) {
 			ModifiedChanged(this, e);
+		}
+
+		private void DocComment_TextChanged(object sender, EventArgs e) {
+			CommentChanged(sender, e);
 		}
 
 		void initChangeQueue() {
