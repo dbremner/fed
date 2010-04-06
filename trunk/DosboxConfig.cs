@@ -31,7 +31,7 @@ using Plain.Design;
 using Plain.IO;
 
 namespace DosboxApp {
-	[DefaultProperty("cmd")]
+	[DefaultProperty("autoexec")]
 	public class DosboxConfig {
 		public class ResolutionTypeConverter : ExpandableObjectConverter {
 			public const string RESOLUTION_ORIGINAL = "original";
@@ -260,6 +260,9 @@ namespace DosboxApp {
 					throw new ArgumentNullException("destinationType");
 				}
 				if ((destinationType == typeof(string)) && (value is string)) {
+					if (string.IsNullOrEmpty(value as string)) {
+						return value;
+					}
 					string[] lines = (value as string).Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 					if (lines.Length > 1) {
 						return lines[0] + "...";
@@ -267,7 +270,6 @@ namespace DosboxApp {
 					else if (lines.Length == 1) {
 						return lines[0];
 					}
-					return string.Empty;
 				}
 				return base.ConvertTo(context, culture, value, destinationType);
 			}
@@ -344,7 +346,7 @@ namespace DosboxApp {
 			write_section(ini, DosboxConfig.SECTION_DOS, config);
 			write_section(ini, DosboxConfig.SECTION_IPX, config);
 			ini.Section = DosboxConfig.SECTION_AUTOEXEC;
-			ini.WriteSection(config.cmd);
+			ini.WriteSection(config.autoexec);
 		}
 
 		public static void SaveProperty(INI ini, string section, string name, object value) {
@@ -377,7 +379,7 @@ namespace DosboxApp {
 				read_section(ini, DosboxConfig.SECTION_DOS, config);
 				read_section(ini, DosboxConfig.SECTION_IPX, config);
 				ini.Section = DosboxConfig.SECTION_AUTOEXEC;
-				config.cmd = ini.ReadSection();
+				config.autoexec = ini.ReadSection();
 			}
 		}
 
@@ -501,7 +503,7 @@ namespace DosboxApp {
 
 			m_ipx = DEFAULT_IPX;
 
-			m_cmd = DEFAULT_CMD;
+			m_autoexec = DEFAULT_AUTOEXEC;
 		}
 
 		#region SDL
@@ -1248,19 +1250,20 @@ namespace DosboxApp {
 		#endregion
 
 		#region AUTOEXEC
-		public const string DEFAULT_CMD = "";
+		public const string DEFAULT_AUTOEXEC = "";
 
 		[CategoryOrder(SECTION_AUTOEXEC, 13)]
-		[DefaultValue(DEFAULT_CMD)]
+		[DefaultValue(DEFAULT_AUTOEXEC)]
 		[Description("Lines in this section will be run at startup.")]
 		[Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+		[ParenthesizePropertyName(true)]
 		[TypeConverter(typeof(CmdStringConverter))]
-		public string cmd {
-			set { m_cmd = value; }
-			get { return m_cmd; }
+		public string autoexec {
+			set { m_autoexec = value; }
+			get { return m_autoexec; }
 		}
 
-		string m_cmd;
+		string m_autoexec;
 		#endregion
 	}
 }
