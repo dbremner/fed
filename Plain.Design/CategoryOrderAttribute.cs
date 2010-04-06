@@ -24,7 +24,7 @@ using System.Text;
 namespace Plain.Design {
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Event, AllowMultiple = false, Inherited = false)]
 	public class CategoryOrderAttribute : System.ComponentModel.CategoryAttribute {
-		const string PREFIX_FOR_ORDER = "\u001f";
+		public const string PREFIX_FOR_ORDER = "\u001f";
 		// NOTE: Obviously this has the problem of same attribute 
 		//	describing different targets overriding the order, but
 		//	it's a balance between that and ease of use.
