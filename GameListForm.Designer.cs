@@ -182,7 +182,7 @@ namespace DosboxApp {
 			this.pnlMain.Location = new System.Drawing.Point(0, 149);
 			this.pnlMain.Name = "pnlMain";
 			this.pnlMain.Size = new System.Drawing.Size(422, 174);
-			this.pnlMain.TabIndex = 3;
+			this.pnlMain.TabIndex = 19;
 			// 
 			// tab
 			// 
@@ -198,7 +198,7 @@ namespace DosboxApp {
 			this.tab.ShowToolTips = true;
 			this.tab.Size = new System.Drawing.Size(422, 174);
 			this.tab.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-			this.tab.TabIndex = 2;
+			this.tab.TabIndex = 20;
 			this.tab.SelectedIndexChanged += new System.EventHandler(this.tab_SelectedIndexChanged);
 			// 
 			// pageGames
@@ -232,7 +232,7 @@ namespace DosboxApp {
 			this.lvwGame.Size = new System.Drawing.Size(410, 142);
 			this.lvwGame.SmallImageList = this.bmpImageList.ImageList;
 			this.lvwGame.StateImageList = this.imlSmallList;
-			this.lvwGame.TabIndex = 1;
+			this.lvwGame.TabIndex = 0;
 			this.lvwGame.UseCompatibleStateImageBehavior = false;
 			this.lvwGame.View = System.Windows.Forms.View.Details;
 			this.lvwGame.ItemActivate += new System.EventHandler(this.lvwGame_ItemActivate);
@@ -270,7 +270,7 @@ namespace DosboxApp {
 			this.comboButton.Location = new System.Drawing.Point(292, 67);
 			this.comboButton.Name = "comboButton";
 			this.comboButton.Size = new System.Drawing.Size(17, 21);
-			this.comboButton.TabIndex = 2;
+			this.comboButton.TabIndex = 1;
 			this.comboButton.VirtualRectangle = new System.Drawing.Rectangle(0, 0, 0, 0);
 			this.comboButton.Visible = false;
 			this.comboButton.LostFocus += new System.EventHandler(this.comboButton_LostFocus);
@@ -296,11 +296,11 @@ namespace DosboxApp {
 			this.gridConfig.Name = "gridConfig";
 			this.gridConfig.PropertySort = System.Windows.Forms.PropertySort.Categorized;
 			this.gridConfig.Size = new System.Drawing.Size(410, 142);
-			this.gridConfig.TabIndex = 1;
+			this.gridConfig.TabIndex = 4;
 			this.gridConfig.ToolbarVisible = false;
-			this.gridConfig.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.gridConfig_SelectedGridItemChanged);
 			this.gridConfig.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridConfig_PropertyValueChanged);
 			this.gridConfig.ModifiedChanged += new System.EventHandler(this.gridConfig_ModifiedChanged);
+			this.gridConfig.CommentChanged += new System.EventHandler(this.gridConfig_CommentChanged);
 			// 
 			// pageOptions
 			// 
@@ -324,7 +324,7 @@ namespace DosboxApp {
 			this.pnlDosboxVersions.Name = "pnlDosboxVersions";
 			this.pnlDosboxVersions.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
 			this.pnlDosboxVersions.Size = new System.Drawing.Size(289, 142);
-			this.pnlDosboxVersions.TabIndex = 2;
+			this.pnlDosboxVersions.TabIndex = 6;
 			// 
 			// lblNotImplemented
 			// 
@@ -332,7 +332,7 @@ namespace DosboxApp {
 			this.lblNotImplemented.Location = new System.Drawing.Point(2, 0);
 			this.lblNotImplemented.Name = "lblNotImplemented";
 			this.lblNotImplemented.Size = new System.Drawing.Size(287, 142);
-			this.lblNotImplemented.TabIndex = 0;
+			this.lblNotImplemented.TabIndex = 7;
 			this.lblNotImplemented.Text = "Not Yet Implemented";
 			this.lblNotImplemented.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -366,7 +366,7 @@ namespace DosboxApp {
 			this.tvwOptions.ShowLines = false;
 			this.tvwOptions.ShowRootLines = false;
 			this.tvwOptions.Size = new System.Drawing.Size(121, 142);
-			this.tvwOptions.TabIndex = 0;
+			this.tvwOptions.TabIndex = 5;
 			this.tvwOptions.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvwOptions_BeforeCollapse);
 			this.tvwOptions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwOptions_AfterSelect);
 			// 
@@ -406,7 +406,7 @@ namespace DosboxApp {
 			this.txtComment.Multiline = true;
 			this.txtComment.Name = "txtComment";
 			this.txtComment.Size = new System.Drawing.Size(287, 142);
-			this.txtComment.TabIndex = 5;
+			this.txtComment.TabIndex = 10;
 			// 
 			// txtSendData
 			// 
@@ -416,7 +416,7 @@ namespace DosboxApp {
 			this.txtSendData.Name = "txtSendData";
 			this.txtSendData.ReadOnly = true;
 			this.txtSendData.Size = new System.Drawing.Size(287, 142);
-			this.txtSendData.TabIndex = 1;
+			this.txtSendData.TabIndex = 11;
 			this.txtSendData.Visible = false;
 			// 
 			// pnlAbout
@@ -427,7 +427,7 @@ namespace DosboxApp {
 			this.pnlAbout.Name = "pnlAbout";
 			this.pnlAbout.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
 			this.pnlAbout.Size = new System.Drawing.Size(289, 142);
-			this.pnlAbout.TabIndex = 7;
+			this.pnlAbout.TabIndex = 12;
 			this.pnlAbout.Visible = false;
 			// 
 			// lblCopyright
@@ -445,7 +445,7 @@ namespace DosboxApp {
 			this.pnlHelp.Location = new System.Drawing.Point(123, 2);
 			this.pnlHelp.Name = "pnlHelp";
 			this.pnlHelp.Size = new System.Drawing.Size(289, 142);
-			this.pnlHelp.TabIndex = 4;
+			this.pnlHelp.TabIndex = 9;
 			// 
 			// tvwHelp
 			// 
@@ -482,7 +482,7 @@ namespace DosboxApp {
 			this.tvwHelp.ShowLines = false;
 			this.tvwHelp.ShowRootLines = false;
 			this.tvwHelp.Size = new System.Drawing.Size(121, 142);
-			this.tvwHelp.TabIndex = 3;
+			this.tvwHelp.TabIndex = 8;
 			this.tvwHelp.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvwHelp_BeforeCollapse);
 			this.tvwHelp.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwHelp_AfterSelect);
 			// 
@@ -503,7 +503,7 @@ namespace DosboxApp {
 			this.tbrHelp.Name = "tbrHelp";
 			this.tbrHelp.ShowToolTips = true;
 			this.tbrHelp.Size = new System.Drawing.Size(422, 26);
-			this.tbrHelp.TabIndex = 3;
+			this.tbrHelp.TabIndex = 18;
 			this.tbrHelp.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrHelp.Visible = false;
 			this.tbrHelp.Wrappable = false;
@@ -600,7 +600,7 @@ namespace DosboxApp {
 			this.sbr.ResourceImageList = this.bmpImageList;
 			this.sbr.ShowPanels = true;
 			this.sbr.Size = new System.Drawing.Size(422, 25);
-			this.sbr.TabIndex = 2;
+			this.sbr.TabIndex = 13;
 			// 
 			// sbpInfo
 			// 
@@ -621,7 +621,7 @@ namespace DosboxApp {
 			this.pnlTop.Location = new System.Drawing.Point(0, 0);
 			this.pnlTop.Name = "pnlTop";
 			this.pnlTop.Size = new System.Drawing.Size(422, 149);
-			this.pnlTop.TabIndex = 4;
+			this.pnlTop.TabIndex = 14;
 			this.pnlTop.Resize += new System.EventHandler(this.pnlTop_Resize);
 			// 
 			// pnlSearch
@@ -633,7 +633,7 @@ namespace DosboxApp {
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
 			this.pnlSearch.Size = new System.Drawing.Size(95, 35);
-			this.pnlSearch.TabIndex = 3;
+			this.pnlSearch.TabIndex = 2;
 			this.pnlSearch.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlSearch_MouseMove);
 			// 
 			// txtSearch
@@ -646,7 +646,7 @@ namespace DosboxApp {
 			this.txtSearch.Location = new System.Drawing.Point(2, 0);
 			this.txtSearch.Name = "txtSearch";
 			this.txtSearch.Size = new System.Drawing.Size(93, 21);
-			this.txtSearch.TabIndex = 2;
+			this.txtSearch.TabIndex = 3;
 			this.txtSearch.Resize += new System.EventHandler(this.txtSearch_Resize);
 			this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
 			// 
@@ -680,7 +680,7 @@ namespace DosboxApp {
 			this.tbrTool.Name = "tbrTool";
 			this.tbrTool.ShowToolTips = true;
 			this.tbrTool.Size = new System.Drawing.Size(422, 34);
-			this.tbrTool.TabIndex = 3;
+			this.tbrTool.TabIndex = 17;
 			this.tbrTool.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrTool.Visible = false;
 			this.tbrTool.Wrappable = false;
@@ -705,15 +705,14 @@ namespace DosboxApp {
 			this.btnSpan.Enabled = false;
 			this.btnSpan.Name = "btnSpan";
 			this.btnSpan.Spring = true;
-			this.btnSpan.Width = 24;
+			this.btnSpan.Width = 314;
 			// 
 			// btnDeleteUserFiles
 			// 
-			this.btnDeleteUserFiles.Enabled = false;
 			this.btnDeleteUserFiles.ImageKey = "DeleteUserFiles";
 			this.btnDeleteUserFiles.Name = "btnDeleteUserFiles";
 			this.btnDeleteUserFiles.Style = System.Windows.Forms.ToolBarButtonStyle.ToggleButton;
-			this.btnDeleteUserFiles.Tag = "Delete FED settings file when program exits.";
+			this.btnDeleteUserFiles.Tag = "Delete FED user settings when program exits.";
 			this.btnDeleteUserFiles.ToolTipText = "Schedule User File Deletion";
 			// 
 			// tbrProp
@@ -739,7 +738,7 @@ namespace DosboxApp {
 			this.tbrProp.Name = "tbrProp";
 			this.tbrProp.ShowToolTips = true;
 			this.tbrProp.Size = new System.Drawing.Size(422, 34);
-			this.tbrProp.TabIndex = 2;
+			this.tbrProp.TabIndex = 16;
 			this.tbrProp.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrProp.Visible = false;
 			this.tbrProp.Wrappable = false;
@@ -844,7 +843,7 @@ namespace DosboxApp {
 			this.tbrAction.Name = "tbrAction";
 			this.tbrAction.ShowToolTips = true;
 			this.tbrAction.Size = new System.Drawing.Size(422, 34);
-			this.tbrAction.TabIndex = 0;
+			this.tbrAction.TabIndex = 15;
 			this.tbrAction.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right;
 			this.tbrAction.Wrappable = false;
 			this.tbrAction.MouseLeave += new System.EventHandler(this.tbrAction_MouseLeave);
