@@ -45,8 +45,9 @@ namespace DosboxApp {
 
 		public void Dispose() {
 			try {
-				if (File.Exists(m_DownloadedUpdate.Path)) {
-					File.Delete(m_DownloadedUpdate.Path);
+				FileInfo fi = new FileInfo(m_DownloadedUpdate.Path);
+				if (fi.Exists) {
+					fi.Delete();
 				}
 			}
 			catch { }
@@ -135,47 +136,35 @@ namespace DosboxApp {
 		}
 
 		public bool DownloadAndVerify() {
-			try {
-				if (m_DownloadedUpdate.Path != null) {
-					if (File.Exists(m_DownloadedUpdate.Path)) {
-						File.Delete(m_DownloadedUpdate.Path);
-					}
-				}
+			if (verifyDownload(null)) {
+				return true;
 			}
-			catch { }
-			finally {
-				m_DownloadedUpdate.Path = null;
-			}
+
 			lock (m_LatestUpdate) {
 				if (this.IsUpdateAvailable) {
 					FileStream outStream = null;
 					HttpWebRequest request = null;
 					HttpWebResponse response = null;
-					long length = 0;
-					BinaryReader reader = null;
+					int length = 0;
 					try {
 						string tmpPath = Path.GetTempFileName();
 						m_DownloadedUpdate.Path = tmpPath + ".exe";
-						File.Move(tmpPath, m_DownloadedUpdate.Path);
-						outStream = new FileStream(m_DownloadedUpdate.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+						FileInfo fi = new FileInfo(tmpPath);
+						fi.MoveTo(m_DownloadedUpdate.Path);
+
+						outStream = fi.OpenWrite();
 						request = (HttpWebRequest) WebRequest.Create(m_LatestUpdate.Path);
 						response = (HttpWebResponse) request.GetResponse();
 						if (response.StatusCode == HttpStatusCode.OK && response.ContentType.StartsWith("application/x-dosexec")) {
-							length = response.ContentLength;
-							reader = new BinaryReader(response.GetResponseStream());
-							byte[] updateData = reader.ReadBytes((int) length);
-							outStream.Write(updateData, 0, updateData.Length);
-							// Compare checksum.
-							outStream.Position = 0;
-							MD5 md5 = MD5.Create();
-							byte[] md5InBytes = md5.ComputeHash(outStream);
-							StringBuilder sb = new StringBuilder(MD5LENGTH);
-							for (int i = 0; i < md5InBytes.Length; ++i) {
-								sb.Append(md5InBytes[i].ToString("x2"));
-							}
+							length = (int) response.ContentLength;
+							byte[] updateData = new byte[length];
+							response.GetResponseStream().Read(updateData, 0, length);
+							outStream.Write(updateData, 0, length);
+							outStream.Close();
+							outStream = null;
 
-							m_DownloadedUpdate.MD5Sum = sb.ToString();
-							if (m_DownloadedUpdate.MD5Sum == m_LatestUpdate.MD5Sum) {
+							// Compare checksum.
+							if (verifyDownload(fi)) {
 								return true;
 							}
 						}
@@ -185,14 +174,8 @@ namespace DosboxApp {
 						if (outStream != null) {
 							outStream.Close();
 						}
-						if (reader != null) {
-							reader.Close();
-						}
 						if (response != null) {
 							response.Close();
-						}
-						if (request != null) {
-							request.Abort();
 						}
 					}
 				}
@@ -241,6 +224,38 @@ namespace DosboxApp {
 		const int MD5LENGTH = 32;
 		Uri m_ReleasesUri;
 		UpdateInfo m_LatestUpdate, m_DownloadedUpdate;
+
+		bool verifyDownload(FileInfo fi) {
+			lock (m_LatestUpdate) {
+				if (this.IsUpdateAvailable) {
+					FileStream stream = null;
+					try {
+						if (fi == null) {
+							fi = new FileInfo(m_DownloadedUpdate.Path);
+						}
+						stream = fi.OpenRead();
+						MD5 md5 = MD5.Create();
+						byte[] md5InBytes = md5.ComputeHash(stream);
+						StringBuilder sb = new StringBuilder(MD5LENGTH);
+						for (int i = 0; i < md5InBytes.Length; ++i) {
+							sb.Append(md5InBytes[i].ToString("x2"));
+						}
+
+						m_DownloadedUpdate.MD5Sum = sb.ToString();
+						if (m_DownloadedUpdate.MD5Sum == m_LatestUpdate.MD5Sum) {
+							return true;
+						}
+					}
+					catch { }
+					finally {
+						if (stream != null) {
+							stream.Close();
+						}
+					}
+				}
+			}
+			return false;
+		}
 
 
 
