@@ -232,14 +232,29 @@ namespace DosboxApp {
 			base.OnFormClosed(e);
 			m_IsInitializationDone = false;
 			this.Visible = false;
+
+			FileInfo fi = null;
 			if (m_TemporaryConfigFile != null) {
 				try {
-					File.Delete(m_TemporaryConfigFile);
+					fi = new FileInfo(m_TemporaryConfigFile);
+					fi.Delete();
 				}
 				catch { }
 			}
-			// TODO: save grid splitter width.
-			this.SaveTo(Program.AppConfig.GameListFormConfig);
+
+			if (btnDeleteUserFiles.Pushed == false) {
+				// TODO: save grid splitter width.
+				this.SaveTo(Program.AppConfig.GameListFormConfig);
+			}
+			else {
+				try {
+					fi = new FileInfo(AppInfo.GetUserConfigFileName());
+					fi.Delete();
+				}
+				catch (Exception xc) {
+					MessageBox.Show(xc.Message, "User File Deletion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 
 			if (Program.AppConfig.UpdateConfig.DelayedInstall) {
 				if (Program.Updater.InstallUpdate() == false) {
@@ -439,6 +454,7 @@ namespace DosboxApp {
 			}
 		}
 
+		// TODO: Consider merging prepareTempConfig() and saveConfig()...
 		bool prepareTempConfig(DosboxInfo dbinfo) {
 			if (gridConfig.Modified) {
 				try {
@@ -450,7 +466,13 @@ namespace DosboxApp {
 					foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
 						CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(ci.ChangedItem.PropertyDescriptor);
 						if (cat != null) {
-							DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
+							if (cat.Category != DosboxConfig.SECTION_AUTOEXEC) {
+								DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
+							}
+							else {
+								ini.Section = DosboxConfig.SECTION_AUTOEXEC;
+								ini.WriteSection(dbinfo.Config.autoexec);
+							}
 						}
 					}
 					btnViewTempConfigExtern.Visible = true;
@@ -482,16 +504,26 @@ namespace DosboxApp {
 			}
 		}
 
+		// TODO: Consider merging prepareTempConfig() and saveConfig()...
 		void saveConfig() {
 			DosboxInfo dbinfo = getSelectedDosboxVersion();
 			if (dbinfo != null) {
 				INI ini = dbinfo.GetUserConfigINI();
-				foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
-					CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(ci.ChangedItem.PropertyDescriptor);
-					if (cat != null) {
-						DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
+				try {
+					foreach (PropertyGridEx.CommitInfo ci in gridConfig.GetUnsavedChanges()) {
+						CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(ci.ChangedItem.PropertyDescriptor);
+						if (cat != null) {
+							if (cat.Category != DosboxConfig.SECTION_AUTOEXEC) {
+								DosboxConfig.SaveProperty(ini, cat.Category, ci.ChangedItem.PropertyDescriptor.Name, ci.Value);
+							}
+							else {
+								ini.Section = DosboxConfig.SECTION_AUTOEXEC;
+								ini.WriteSection(dbinfo.Config.autoexec);
+							}
+						}
 					}
 				}
+				catch { }
 				gridConfig.SetSavePoint();
 			}
 		}
@@ -577,8 +609,13 @@ namespace DosboxApp {
 				}
 			}
 			pnlTop.ResumeLayout();
-			if (tab.SelectedTab.Controls.Count > 0) {
-				tab.SelectedTab.Controls[0].Focus();
+			if ((Control.MouseButtons & MouseButtons.Left) != MouseButtons.None) {
+				foreach (Control ctrl in tab.SelectedTab.Controls) {
+					if (ctrl.CanSelect) {
+						ctrl.Select();
+						break;
+					}
+				}
 			}
 		}
 
@@ -726,7 +763,6 @@ namespace DosboxApp {
 
 		private void tbrAction_Resize(object sender, EventArgs e) {
 			if (m_IsInitializationDone) {
-				// TODO: find out why this is called many times.
 				pnlTop.Height = Math.Max(tbrAction.Height, pnlSearch.Height) - 3;
 			}
 		}
@@ -965,13 +1001,16 @@ namespace DosboxApp {
 			btnRedoConfig.Enabled = gridConfig.CanRedo;
 		}
 
-		private void gridConfig_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e) {
+		private void gridConfig_CommentChanged(object sender, EventArgs e) {
+			Control ctrl = sender as Control;
 			// Fix artificially malformed category text from ordering.
-			if (e.NewSelection.GridItemType == GridItemType.Category) {
-				if (e.NewSelection.GridItems.Count > 0) {
-					CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(e.NewSelection.GridItems[0].PropertyDescriptor);
-					if (cat != null) {
-						gridConfig.SetComment(cat.Category, cat.Description);
+			if (gridConfig.SelectedGridItem.GridItemType == GridItemType.Category) {
+				if (ctrl.Text.StartsWith(CategoryOrderAttribute.PREFIX_FOR_ORDER)) {
+					if (gridConfig.SelectedGridItem.GridItems.Count > 0) {
+						CategoryOrderAttribute cat = DosboxConfig.GetCategoryFromDescriptor(gridConfig.SelectedGridItem.GridItems[0].PropertyDescriptor);
+						if (cat != null) {
+							gridConfig.SetComment(cat.Category, cat.Description);
+						}
 					}
 				}
 			}
