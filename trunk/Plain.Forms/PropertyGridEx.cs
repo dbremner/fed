@@ -32,7 +32,6 @@ namespace Plain.Forms {
 			: base() {
 			Control comment = getControl(TYPE_DOCCOMMENT);
 			if (comment != null) {
-				comment.TextChanged += new EventHandler(DocComment_TextChanged);
 				foreach (Control ctrl in comment.Controls) {
 					ctrl.TextChanged += new EventHandler(DocComment_TextChanged);
 				}
