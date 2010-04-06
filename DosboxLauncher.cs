@@ -16,6 +16,7 @@ namespace DosboxApp {
 			NativeMethods.GetShortPathName(gobj.Directory, shortDirName, shortDirName.Capacity);
 			NativeMethods.GetShortPathName(gobj.FileName, shortExeName, shortExeName.Capacity);
 			string args = "-noconsole";
+			args += " -c \"mount d " + "'" + gobj.Directory + "' -t cdrom\"";
 			args += " -c \"mount c " + "'" + Path.GetDirectoryName(gobj.Directory) + "'\"";
 			args += " -c \"c:\"";
 			args += " -c \"cd " + Path.GetFileName(shortDirName.ToString()) + "\"";
