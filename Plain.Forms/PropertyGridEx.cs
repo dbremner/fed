@@ -346,31 +346,24 @@ namespace Plain.Forms {
 			/// <param name="oldValue">The old property value.</param>
 			/// <param name="newValue">The new property value.</param>
 			public ChangeInfo(GridItem item, object oldValue, object newValue) {
-				m_ChangedItem = item;
-				m_OldValue = oldValue;
-				m_NewValue = newValue;
+				ChangedItem = item;
+				OldValue = oldValue;
+				NewValue = newValue;
 			}
 			/// <summary>
 			/// Gets the GridItem that was changed.
 			/// </summary>
-			public GridItem ChangedItem {
-				get { return m_ChangedItem; }
-			}
-			/// <summary>
+			public GridItem ChangedItem { get; }
+
+		    /// <summary>
 			/// The value of the grid item before it was changed.
 			/// </summary>
-			public object OldValue {
-				get { return m_OldValue; }
-			}
-			/// <summary>
+			public object OldValue { get; }
+
+		    /// <summary>
 			/// The value of the grid item after it was changed.
 			/// </summary>
-			public object NewValue {
-				get { return m_NewValue; }
-			}
-			GridItem m_ChangedItem;
-			object m_OldValue;
-			object m_NewValue;
+			public object NewValue { get; }
 		}
 
 		public class CommitInfo {
@@ -378,28 +371,21 @@ namespace Plain.Forms {
 				: this(item, value, false) {
 			}
 			public CommitInfo(GridItem item, object value, bool negativeChange) {
-				m_ChangedItem = item;
-				m_Value = value;
-				m_NegativeChange = negativeChange;
+				ChangedItem = item;
+				Value = value;
+				NegativeChange = negativeChange;
 			}
 			/// <summary>
 			/// Gets the GridItem that was changed.
 			/// </summary>
-			public GridItem ChangedItem {
-				get { return m_ChangedItem; }
-			}
-			/// <summary>
+			public GridItem ChangedItem { get; }
+
+		    /// <summary>
 			/// The value of the grid item.
 			/// </summary>
-			public object Value {
-				get { return m_Value; }
-			}
-			public bool NegativeChange {
-				get { return m_NegativeChange; }
-			}
-			GridItem m_ChangedItem;
-			object m_Value;
-			bool m_NegativeChange;
+			public object Value { get; }
+
+		    public bool NegativeChange { get; }
 		}
 	}
 }

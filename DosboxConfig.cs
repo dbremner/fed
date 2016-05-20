@@ -426,58 +426,58 @@ namespace DosboxApp {
 		}
 
 		public DosboxConfig() {
-			m_fullscreen = DEFAULT_FULLSCREEN;
-			m_fulldouble = DEFAULT_FULLDOUBLE;
-			m_fullresolution = (ResolutionType) TypeDescriptor.GetConverter(typeof(ResolutionType)).ConvertFromInvariantString(DEFAULT_FULLRESOLUTION);
-			m_windowresolution = (ResolutionType) TypeDescriptor.GetConverter(typeof(ResolutionType)).ConvertFromInvariantString(DEFAULT_WINDOWRESOLUTION);
-			m_output = DEFAULT_OUTPUT;
-			m_autolock = DEFAULT_AUTOLOCK;
-			m_sensitivity = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_SENSITIVITY);
-			m_waitonerror = DEFAULT_WAITONERROR;
-			m_priority = (PriorityType) TypeDescriptor.GetConverter(typeof(PriorityType)).ConvertFromInvariantString(DEFAULT_PRIORITY);
-			m_mapperfile = DEFAULT_MAPPERFILE;
-			m_usescancodes = DEFAULT_USESCANCODES;
+			fullscreen = DEFAULT_FULLSCREEN;
+			fulldouble = DEFAULT_FULLDOUBLE;
+			fullresolution = (ResolutionType) TypeDescriptor.GetConverter(typeof(ResolutionType)).ConvertFromInvariantString(DEFAULT_FULLRESOLUTION);
+			windowresolution = (ResolutionType) TypeDescriptor.GetConverter(typeof(ResolutionType)).ConvertFromInvariantString(DEFAULT_WINDOWRESOLUTION);
+			output = DEFAULT_OUTPUT;
+			autolock = DEFAULT_AUTOLOCK;
+			sensitivity = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_SENSITIVITY);
+			waitonerror = DEFAULT_WAITONERROR;
+			priority = (PriorityType) TypeDescriptor.GetConverter(typeof(PriorityType)).ConvertFromInvariantString(DEFAULT_PRIORITY);
+			mapperfile = DEFAULT_MAPPERFILE;
+			usescancodes = DEFAULT_USESCANCODES;
 
-			m_language = DEFAULT_LANGUAGE;
-			m_memsize = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_MEMSIZE);
-			m_machine = DEFAULT_MACHINE;
-			m_captures = DEFAULT_CAPTURES;
+			language = DEFAULT_LANGUAGE;
+			memsize = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_MEMSIZE);
+			machine = DEFAULT_MACHINE;
+			captures = DEFAULT_CAPTURES;
 
-			m_frameskip = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_FRAMESKIP);
-			m_aspect = DEFAULT_ASPECT;
-			m_scaler = DEFAULT_SCALER;
+			frameskip = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_FRAMESKIP);
+			aspect = DEFAULT_ASPECT;
+			scaler = DEFAULT_SCALER;
 
-			m_core = DEFAULT_CORE;
-			m_cputype = DEFAULT_CPUTYPE;
-			m_cycles = (UInt16) new CyclesConverter().ConvertFromInvariantString(DEFAULT_CYCLES);
-			m_cycleup = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_CYCLEUP);
-			m_cycledown = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_CYCLEDOWN);
+			core = DEFAULT_CORE;
+			cputype = DEFAULT_CPUTYPE;
+			cycles = (UInt16) new CyclesConverter().ConvertFromInvariantString(DEFAULT_CYCLES);
+			cycleup = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_CYCLEUP);
+			cycledown = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_CYCLEDOWN);
 
-			m_nosound = DEFAULT_NOSOUND;
-			m_rate = DEFAULT_RATE;
-			m_blocksize = DEFAULT_BLOCKSIZE;
-			m_prebuffer = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_PREBUF);
+			nosound = DEFAULT_NOSOUND;
+			rate = DEFAULT_RATE;
+			blocksize = DEFAULT_BLOCKSIZE;
+			prebuffer = (UInt16) TypeDescriptor.GetConverter(typeof(UInt16)).ConvertFromInvariantString(DEFAULT_PREBUF);
 
-			m_mpu401 = DEFAULT_MPU401;
-			m_mididevice = DEFAULT_MIDIDEVICE;
-			m_midiconfig = DEFAULT_MIDICONFIG;
+			mpu401 = DEFAULT_MPU401;
+			mididevice = DEFAULT_MIDIDEVICE;
+			midiconfig = DEFAULT_MIDICONFIG;
 
-			m_sbtype = DEFAULT_SBTYPE;
-			m_sbbase = DEFAULT_SBBASE;
-			m_irq = DEFAULT_IRQ;
-			m_dma = DEFAULT_DMA;
-			m_hdma = DEFAULT_HDMA;
-			m_sbmixer = DEFAULT_SBMIXER;
-			m_oplmode = DEFAULT_OPLMODE;
-			m_oplemu = DEFAULT_OPLEMU;
-			m_oplrate = DEFAULT_OPLRATE;
+			sbtype = DEFAULT_SBTYPE;
+			sbbase = DEFAULT_SBBASE;
+			irq = DEFAULT_IRQ;
+			dma = DEFAULT_DMA;
+			hdma = DEFAULT_HDMA;
+			sbmixer = DEFAULT_SBMIXER;
+			oplmode = DEFAULT_OPLMODE;
+			oplemu = DEFAULT_OPLEMU;
+			oplrate = DEFAULT_OPLRATE;
 
-			m_gus = DEFAULT_GUS;
-			m_gusrate = DEFAULT_GUSRATE;
-			m_gusbase = DEFAULT_GUSBASE;
-			m_gusirq = DEFAULT_GUSIRQ;
-			m_gusdma = DEFAULT_GUSDMA;
-			m_ultradir = DEFAULT_ULTRADIR;
+			gus = DEFAULT_GUS;
+			gusrate = DEFAULT_GUSRATE;
+			gusbase = DEFAULT_GUSBASE;
+			gusirq = DEFAULT_GUSIRQ;
+			gusdma = DEFAULT_GUSDMA;
+			ultradir = DEFAULT_ULTRADIR;
 
 			m_pcspeaker = DEFAULT_PCSPEAKER;
 			m_pcrate = DEFAULT_PCRATE;
@@ -485,11 +485,11 @@ namespace DosboxApp {
 			m_tandyrate = DEFAULT_TANDYRATE;
 			m_disney = DEFAULT_DISNEY;
 
-			m_joysticktype = DEFAULT_JOYSTICKTYPE;
-			m_timed = DEFAULT_TIMED;
-			m_autofired = DEFAULT_AUTOFIRED;
-			m_swap34 = DEFAULT_SWAP34;
-			m_buttonwrap = DEFAULT_BUTTONWRAP;
+			joysticktype = DEFAULT_JOYSTICKTYPE;
+			timed = DEFAULT_TIMED;
+			autofired = DEFAULT_AUTOFIRED;
+			swap34 = DEFAULT_SWAP34;
+			buttonwrap = DEFAULT_BUTTONWRAP;
 
 			m_serial1 = DEFAULT_SERIAL1;
 			m_serial2 = DEFAULT_SERIAL2;
@@ -537,21 +537,14 @@ namespace DosboxApp {
 		[TypeConverter(typeof(PriorityTypeConverter))]
 		public struct PriorityType {
 			public PriorityType(PriorityValue when_focused, PriorityValue when_minimzed) {
-				m_when_focused = when_focused;
-				m_when_minimzed = when_minimzed;
+				this.when_focused = when_focused;
+				this.when_minimzed = when_minimzed;
 			}
 			[DefaultValue(PriorityValue.higher)]
-			public PriorityValue when_focused {
-				set { m_when_focused = value; }
-				get { return m_when_focused; }
-			}
-			[DefaultValue(PriorityValue.normal)]
-			public PriorityValue when_minimzed {
-				set { m_when_minimzed = value; }
-				get { return m_when_minimzed; }
-			}
-			PriorityValue m_when_focused;
-			PriorityValue m_when_minimzed;
+			public PriorityValue when_focused { set; get; }
+
+		    [DefaultValue(PriorityValue.normal)]
+			public PriorityValue when_minimzed { set; get; }
 		}
 
 		public const bool DEFAULT_FULLSCREEN = false;
@@ -569,94 +562,60 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_SDL, 0)]
 		[DefaultValue(DEFAULT_FULLSCREEN)]
 		[Description("Start DOSBox directly in fullscreen.")]
-		public bool fullscreen {
-			set { m_fullscreen = value; }
-			get { return m_fullscreen; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public bool fullscreen { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(DEFAULT_FULLDOUBLE)]
 		[Description("Use double buffering in fullscreen.")]
-		public bool fulldouble {
-			set { m_fulldouble = value; }
-			get { return m_fulldouble; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public bool fulldouble { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(typeof(ResolutionType), DEFAULT_FULLRESOLUTION)]
 		[Description("The resolution to use for fullscreen. If original is specified, DOSBox will try to switch the screen resolution to best match the resolution request by the application. For example, if a game in DOSBox is requesting a graphics screen resolution of (320 x 240) while your desktop is (1280 x 1024), DOSBox will perform the switch or try other resolutions that closely matches it, e.g. (400 x 300) if (320 x 240) is not available.")]
-		public ResolutionType fullresolution {
-			set { m_fullresolution = value; }
-			get { return m_fullresolution; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public ResolutionType fullresolution { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(typeof(ResolutionType), DEFAULT_WINDOWRESOLUTION)]
 		[Description("Scale the window to this size IF the output device supports hardware scaling (i.e. any output other than surface). Note that the window size actually has a fixed 1.6 aspect ratio, so if you ask for 1280x1024, you'll end up with a squished 1280x800 window. original means 1x zoom and will resize as the emulator switches graphics modes.")]
-		public ResolutionType windowresolution {
-			set { m_windowresolution = value; }
-			get { return m_windowresolution; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public ResolutionType windowresolution { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(DEFAULT_OUTPUT)]
 		[Description("What to use for output.")]
-		public OutputValue output {
-			set { m_output = value; }
-			get { return m_output; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public OutputValue output { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(DEFAULT_AUTOLOCK)]
 		[Description("Mouse will automatically lock, if you click on the screen.")]
-		public bool autolock {
-			set { m_autolock = value; }
-			get { return m_autolock; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public bool autolock { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(typeof(UInt16), DEFAULT_SENSITIVITY)]
 		[Description("Mouse sensitivity.")]
-		public UInt16 sensitivity {
-			set { m_sensitivity = value; }
-			get { return m_sensitivity; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public UInt16 sensitivity { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(DEFAULT_WAITONERROR)]
 		[Description("Wait before closing the console if DOSBox has an error.")]
-		public bool waitonerror {
-			set { m_waitonerror = value; }
-			get { return m_waitonerror; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public bool waitonerror { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(typeof(PriorityType), DEFAULT_PRIORITY)]
 		[Description("Priority levels for DOSBox. Second entry behind the comma is for when DOSBox is not focused/minimized.")]
-		public PriorityType priority {
-			set { m_priority = value; }
-			get { return m_priority; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public PriorityType priority { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(DEFAULT_MAPPERFILE)]
 		[Description("File used to load/save the key/event mappings from.")]
 		[Editor(typeof(FileNameEditorEx), typeof(UITypeEditor))]
-		public string mapperfile {
-			set { m_mapperfile = value; }
-			get { return m_mapperfile; }
-		}
-		[CategoryOrder(SECTION_SDL)]
+		public string mapperfile { set; get; }
+
+	    [CategoryOrder(SECTION_SDL)]
 		[DefaultValue(DEFAULT_USESCANCODES)]
 		[Description("Avoid usage of symkeys, might not work on all operating systems.")]
-		public bool usescancodes {
-			set { m_usescancodes = value; }
-			get { return m_usescancodes; }
-		}
+		public bool usescancodes { set; get; }
 
-		bool m_fullscreen;
-		bool m_fulldouble;
-		ResolutionType m_fullresolution;
-		ResolutionType m_windowresolution;
-		OutputValue m_output;
-		bool m_autolock;
-		UInt16 m_sensitivity;
-		bool m_waitonerror;
-		PriorityType m_priority;
-		string m_mapperfile;
-		bool m_usescancodes;
-		#endregion
+	    #endregion
 
 		#region DOSBOX
 		public enum MachineValue { hercules, cga, tandy, pcjr, ega, vgaonly, svga_s3, svga_et3000, svga_et4000, svga_paradise, vesa_nolfb, vesa_oldvbe };
@@ -670,38 +629,25 @@ namespace DosboxApp {
 		[DefaultValue(DEFAULT_LANGUAGE)]
 		[Description("Select another language file.")]
 		[Editor(typeof(FileNameEditorEx), typeof(UITypeEditor))]
-		public string language {
-			set { m_language = value; }
-			get { return m_language; }
-		}
-		[CategoryOrder(SECTION_DOSBOX)]
+		public string language { set; get; }
+
+	    [CategoryOrder(SECTION_DOSBOX)]
 		[DefaultValue(typeof(UInt16), DEFAULT_MEMSIZE)]
 		[Description("Amount of high memory (in megabytes) available to programs.")]
-		public UInt16 memsize {
-			set { m_memsize = value; }
-			get { return m_memsize; }
-		}
-		[CategoryOrder(SECTION_DOSBOX)]
+		public UInt16 memsize { set; get; }
+
+	    [CategoryOrder(SECTION_DOSBOX)]
 		[DefaultValue(DEFAULT_MACHINE)]
 		[Description("The type of machine (specifically the type of graphics hardware) DOSBox tries to emulate.")]
-		public MachineValue machine {
-			set { m_machine = value; }
-			get { return m_machine; }
-		}
-		[CategoryOrder(SECTION_DOSBOX)]
+		public MachineValue machine { set; get; }
+
+	    [CategoryOrder(SECTION_DOSBOX)]
 		[DefaultValue(DEFAULT_CAPTURES)]
 		[Description("Directory where things like music (wave and MIDI) and screenshots are captured when special keys CTRL-F5 and CTRL-F6 are used. Screenshots will be captured and saved as (PNG) files with a resolution of 320x200.")]
 		[Editor(typeof(FolderNameEditorEx), typeof(UITypeEditor))]
-		public string captures {
-			set { m_captures = value; }
-			get { return m_captures; }
-		}
+		public string captures { set; get; }
 
-		string m_language;
-		UInt16 m_memsize;
-		MachineValue m_machine;
-		string m_captures;
-		#endregion
+	    #endregion
 
 		#region RENDER
 		public enum ScalerValue { normal2x, normal3x, advmame2x, advmame3x, advinterp2x, advinterp3x, tv2x, tv3x, rgb2x, rgb3x, scan2x, scan3x };
@@ -713,29 +659,19 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_RENDER, 2)]
 		[DefaultValue(typeof(UInt16), DEFAULT_FRAMESKIP)]
 		[Description("How many frames DOSBox skips before drawing one.")]
-		public UInt16 frameskip {
-			set { m_frameskip = value; }
-			get { return m_frameskip; }
-		}
-		[CategoryOrder(SECTION_RENDER)]
+		public UInt16 frameskip { set; get; }
+
+	    [CategoryOrder(SECTION_RENDER)]
 		[DefaultValue(DEFAULT_ASPECT)]
 		[Description("Do aspect correction. It only affects non-square pixel modes (like for example Mode 13h, which has a resolution of 320x200 pixels and it's used by many DOS games), and it's needed to get correct aspect ratio on square-pixel screens in windowed mode.")]
-		public bool aspect {
-			set { m_aspect = value; }
-			get { return m_aspect; }
-		}
-		[CategoryOrder(SECTION_RENDER)]
+		public bool aspect { set; get; }
+
+	    [CategoryOrder(SECTION_RENDER)]
 		[DefaultValue(DEFAULT_SCALER)]
 		[Description("Specifies which scaler is used to enlarge and enhance low resolution modes.")]
-		public ScalerValue scaler {
-			set { m_scaler = value; }
-			get { return m_scaler; }
-		}
+		public ScalerValue scaler { set; get; }
 
-		UInt16 m_frameskip;
-		bool m_aspect;
-		ScalerValue m_scaler;
-		#endregion
+	    #endregion
 
 		#region CPU
 		public enum CoreValue { simple, normal, full, dynamic, auto };
@@ -751,46 +687,30 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_CPU, 3)]
 		[DefaultValue(DEFAULT_CORE)]
 		[Description("CPU core used in emulation. auto switches to dynamic if appropriate.")]
-		public CoreValue core {
-			set { m_core = value; }
-			get { return m_core; }
-		}
-		[CategoryOrder(SECTION_CPU)]
+		public CoreValue core { set; get; }
+
+	    [CategoryOrder(SECTION_CPU)]
 		[DefaultValue(DEFAULT_CPUTYPE)]
 		[Description("CPU Type used in emulation. auto is the fastest choice.")]
-		public CputypeValue cputype {
-			set { m_cputype = value; }
-			get { return m_cputype; }
-		}
-		[CategoryOrder(SECTION_CPU)]
+		public CputypeValue cputype { set; get; }
+
+	    [CategoryOrder(SECTION_CPU)]
 		[DefaultValue(typeof(UInt16), DEFAULT_CYCLES)]
 		[Description("Amount of instructions DOSBox tries to emulate each millisecond. Set to max to automatically run as many cycles as possible. auto setting switches to max if appropriate.")]
 		[TypeConverter(typeof(CyclesConverter))]
-		public UInt16 cycles {
-			set { m_cycles = value; }
-			get { return m_cycles; }
-		}
-		[CategoryOrder(SECTION_CPU)]
+		public UInt16 cycles { set; get; }
+
+	    [CategoryOrder(SECTION_CPU)]
 		[DefaultValue(typeof(UInt16), DEFAULT_CYCLEUP)]
 		[Description("Amount of cycles to increase with keycombo.")]
-		public UInt16 cycleup {
-			set { m_cycleup = value; }
-			get { return m_cycleup; }
-		}
-		[CategoryOrder(SECTION_CPU)]
+		public UInt16 cycleup { set; get; }
+
+	    [CategoryOrder(SECTION_CPU)]
 		[DefaultValue(typeof(UInt16), DEFAULT_CYCLEDOWN)]
 		[Description("Amount of cycles to decrease with keycombo.")]
-		public UInt16 cycledown {
-			set { m_cycledown = value; }
-			get { return m_cycledown; }
-		}
+		public UInt16 cycledown { set; get; }
 
-		CoreValue m_core;
-		CputypeValue m_cputype;
-		UInt16 m_cycles;
-		UInt16 m_cycleup;
-		UInt16 m_cycledown;
-		#endregion
+	    #endregion
 
 		#region MIXER
 		[TypeConverter(typeof(PrefixedEnumConverter))]
@@ -806,37 +726,24 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_MIXER, 4)]
 		[DefaultValue(DEFAULT_NOSOUND)]
 		[Description("Enable silent mode, sound is still emulated though.")]
-		public bool nosound {
-			set { m_nosound = value; }
-			get { return m_nosound; }
-		}
-		[CategoryOrder(SECTION_MIXER)]
+		public bool nosound { set; get; }
+
+	    [CategoryOrder(SECTION_MIXER)]
 		[DefaultValue(DEFAULT_RATE)]
 		[Description("Mixer sample rate, setting any device's rate higher than this will probably lower their sound quality.")]
-		public RateValue rate {
-			set { m_rate = value; }
-			get { return m_rate; }
-		}
-		[CategoryOrder(SECTION_MIXER)]
+		public RateValue rate { set; get; }
+
+	    [CategoryOrder(SECTION_MIXER)]
 		[DefaultValue(DEFAULT_BLOCKSIZE)]
 		[Description("Mixer block size, larger blocks might help sound stuttering but sound will also be more lagged.")]
-		public BlocksizeValue blocksize {
-			set { m_blocksize = value; }
-			get { return m_blocksize; }
-		}
-		[CategoryOrder(SECTION_MIXER)]
+		public BlocksizeValue blocksize { set; get; }
+
+	    [CategoryOrder(SECTION_MIXER)]
 		[DefaultValue(typeof(UInt16), DEFAULT_PREBUF)]
 		[Description("How many milliseconds of data to keep on top of the blocksize.")]
-		public UInt16 prebuffer {
-			set { m_prebuffer = value; }
-			get { return m_prebuffer; }
-		}
+		public UInt16 prebuffer { set; get; }
 
-		bool m_nosound;
-		RateValue m_rate;
-		BlocksizeValue m_blocksize;
-		UInt16 m_prebuffer;
-		#endregion
+	    #endregion
 
 		#region MIDI
 		public enum Mpu401Value { intelligent, uart, none };
@@ -850,29 +757,19 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_MIDI, 5)]
 		[DefaultValue(DEFAULT_MPU401)]
 		[Description("Type of MPU-401 to emulate.")]
-		public Mpu401Value mpu401 {
-			set { m_mpu401 = value; }
-			get { return m_mpu401; }
-		}
-		[CategoryOrder(SECTION_MIDI)]
+		public Mpu401Value mpu401 { set; get; }
+
+	    [CategoryOrder(SECTION_MIDI)]
 		[DefaultValue(DEFAULT_MIDIDEVICE)]
 		[Description("Device that will receive the MIDI data from MPU-401.")]
-		public MidideviceValue mididevice {
-			set { m_mididevice = value; }
-			get { return m_mididevice; }
-		}
-		[CategoryOrder(SECTION_MIDI)]
+		public MidideviceValue mididevice { set; get; }
+
+	    [CategoryOrder(SECTION_MIDI)]
 		[DefaultValue(DEFAULT_MIDICONFIG)]
 		[Description("Special configuration options for the device driver. This is usually the id of the device you want to use.")]
-		public string midiconfig {
-			set { m_midiconfig = value; }
-			get { return m_midiconfig; }
-		}
+		public string midiconfig { set; get; }
 
-		Mpu401Value m_mpu401;
-		MidideviceValue m_mididevice;
-		string m_midiconfig;
-		#endregion
+	    #endregion
 
 		#region SBLASTER
 		public enum SbtypeValue { sb1, sb2, sbpro1, sbpro2, sb16, none };
@@ -899,77 +796,49 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_SBLASTER, 6)]
 		[DefaultValue(DEFAULT_SBTYPE)]
 		[Description("Type of sblaster to emulate.")]
-		public SbtypeValue sbtype {
-			set { m_sbtype = value; }
-			get { return m_sbtype; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public SbtypeValue sbtype { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_SBBASE)]
 		[Description("The IO address of the soundblaster.")]
-		public IobaseValue sbbase {
-			set { m_sbbase = value; }
-			get { return m_sbbase; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public IobaseValue sbbase { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_IRQ)]
 		[Description("The IRQ number of the soundblaster.")]
-		public IrqValue irq {
-			set { m_irq = value; }
-			get { return m_irq; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public IrqValue irq { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_DMA)]
 		[Description("The DMA number of the soundblaster.")]
-		public DmaValue dma {
-			set { m_dma = value; }
-			get { return m_dma; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public DmaValue dma { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_HDMA)]
 		[Description("The High DMA number of the soundblaster.")]
-		public DmaValue hdma {
-			set { m_hdma = value; }
-			get { return m_hdma; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public DmaValue hdma { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_SBMIXER)]
 		[Description("Allow the soundblaster mixer to modify the DOSBox mixer.")]
-		public bool sbmixer {
-			set { m_sbmixer = value; }
-			get { return m_sbmixer; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public bool sbmixer { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_OPLMODE)]
 		[Description("Type of OPL emulation. On 'auto' the mode is determined by sblaster type. All OPL modes are Adlib-compatible, except for 'cms'.")]
-		public OplmodeValue oplmode {
-			set { m_oplmode = value; }
-			get { return m_oplmode; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public OplmodeValue oplmode { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_OPLEMU)]
 		[Description("Provider for the OPL emulation. compat or old might provide better quality (see oplrate as well).")]
-		public OplemuValue oplemu {
-			set { m_oplemu = value; }
-			get { return m_oplemu; }
-		}
-		[CategoryOrder(SECTION_SBLASTER)]
+		public OplemuValue oplemu { set; get; }
+
+	    [CategoryOrder(SECTION_SBLASTER)]
 		[DefaultValue(DEFAULT_OPLRATE)]
 		[Description("Sample rate of OPL music emulation. Use 49716 for highest quality (set the mixer rate accordingly).")]
-		public RateValue oplrate {
-			set { m_oplrate = value; }
-			get { return m_oplrate; }
-		}
+		public RateValue oplrate { set; get; }
 
-		SbtypeValue m_sbtype;
-		IobaseValue m_sbbase;
-		IrqValue m_irq;
-		DmaValue m_dma;
-		DmaValue m_hdma;
-		bool m_sbmixer;
-		OplmodeValue m_oplmode;
-		OplemuValue m_oplemu;
-		RateValue m_oplrate;
-		#endregion
+	    #endregion
 
 		#region GUS
 		public const bool DEFAULT_GUS = false;
@@ -982,54 +851,35 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_GUS, 7)]
 		[DefaultValue(DEFAULT_GUS)]
 		[Description("Enable the Gravis Ultrasound emulation.")]
-		public bool gus {
-			set { m_gus = value; }
-			get { return m_gus; }
-		}
-		[CategoryOrder(SECTION_GUS)]
+		public bool gus { set; get; }
+
+	    [CategoryOrder(SECTION_GUS)]
 		[DefaultValue(DEFAULT_GUSRATE)]
 		[Description("Sample rate of Ultrasound emulation.")]
-		public RateValue gusrate {
-			set { m_gusrate = value; }
-			get { return m_gusrate; }
-		}
-		[CategoryOrder(SECTION_GUS)]
+		public RateValue gusrate { set; get; }
+
+	    [CategoryOrder(SECTION_GUS)]
 		[DefaultValue(DEFAULT_GUSBASE)]
 		[Description("The IO base address of the Gravis Ultrasound.")]
-		public IobaseValue gusbase {
-			set { m_gusbase = value; }
-			get { return m_gusbase; }
-		}
-		[CategoryOrder(SECTION_GUS)]
+		public IobaseValue gusbase { set; get; }
+
+	    [CategoryOrder(SECTION_GUS)]
 		[DefaultValue(DEFAULT_GUSIRQ)]
 		[Description("The IRQ number of the Gravis Ultrasound.")]
-		public IrqValue gusirq {
-			set { m_gusirq = value; }
-			get { return m_gusirq; }
-		}
-		[CategoryOrder(SECTION_GUS)]
+		public IrqValue gusirq { set; get; }
+
+	    [CategoryOrder(SECTION_GUS)]
 		[DefaultValue(DEFAULT_GUSDMA)]
 		[Description("The DMA channel of the Gravis Ultrasound.")]
-		public DmaValue gusdma {
-			set { m_gusdma = value; }
-			get { return m_gusdma; }
-		}
-		[CategoryOrder(SECTION_GUS)]
+		public DmaValue gusdma { set; get; }
+
+	    [CategoryOrder(SECTION_GUS)]
 		[DefaultValue(DEFAULT_ULTRADIR)]
 		[Description("Path to Ultrasound directory. In this directory there should be a MIDI directory that contains the patch files for GUS playback. Patch sets used with Timidity should work fine.")]
 		[Editor(typeof(FolderNameEditorEx), typeof(UITypeEditor))]
-		public string ultradir {
-			set { m_ultradir = value; }
-			get { return m_ultradir; }
-		}
+		public string ultradir { set; get; }
 
-		bool m_gus;
-		RateValue m_gusrate;
-		IobaseValue m_gusbase;
-		IrqValue m_gusirq;
-		DmaValue m_gusdma;
-		string m_ultradir;
-		#endregion
+	    #endregion
 
 		#region SPEAKER
 		public enum TandyValue { auto, on, off };
@@ -1111,45 +961,29 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_JOYSTICK, 9)]
 		[DefaultValue(DEFAULT_JOYSTICKTYPE)]
 		[Description("Type of joystick to emulate")]
-		public JoysticktypeValue joysticktype {
-			set { m_joysticktype = value; }
-			get { return m_joysticktype; }
-		}
-		[CategoryOrder(SECTION_JOYSTICK)]
+		public JoysticktypeValue joysticktype { set; get; }
+
+	    [CategoryOrder(SECTION_JOYSTICK)]
 		[DefaultValue(DEFAULT_TIMED)]
 		[Description("Enable timed intervals for axis. (False is old style behaviour).")]
-		public bool timed {
-			set { m_timed = value; }
-			get { return m_timed; }
-		}
-		[CategoryOrder(SECTION_JOYSTICK)]
+		public bool timed { set; get; }
+
+	    [CategoryOrder(SECTION_JOYSTICK)]
 		[DefaultValue(DEFAULT_AUTOFIRED)]
 		[Description("Continuously fires as long as you keep the button pressed.")]
-		public bool autofired {
-			set { m_autofired = value; }
-			get { return m_autofired; }
-		}
-		[CategoryOrder(SECTION_JOYSTICK)]
+		public bool autofired { set; get; }
+
+	    [CategoryOrder(SECTION_JOYSTICK)]
 		[DefaultValue(DEFAULT_SWAP34)]
 		[Description("Swap the 3rd and the 4th axis. Can be useful for certain joysticks.")]
-		public bool swap34 {
-			set { m_swap34 = value; }
-			get { return m_swap34; }
-		}
-		[CategoryOrder(SECTION_JOYSTICK)]
+		public bool swap34 { set; get; }
+
+	    [CategoryOrder(SECTION_JOYSTICK)]
 		[DefaultValue(DEFAULT_BUTTONWRAP)]
 		[Description("Enable button wrapping at the number of emulated buttons.")]
-		public bool buttonwrap {
-			set { m_buttonwrap = value; }
-			get { return m_buttonwrap; }
-		}
+		public bool buttonwrap { set; get; }
 
-		JoysticktypeValue m_joysticktype;
-		bool m_timed;
-		bool m_autofired;
-		bool m_swap34;
-		bool m_buttonwrap;
-		#endregion
+	    #endregion
 
 		#region SERIAL
 		public enum SerialValue { dummy, disabled, modem, nullmodem, directserial };

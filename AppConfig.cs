@@ -20,25 +20,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace DosboxApp {
 	public class AppConfig {
 		public AppConfig() {
-			m_GameListFormConfig = new GameListFormConfig();
-			m_GameConfig = new GameConfig();
-			m_UpdateConfig = new UpdateConfig();
+			GameListFormConfig = new GameListFormConfig();
+			GameConfig = new GameConfig();
+			UpdateConfig = new UpdateConfig();
 		}
 
-		public GameListFormConfig GameListFormConfig {
-			get { return m_GameListFormConfig; }
-		}
+		public GameListFormConfig GameListFormConfig { get; }
 
-		public GameConfig GameConfig {
-			get { return m_GameConfig; }
-		}
+	    public GameConfig GameConfig { get; }
 
-		public UpdateConfig UpdateConfig {
-			get { return m_UpdateConfig; }
-		}
-
-		GameListFormConfig m_GameListFormConfig;
-		GameConfig m_GameConfig;
-		UpdateConfig m_UpdateConfig;
+	    public UpdateConfig UpdateConfig { get; }
 	}
 }

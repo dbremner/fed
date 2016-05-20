@@ -50,7 +50,7 @@ namespace Plain.Design {
 
 		public CategoryOrderAttribute()
 			: base() {
-			m_Category = base.Category;
+			Category = base.Category;
 		}
 		/// <summary>
 		/// Initializes a new instance of the CategoryOrderAttribute class using the specified category name and previously specified order, if any.
@@ -58,7 +58,7 @@ namespace Plain.Design {
 		/// <param name="category">The name of the category.</param>
 		public CategoryOrderAttribute(string category)
 			: base(CategoryOrder(category)) {
-			m_Category = category;
+			Category = category;
 		}
 		/// <summary>
 		/// Initializes a new instance of the CategoryOrderAttribute class using the specified category name and order.
@@ -75,23 +75,17 @@ namespace Plain.Design {
 		/// <param name="description">The description of the category.</param>
 		public CategoryOrderAttribute(string category, int order, string description)
 			: base(CategoryOrder(category, order)) {
-			m_Category = category;
-			m_Description = description;
+			Category = category;
+			Description = description;
 		}
 		/// <summary>
 		/// Gets the name of the category for the property or event that this attribute is applied to.
 		/// </summary>
-		public new string Category {
-			get { return m_Category; }
-		}
-		/// <summary>
+		public new string Category { get; }
+
+	    /// <summary>
 		/// Gets the description of the category for the property or event that this attribute is applied to.
 		/// </summary>
-		public string Description {
-			get { return m_Description; }
-		}
-
-		string m_Category;
-		string m_Description;
+		public string Description { get; }
 	}
 }

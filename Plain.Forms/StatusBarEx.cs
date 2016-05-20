@@ -33,11 +33,6 @@ namespace Plain.Forms {
 		}
 #endif
 
-		public ResourceImageList ResourceImageList {
-			set { m_ResourceImageList = value; }
-			get { return m_ResourceImageList; }
-		}
-
-		ResourceImageList m_ResourceImageList;
+		public ResourceImageList ResourceImageList { set; get; }
 	}
 }
