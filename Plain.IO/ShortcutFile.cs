@@ -78,12 +78,11 @@ namespace Plain.IO {
 		}
 
 		public string Target {
-			set {
-				if (_comShellLink != null) {
-					_comShellLink.SetPath(value);
-				}
+			set
+			{
+			    _comShellLink?.SetPath(value);
 			}
-			get {
+		    get {
 				if (_comShellLink != null) {
 					_comShellLink.GetPath(_sb, _sb.Capacity, IntPtr.Zero, (uint) NativeMethods.SLGP_FLAGS.SLGP_UNCPRIORITY);
 					return _sb.ToString();
@@ -93,12 +92,11 @@ namespace Plain.IO {
 		}
 
 		public IntPtr IDList {
-			set {
-				if (_comShellLink != null) {
-					_comShellLink.SetIDList(value);
-				}
+			set
+			{
+			    _comShellLink?.SetIDList(value);
 			}
-			get {
+		    get {
 				if (_comShellLink != null) {
 					IntPtr value;
 					_comShellLink.GetIDList(out value);
@@ -109,12 +107,11 @@ namespace Plain.IO {
 		}
 
 		public string Description {
-			set {
-				if (_comShellLink != null) {
-					_comShellLink.SetDescription(value);
-				}
+			set
+			{
+			    _comShellLink?.SetDescription(value);
 			}
-			get {
+		    get {
 				if (_comShellLink != null) {
 					_comShellLink.GetDescription(_sb, _sb.Capacity);
 					return _sb.ToString();
@@ -124,12 +121,11 @@ namespace Plain.IO {
 		}
 
 		public string WorkingDirectory {
-			set {
-				if (_comShellLink != null) {
-					_comShellLink.SetWorkingDirectory(value);
-				}
+			set
+			{
+			    _comShellLink?.SetWorkingDirectory(value);
 			}
-			get {
+		    get {
 				if (_comShellLink != null) {
 					_comShellLink.GetWorkingDirectory(_sb, _sb.Capacity);
 					return _sb.ToString();
@@ -139,12 +135,11 @@ namespace Plain.IO {
 		}
 
 		public string Arguments {
-			set {
-				if (_comShellLink != null) {
-					_comShellLink.SetArguments(value);
-				}
+			set
+			{
+			    _comShellLink?.SetArguments(value);
 			}
-			get {
+		    get {
 				if (_comShellLink != null) {
 					_comShellLink.GetArguments(_sb, _sb.Capacity);
 					return _sb.ToString();
@@ -231,12 +226,11 @@ namespace Plain.IO {
 		}
 
 		public IconLocation IconLocation {
-			set {
-				if (_comShellLink != null) {
-					_comShellLink.SetIconLocation(value.Path, value.Index);
-				}
+			set
+			{
+			    _comShellLink?.SetIconLocation(value.Path, value.Index);
 			}
-			get {
+		    get {
 				IconLocation value = IconLocation.Empty;
 				if (_comShellLink != null) {
 					_comShellLink.GetIconLocation(_sb, _sb.Capacity, out value.Index);

@@ -122,15 +122,9 @@ namespace DosboxApp {
 			}
 			catch { }
 			finally {
-				if (reader != null) {
-					reader.Close();
-				}
-				if (response != null) {
-					response.Close();
-				}
-				if (request != null) {
-					request.Abort();
-				}
+			    reader?.Close();
+			    response?.Close();
+			    request?.Abort();
 			}
 			return false;
 		}
@@ -169,12 +163,8 @@ namespace DosboxApp {
 					}
 					catch { }
 					finally {
-						if (outStream != null) {
-							outStream.Close();
-						}
-						if (response != null) {
-							response.Close();
-						}
+					    outStream?.Close();
+					    response?.Close();
 					}
 				}
 			}
@@ -245,10 +235,9 @@ namespace DosboxApp {
 						}
 					}
 					catch { }
-					finally {
-						if (stream != null) {
-							stream.Close();
-						}
+					finally
+					{
+					    stream?.Close();
 					}
 				}
 			}

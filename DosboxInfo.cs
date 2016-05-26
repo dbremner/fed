@@ -140,11 +140,10 @@ namespace DosboxApp {
 			}
 			catch {
 			}
-			finally {
-				if (reader != null) {
-					reader.Close();
-				}
+			finally
+			{
+			    reader?.Close();
 			}
-		}
+	    }
 	}
 }
