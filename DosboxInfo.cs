@@ -77,16 +77,16 @@ namespace DosboxApp {
 		public const string NEWS_NAME = "NEWS.txt";
 
 		public DosboxInfo(string directory) {
-			m_Directory = Path.GetFullPath(directory);
-			m_VersionString = Path.GetFileName(directory);
+			Directory = Path.GetFullPath(directory);
+			VersionString = Path.GetFileName(directory);
 		}
 
 		public string GetAppConfigFileName() {
-			return m_Directory + Path.DirectorySeparatorChar + CONF_NAME;
+			return Directory + Path.DirectorySeparatorChar + CONF_NAME;
 		}
 
 		public string GetUserConfigFileName() {
-			return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + CONF_DIR + m_VersionString + CONF_EXT;
+			return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + CONF_DIR + VersionString + CONF_EXT;
 		}
 
 		public INI GetUserConfigINI() {
@@ -118,34 +118,25 @@ namespace DosboxApp {
 			}
 		}
 
-		public string Directory {
-			get { return m_Directory; }
+		public string Directory { get; }
+
+	    public string FileName {
+			get { return Directory + Path.DirectorySeparatorChar + EXECUTABLE; }
 		}
 
-		public string FileName {
-			get { return m_Directory + Path.DirectorySeparatorChar + EXECUTABLE; }
-		}
+		public string VersionString { get; }
 
-		public string VersionString {
-			get { return m_VersionString; }
-		}
+	    public Version Version { get; private set; }
 
-		public Version Version {
-			get { return m_Version; }
-		}
+	    DosboxConfig m_Config;
 
-		DosboxConfig m_Config;
-		string m_Directory;
-		string m_VersionString;
-		Version m_Version;
-
-		void read_version() {
+	    void read_version() {
 			StreamReader reader = null;
 			try {
-				reader = new StreamReader(m_Directory + Path.DirectorySeparatorChar + NEWS_NAME);
+				reader = new StreamReader(Directory + Path.DirectorySeparatorChar + NEWS_NAME);
 				string ver = reader.ReadLine();
 				reader.Close();
-				m_Version = new Version(ver);
+				Version = new Version(ver);
 			}
 			catch {
 			}

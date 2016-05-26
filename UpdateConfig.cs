@@ -28,38 +28,25 @@ namespace DosboxApp {
 
 		public override void SaveTo(INI ini) {
 			ini.Section = base.Name;
-			base.writeProp(ini, "CheckOnStartup", m_CheckOnStartup);
-			base.writeProp(ini, "UpdateInstall", m_UpdateInstall);
+			base.writeProp(ini, "CheckOnStartup", CheckOnStartup);
+			base.writeProp(ini, "UpdateInstall", UpdateInstall);
 		}
 
 		public override void LoadFrom(INI ini) {
 			object value;
 			ini.Section = base.Name;
 			if (base.readProp(ini, "CheckOnStartup", out value)) {
-				m_CheckOnStartup = (bool) value;
+				CheckOnStartup = (bool) value;
 			}
 			if (base.readProp(ini, "UpdateInstall", out value)) {
-				m_UpdateInstall = (bool) value;
+				UpdateInstall = (bool) value;
 			}
 		}
 
-		public bool CheckOnStartup {
-			set { m_CheckOnStartup = value; }
-			get { return m_CheckOnStartup; }
-		}
+		public bool CheckOnStartup { set; get; }
 
-		public bool UpdateInstall {
-			set { m_UpdateInstall = value; }
-			get { return m_UpdateInstall; }
-		}
+	    public bool UpdateInstall { set; get; }
 
-		public bool DelayedInstall {
-			set { m_DelayedInstall = value; }
-			get { return m_DelayedInstall; }
-		}
-
-		bool m_CheckOnStartup;
-		bool m_UpdateInstall;
-		bool m_DelayedInstall;
+	    public bool DelayedInstall { set; get; }
 	}
 }

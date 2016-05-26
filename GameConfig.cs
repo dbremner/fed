@@ -28,14 +28,14 @@ namespace DosboxApp {
 	public class GameConfig : BaseConfig {
 		public GameConfig() {
 			base.Name = CAT_NAME;
-			m_Games = new Dictionary<string,GameObject>();
+			Games = new Dictionary<string,GameObject>();
 		}
 
 		public override void SaveTo(INI ini) {
 			ini.Section = base.Name;
-			writeProp(ini, KEY_NUMGAMES, m_Games.Count);
+			writeProp(ini, KEY_NUMGAMES, Games.Count);
 			int i = 0;
-			foreach(GameObject gobj in m_Games.Values) {
+			foreach(GameObject gobj in Games.Values) {
 				ini.Section = CAT_NAME_MORE + i;
 				writeProp(ini, KEY_DIR, gobj.Directory);
 				writeProp(ini, KEY_EXE, gobj.Executable);
@@ -49,28 +49,25 @@ namespace DosboxApp {
 			if (number > int.MaxValue) {
 				number = 0;
 			}
-			m_Games = new Dictionary<string, GameObject>((int) number);
+			Games = new Dictionary<string, GameObject>((int) number);
 			for (int i = 0; i < number; ++i) {
 				ini.Section = CAT_NAME_MORE + i;
 				string dir = readString(ini, KEY_DIR);
 				if (string.IsNullOrEmpty(dir) == false) {
 					string exe = readString(ini, KEY_EXE);
-					GameObject gobj = new GameObject(dir);
+					var gobj = new GameObject(dir);
 					gobj.Executable = exe;
-					m_Games.Add(gobj.Directory, gobj);
+					Games.Add(gobj.Directory, gobj);
 				}
 			}
 		}
 
-		public Dictionary<string, GameObject> Games {
-			get { return m_Games; }
-		}
+		public Dictionary<string, GameObject> Games { get; private set; }
 
-		const string CAT_NAME = "Games";
+	    const string CAT_NAME = "Games";
 		const string KEY_NUMGAMES = "Count";
 		const string CAT_NAME_MORE = "Game";
 		const string KEY_DIR = "Dir";
 		const string KEY_EXE = "Exe";
-		Dictionary<string, GameObject> m_Games;
 	}
 }

@@ -46,8 +46,8 @@ namespace DosboxApp {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			
-			s_AppConfig = AppInfo.LoadConfig();
-			s_Updater = new Updater();
+			AppConfig = AppInfo.LoadConfig();
+			Updater = new Updater();
 
 			if (Program.AppConfig.UpdateConfig.CheckOnStartup) {
 				if (Program.Updater.GUICheck(false)) {
@@ -64,18 +64,11 @@ namespace DosboxApp {
 		}
 
 		static void Application_ApplicationExit(object sender, EventArgs e) {
-			AppInfo.SaveConfig(s_AppConfig);
+			AppInfo.SaveConfig(AppConfig);
 		}
 
-		public static Updater Updater {
-			get { return s_Updater; }
-		}
+		public static Updater Updater { get; private set; }
 
-		public static AppConfig AppConfig {
-			get { return s_AppConfig; }
-		}
-
-		static Updater s_Updater;
-		static AppConfig s_AppConfig;
+	    public static AppConfig AppConfig { get; private set; }
 	}
 }

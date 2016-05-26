@@ -80,23 +80,15 @@ namespace DosboxApp {
 		}
 
 		public GameObject(string directory) {
-			m_Directory = Path.GetFullPath(directory);
+			Directory = Path.GetFullPath(directory);
 		}
 
-		public string Directory {
-			get { return m_Directory; }
-		}
+		public string Directory { get; }
 
-		public string Executable {
-			set { m_Executable = value; }
-			get { return m_Executable; }
-		}
+	    public string Executable { set; get; }
 
-		public string FileName {
-			get { return m_Directory + @"\" + m_Executable; }
+	    public string FileName {
+			get { return Directory + @"\" + Executable; }
 		}
-
-		string m_Directory;
-		string m_Executable;
 	}
 }

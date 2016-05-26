@@ -229,9 +229,9 @@ namespace Plain.Forms {
 		[RefreshProperties(RefreshProperties.Repaint)]
 		public bool Collapsible {
 			set {
-				m_Collapsible = value;
-				if (m_Collapsible == false) {
-					m_Collapsed = false;
+				ShouldBeCollapsible = value;
+				if (ShouldBeCollapsible == false) {
+					ShouldBeCollapsed = false;
 				}
 				updateState();
 			}
@@ -246,7 +246,7 @@ namespace Plain.Forms {
 						return (lvg.state & NativeMethods.LVGS_COLLAPSIBLE) != 0;
 					}
 				}
-				return m_Collapsible;
+				return ShouldBeCollapsible;
 			}
 		}
 
@@ -258,9 +258,9 @@ namespace Plain.Forms {
 		[RefreshProperties(RefreshProperties.Repaint)]
 		public bool Collapsed {
 			set {
-				m_Collapsed = value;
-				if (m_Collapsed == true) {
-					m_Collapsible = true;
+				ShouldBeCollapsed = value;
+				if (ShouldBeCollapsed == true) {
+					ShouldBeCollapsible = true;
 				}
 				updateState();
 			}
@@ -275,24 +275,17 @@ namespace Plain.Forms {
 						return (lvg.state & NativeMethods.LVGS_COLLAPSED) != 0;
 					}
 				}
-				return m_Collapsed;
+				return ShouldBeCollapsed;
 			}
 		}
 
 		[Browsable(false)]
-		internal bool ShouldBeCollapsible {
-			get { return m_Collapsible; }
-		}
+		internal bool ShouldBeCollapsible { get; private set; }
 
-		[Browsable(false)]
-		internal bool ShouldBeCollapsed {
-			get { return m_Collapsed; }
-		}
+	    [Browsable(false)]
+		internal bool ShouldBeCollapsed { get; private set; }
 
-		bool m_Collapsible;
-		bool m_Collapsed;
-
-		void create() {
+	    void create() {
 			base.BaseClass.Tag = this;
 		}
 
@@ -303,10 +296,10 @@ namespace Plain.Forms {
 				lvg.mask = NativeMethods.LVGF_STATE;
 				lvg.stateMask = NativeMethods.LVGS_COLLAPSIBLE | NativeMethods.LVGS_COLLAPSED;
 				lvg.state = 0;
-				if (m_Collapsible) {
+				if (ShouldBeCollapsible) {
 					lvg.state |= NativeMethods.LVGS_COLLAPSIBLE;
 				}
-				if (m_Collapsed) {
+				if (ShouldBeCollapsed) {
 					lvg.state |= NativeMethods.LVGS_COLLAPSED;
 				}
 				NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, (IntPtr)base.ID, ref lvg);

@@ -29,20 +29,20 @@ namespace Plain.IO {
 			if (string.IsNullOrEmpty(path)) {
 				throw new ArgumentNullException("path");
 			}
-			m_FileName = path;
+			FileName = path;
 		}
 
 		public void Write(string key, string value) {
 			check_section();
 			check_key(key);
-			NativeMethods.WritePrivateProfileString(m_Section, key, value, m_FileName);
+			NativeMethods.WritePrivateProfileString(m_Section, key, value, FileName);
 		}
 
 		public string Read(string key) {
 			check_section();
 			check_key(key);
 			StringBuilder sb = new StringBuilder(256);
-			uint ret = NativeMethods.GetPrivateProfileString(m_Section, key, string.Empty, sb, (uint) sb.Capacity, m_FileName);
+			uint ret = NativeMethods.GetPrivateProfileString(m_Section, key, string.Empty, sb, (uint) sb.Capacity, FileName);
 			if (ret == 0) {
 				int err = Marshal.GetLastWin32Error();
 				if (err != 0) {
@@ -58,7 +58,7 @@ namespace Plain.IO {
 		public uint ReadInt(string key) {
 			check_section();
 			check_key(key);
-			uint value = NativeMethods.GetPrivateProfileInt(m_Section, key, 0, m_FileName);
+			uint value = NativeMethods.GetPrivateProfileInt(m_Section, key, 0, FileName);
 			int err = Marshal.GetLastWin32Error();
 			if (err != 0) {
 #if USE_THROW
@@ -76,7 +76,7 @@ namespace Plain.IO {
 			DeleteSection();
 			if (data != null) {
 				data = data.Replace(Environment.NewLine, "\0");
-				bool ret = NativeMethods.WritePrivateProfileSection(m_Section, data, m_FileName);
+				bool ret = NativeMethods.WritePrivateProfileSection(m_Section, data, FileName);
 				if (ret == false) {
 					int err = Marshal.GetLastWin32Error();
 					if (err != 0) {
@@ -93,7 +93,7 @@ namespace Plain.IO {
 			string s = string.Empty;
 			IntPtr lpsz = Marshal.AllocHGlobal(MAX_SECTIONDATA);
 			if (lpsz != IntPtr.Zero) {
-				uint num = NativeMethods.GetPrivateProfileSection(m_Section, lpsz, MAX_SECTIONDATA, m_FileName);
+				uint num = NativeMethods.GetPrivateProfileSection(m_Section, lpsz, MAX_SECTIONDATA, FileName);
 				int err = Marshal.GetLastWin32Error();
 				if (err != 0) {
 					Marshal.FreeHGlobal(lpsz);
@@ -116,7 +116,7 @@ namespace Plain.IO {
 
 		public void DeleteSection() {
 			check_section();
-			bool ret = NativeMethods.WritePrivateProfileSection(m_Section, null, m_FileName);
+			bool ret = NativeMethods.WritePrivateProfileSection(m_Section, null, FileName);
 			if (ret == false) {
 				int err = Marshal.GetLastWin32Error();
 				if (err != 0) {
@@ -127,11 +127,9 @@ namespace Plain.IO {
 			}
 		}
 
-		public string FileName {
-			get { return m_FileName; }
-		}
+		public string FileName { get; }
 
-		public string Section {
+	    public string Section {
 			set {
 				if (string.IsNullOrEmpty(value)) {
 					throw new ArgumentNullException("Section");
@@ -142,8 +140,7 @@ namespace Plain.IO {
 		}
 
 		const int MAX_SECTIONDATA = 65535;
-		string m_FileName;
-		string m_Section;
+	    string m_Section;
 
 		void check_section() {
 			if (string.IsNullOrEmpty(m_Section)) {

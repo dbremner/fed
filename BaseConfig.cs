@@ -23,18 +23,13 @@ using Plain.IO;
 
 namespace DosboxApp {
 	public abstract class BaseConfig {
-		public string Name {
-			set { m_Name = value; }
-			get { return m_Name; }
-		}
+		public string Name { set; get; }
 
-		public abstract void SaveTo(INI ini);
+	    public abstract void SaveTo(INI ini);
 
 		public abstract void LoadFrom(INI ini);
 
-		string m_Name;
-
-		protected void writeProp(INI ini, string key, object value) {
+	    protected void writeProp(INI ini, string key, object value) {
 			try {
 				ini.Write(key, TypeDescriptor.GetConverter(value).ConvertToInvariantString(value));
 			}

@@ -29,13 +29,13 @@ namespace Plain.Forms {
 	public partial class ComboButton : UserControl {
 		public ComboButton() {
 			InitializeComponent();
-			m_PreferredSize = getPreferredSize();
-			base.Size = m_PreferredSize;
+			PreferredSize = getPreferredSize();
+			base.Size = PreferredSize;
 			base.SetStyle(ControlStyles.Selectable, false);
 		}
 
 		public override Size GetPreferredSize(Size proposedSize) {
-			return m_PreferredSize;
+			return PreferredSize;
 		}
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -44,11 +44,9 @@ namespace Plain.Forms {
 		}
 
 		//[Browsable(false)]
-		public new Size PreferredSize {
-			get { return m_PreferredSize; }
-		}
+		public new Size PreferredSize { get; private set; }
 
-		public new Size Size {
+	    public new Size Size {
 			set {
 				if (base.AutoSize == false) {
 					base.Size = value;
@@ -75,20 +73,15 @@ namespace Plain.Forms {
 			get { return base.Height; }
 		}
 
-		public Rectangle VirtualRectangle {
-			set { m_VirtualRectangle = value; }
-			get { return m_VirtualRectangle; }
-		}
+		public Rectangle VirtualRectangle { set; get; }
 
-		Size m_PreferredSize;
-		Rectangle m_VirtualRectangle;
-		bool _IsMouseDown;
+	    bool _IsMouseDown;
 		bool _HasMouse;
 
 		protected override void OnAutoSizeChanged(EventArgs e) {
 			base.OnAutoSizeChanged(e);
 			if (base.AutoSize) {
-				base.Size = m_PreferredSize;
+				base.Size = PreferredSize;
 			}
 		}
 
@@ -99,9 +92,9 @@ namespace Plain.Forms {
 
 		protected override void OnSystemColorsChanged(EventArgs e) {
 			base.OnSystemColorsChanged(e);
-			m_PreferredSize = getPreferredSize();
+			PreferredSize = getPreferredSize();
 			if (base.AutoSize) {
-				base.Size = m_PreferredSize;
+				base.Size = PreferredSize;
 			}
 		}
 
@@ -163,7 +156,7 @@ namespace Plain.Forms {
 				cboState = ComboBoxState.Normal;
 				btnState = ButtonState.Normal;
 			}
-			Rectangle r = m_VirtualRectangle.IsEmpty ? label.Bounds : m_VirtualRectangle;
+			Rectangle r = VirtualRectangle.IsEmpty ? label.Bounds : VirtualRectangle;
 			if (ComboBoxRenderer.IsSupported) {
 				ComboBoxRenderer.DrawDropDownButton(e.Graphics, r, cboState);
 			}

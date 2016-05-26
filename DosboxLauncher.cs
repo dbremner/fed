@@ -25,24 +25,24 @@ namespace DosboxApp {
 				args += " -conf \"" + pathConf + "\"";
 			}
 
-			m_Process = new Process();
-			m_Process.EnableRaisingEvents = true;
-			m_Process.StartInfo.FileName = dbinfo.FileName;
-			m_Process.StartInfo.Arguments = args;
-			m_Process.StartInfo.WorkingDirectory = Path.GetDirectoryName(dbinfo.FileName);
+			Process = new Process();
+			Process.EnableRaisingEvents = true;
+			Process.StartInfo.FileName = dbinfo.FileName;
+			Process.StartInfo.Arguments = args;
+			Process.StartInfo.WorkingDirectory = Path.GetDirectoryName(dbinfo.FileName);
 			//m_Process.StartInfo.WindowStyle = m_ProcessWindowStyle.Hidden;
 			//m_Process.StartInfo.ErrorDialog = true;
-			m_WindowHandle = IntPtr.Zero;
+			WindowHandle = IntPtr.Zero;
 		}
 
 		public static bool Start() {
-			if (m_Process != null) {
+			if (Process != null) {
 				try {
-					m_Process.Start();
-					m_Process.WaitForInputIdle(3000);
+					Process.Start();
+					Process.WaitForInputIdle(3000);
 					for (int i = 0; i < 10; ++i) {
-						m_WindowHandle = getDosboxWindowHandle();
-						if (m_WindowHandle != IntPtr.Zero) {
+						WindowHandle = getDosboxWindowHandle();
+						if (WindowHandle != IntPtr.Zero) {
 							OnProcessStarted(EventArgs.Empty);
 							break;
 						}
@@ -51,26 +51,19 @@ namespace DosboxApp {
 					return true;
 				}
 				catch (Exception ex) {
-					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + m_Process.StartInfo.FileName + Environment.NewLine + m_Process.StartInfo.Arguments, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine + Process.StartInfo.FileName + Environment.NewLine + Process.StartInfo.Arguments, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 			return false;
 		}
 
-		public static Process Process {
-			get { return m_Process; }
-		}
+		public static Process Process { get; private set; }
 
-		public static IntPtr WindowHandle {
-			get { return m_WindowHandle; }
-		}
+	    public static IntPtr WindowHandle { get; private set; }
 
-		static Process m_Process;
-		static IntPtr m_WindowHandle;
-
-		static protected void OnProcessStarted(EventArgs e) {
+	    static protected void OnProcessStarted(EventArgs e) {
 			if (ProcessStarted.GetInvocationList().Length > 0) {
-				ProcessStarted(m_Process, e);
+				ProcessStarted(Process, e);
 			}
 		}
 
@@ -81,7 +74,7 @@ namespace DosboxApp {
 			while (hwnd != IntPtr.Zero) {
 				uint pid;
 				NativeMethods.GetWindowThreadProcessId(hwnd, out pid);
-				if (pid == m_Process.Id) {
+				if (pid == Process.Id) {
 					break;
 				}
 				hwnd = PInvoke.User32.FindWindowEx(IntPtr.Zero, hwnd, "SDL_app", null);

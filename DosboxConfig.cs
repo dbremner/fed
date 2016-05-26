@@ -478,11 +478,11 @@ namespace DosboxApp {
 			gusdma = DEFAULT_GUSDMA;
 			ultradir = DEFAULT_ULTRADIR;
 
-			m_pcspeaker = DEFAULT_PCSPEAKER;
-			m_pcrate = DEFAULT_PCRATE;
-			m_tandy = DEFAULT_TANDY;
-			m_tandyrate = DEFAULT_TANDYRATE;
-			m_disney = DEFAULT_DISNEY;
+			pcspeaker = DEFAULT_PCSPEAKER;
+			pcrate = DEFAULT_PCRATE;
+			tandy = DEFAULT_TANDY;
+			tandyrate = DEFAULT_TANDYRATE;
+			disney = DEFAULT_DISNEY;
 
 			joysticktype = DEFAULT_JOYSTICKTYPE;
 			timed = DEFAULT_TIMED;
@@ -490,19 +490,19 @@ namespace DosboxApp {
 			swap34 = DEFAULT_SWAP34;
 			buttonwrap = DEFAULT_BUTTONWRAP;
 
-			m_serial1 = DEFAULT_SERIAL1;
-			m_serial2 = DEFAULT_SERIAL2;
-			m_serial3 = DEFAULT_SERIAL3;
-			m_serial4 = DEFAULT_SERIAL4;
+			serial1 = DEFAULT_SERIAL1;
+			serial2 = DEFAULT_SERIAL2;
+			serial3 = DEFAULT_SERIAL3;
+			serial4 = DEFAULT_SERIAL4;
 
-			m_xms = DEFAULT_XMS;
-			m_ems = DEFAULT_EMS;
-			m_umb = DEFAULT_UMB;
-			m_keyboardlayout = DEFAULT_KEYBOARDLAYOUT;
+			xms = DEFAULT_XMS;
+			ems = DEFAULT_EMS;
+			umb = DEFAULT_UMB;
+			keyboardlayout = DEFAULT_KEYBOARDLAYOUT;
 
-			m_ipx = DEFAULT_IPX;
+			ipx = DEFAULT_IPX;
 
-			m_autoexec = DEFAULT_AUTOEXEC;
+			autoexec = DEFAULT_AUTOEXEC;
 		}
 
 		#region SDL
@@ -513,23 +513,17 @@ namespace DosboxApp {
 			}
 			public static readonly ResolutionType Empty;
 			public ResolutionType(UInt16 width, UInt16 height) {
-				m_width = width;
-				m_height = height;
+				this.width = width;
+				this.height = height;
 			}
-			public UInt16 width {
-				set { m_width = value; }
-				get { return m_width; }
-			}
-			public UInt16 height {
-				set { m_height = value; }
-				get { return m_height; }
-			}
-			[Browsable(false)]
+			public UInt16 width { set; get; }
+
+		    public UInt16 height { set; get; }
+
+		    [Browsable(false)]
 			public bool IsEmpty {
-				get { return m_width == 0 && m_height == 0; }
+				get { return width == 0 && height == 0; }
 			}
-			UInt16 m_width;
-			UInt16 m_height;
 		}
 		public enum OutputValue { surface, overlay, opengl, openglnb, ddraw };
 		public enum PriorityValue { lowerest, lower, normal, higher, highest, pause };
@@ -892,45 +886,29 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_SPEAKER, 8)]
 		[DefaultValue(DEFAULT_PCSPEAKER)]
 		[Description("Enable PC-Speaker emulation.")]
-		public bool pcspeaker {
-			set { m_pcspeaker = value; }
-			get { return m_pcspeaker; }
-		}
-		[CategoryOrder(SECTION_SPEAKER)]
+		public bool pcspeaker { set; get; }
+
+	    [CategoryOrder(SECTION_SPEAKER)]
 		[DefaultValue(DEFAULT_PCRATE)]
 		[Description("Sample rate of the PC-Speaker sound generation.")]
-		public RateValue pcrate {
-			set { m_pcrate = value; }
-			get { return m_pcrate; }
-		}
-		[CategoryOrder(SECTION_SPEAKER)]
+		public RateValue pcrate { set; get; }
+
+	    [CategoryOrder(SECTION_SPEAKER)]
 		[DefaultValue(DEFAULT_TANDY)]
 		[Description("Enable Tandy Sound System emulation. For 'auto', emulation is present only if machine is set to 'tandy'.")]
-		public TandyValue tandy {
-			set { m_tandy = value; }
-			get { return m_tandy; }
-		}
-		[CategoryOrder(SECTION_SPEAKER)]
+		public TandyValue tandy { set; get; }
+
+	    [CategoryOrder(SECTION_SPEAKER)]
 		[DefaultValue(DEFAULT_TANDYRATE)]
 		[Description("Sample rate of the Tandy 3-Voice generation.")]
-		public RateValue tandyrate {
-			set { m_tandyrate = value; }
-			get { return m_tandyrate; }
-		}
-		[CategoryOrder(SECTION_SPEAKER)]
+		public RateValue tandyrate { set; get; }
+
+	    [CategoryOrder(SECTION_SPEAKER)]
 		[DefaultValue(DEFAULT_DISNEY)]
 		[Description("Enable Disney Sound Source emulation. (Covox Voice Master and Speech Thing compatible).")]
-		public bool disney {
-			set { m_disney = value; }
-			get { return m_disney; }
-		}
+		public bool disney { set; get; }
 
-		bool m_pcspeaker;
-		RateValue m_pcrate;
-		TandyValue m_tandy;
-		RateValue m_tandyrate;
-		bool m_disney;
-		#endregion
+	    #endregion
 
 		#region JOYSTICK
 		[TypeConverter(typeof(PrefixedEnumConverter))]
@@ -995,37 +973,24 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_SERIAL, 10)]
 		[DefaultValue(DEFAULT_SERIAL1)]
 		[Description("Set type of device connected to com port.")]
-		public SerialValue serial1 {
-			set { m_serial1 = value; }
-			get { return m_serial1; }
-		}
-		[CategoryOrder(SECTION_SERIAL)]
+		public SerialValue serial1 { set; get; }
+
+	    [CategoryOrder(SECTION_SERIAL)]
 		[DefaultValue(DEFAULT_SERIAL2)]
 		[Description("Set type of device connected to com port.")]
-		public SerialValue serial2 {
-			set { m_serial2 = value; }
-			get { return m_serial2; }
-		}
-		[CategoryOrder(SECTION_SERIAL)]
+		public SerialValue serial2 { set; get; }
+
+	    [CategoryOrder(SECTION_SERIAL)]
 		[DefaultValue(DEFAULT_SERIAL3)]
 		[Description("Set type of device connected to com port.")]
-		public SerialValue serial3 {
-			set { m_serial3 = value; }
-			get { return m_serial3; }
-		}
-		[CategoryOrder(SECTION_SERIAL)]
+		public SerialValue serial3 { set; get; }
+
+	    [CategoryOrder(SECTION_SERIAL)]
 		[DefaultValue(DEFAULT_SERIAL4)]
 		[Description("Set type of device connected to com port.")]
-		public SerialValue serial4 {
-			set { m_serial4 = value; }
-			get { return m_serial4; }
-		}
+		public SerialValue serial4 { set; get; }
 
-		SerialValue m_serial1;
-		SerialValue m_serial2;
-		SerialValue m_serial3;
-		SerialValue m_serial4;
-		#endregion
+	    #endregion
 
 		#region DOS
 		public const bool DEFAULT_XMS = true;
@@ -1036,37 +1001,24 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_DOS, 11)]
 		[DefaultValue(DEFAULT_XMS)]
 		[Description("Enable XMS support.")]
-		public bool xms {
-			set { m_xms = value; }
-			get { return m_xms; }
-		}
-		[CategoryOrder(SECTION_DOS)]
+		public bool xms { set; get; }
+
+	    [CategoryOrder(SECTION_DOS)]
 		[DefaultValue(DEFAULT_EMS)]
 		[Description("Enable EMS support.")]
-		public bool ems {
-			set { m_ems = value; }
-			get { return m_ems; }
-		}
-		[CategoryOrder(SECTION_DOS)]
+		public bool ems { set; get; }
+
+	    [CategoryOrder(SECTION_DOS)]
 		[DefaultValue(DEFAULT_UMB)]
 		[Description("Enable UMB support.")]
-		public bool umb {
-			set { m_umb = value; }
-			get { return m_umb; }
-		}
-		[CategoryOrder(SECTION_DOS)]
+		public bool umb { set; get; }
+
+	    [CategoryOrder(SECTION_DOS)]
 		[DefaultValue(DEFAULT_KEYBOARDLAYOUT)]
 		[Description("Language code of the keyboard layout (or none).")]
-		public string keyboardlayout {
-			set { m_keyboardlayout = value; }
-			get { return m_keyboardlayout; }
-		}
+		public string keyboardlayout { set; get; }
 
-		bool m_xms;
-		bool m_ems;
-		bool m_umb;
-		string m_keyboardlayout;
-		#endregion
+	    #endregion
 
 		#region IPX
 		public const bool DEFAULT_IPX = false;
@@ -1074,13 +1026,9 @@ namespace DosboxApp {
 		[CategoryOrder(SECTION_IPX, 12)]
 		[DefaultValue(DEFAULT_IPX)]
 		[Description("Enable ipx over UDP/IP emulation.")]
-		public bool ipx {
-			set { m_ipx = value; }
-			get { return m_ipx; }
-		}
+		public bool ipx { set; get; }
 
-		bool m_ipx;
-		#endregion
+	    #endregion
 
 		#region AUTOEXEC
 		public const string DEFAULT_AUTOEXEC = "";
@@ -1091,12 +1039,8 @@ namespace DosboxApp {
 		[Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
 		[ParenthesizePropertyName(true)]
 		[TypeConverter(typeof(CmdStringConverter))]
-		public string autoexec {
-			set { m_autoexec = value; }
-			get { return m_autoexec; }
-		}
+		public string autoexec { set; get; }
 
-		string m_autoexec;
-		#endregion
+	    #endregion
 	}
 }

@@ -25,16 +25,16 @@ namespace DosboxApp {
 	public class FormConfig : BaseConfig {
 		public FormConfig() {
 			base.Name = typeof(Form).Name;
-			m_WindowState = FormWindowState.Normal;
-			m_Opacity = 1;
+			WindowState = FormWindowState.Normal;
+			Opacity = 1;
 		}
 
 		public override void SaveTo(INI ini) {
 			ini.Section = base.Name;
 			base.writeProp(ini, "DesktopBounds", m_DesktopBounds);
-			base.writeProp(ini, "Size", m_Size);
-			base.writeProp(ini, "WindowState", m_WindowState);
-			base.writeProp(ini, "Opacity", m_Opacity);
+			base.writeProp(ini, "Size", Size);
+			base.writeProp(ini, "WindowState", WindowState);
+			base.writeProp(ini, "Opacity", Opacity);
 		}
 
 		public override void LoadFrom(INI ini) {
@@ -44,50 +44,35 @@ namespace DosboxApp {
 				this.DesktopBounds = (Rectangle) value;
 			}
 			if (base.readProp(ini, "Size", out value)) {
-				m_Size = (Size) value;
+				Size = (Size) value;
 			}
 			if (base.readProp(ini, "WindowState", out value)) {
-				m_WindowState = (FormWindowState) value;
+				WindowState = (FormWindowState) value;
 			}
 			if (base.readProp(ini, "Opacity", out value)) {
 				if (0.2 <= (double) value) {
-					m_Opacity = (double) value;
+					Opacity = (double) value;
 				}
 			}
 		}
 
-		public bool LocationSet {
-			get { return m_LocationSet; }
-		}
+		public bool LocationSet { get; private set; }
 
-		public Size Size {
-			set { m_Size = value; }
-			get { return m_Size; }
-		}
+	    public Size Size { set; get; }
 
-		public Rectangle DesktopBounds {
+	    public Rectangle DesktopBounds {
 			set {
 				m_DesktopBounds = value;
-				m_LocationSet = true;
+				LocationSet = true;
 			}
 			get { return m_DesktopBounds; }
 		}
 
-		public FormWindowState WindowState {
-			set { m_WindowState = value; }
-			get { return m_WindowState; }
-		}
+		public FormWindowState WindowState { set; get; }
 
-		public double Opacity {
-			set { m_Opacity = value; }
-			get { return m_Opacity; }
-		}
+	    public double Opacity { set; get; }
 
-		bool m_LocationSet;
-		Rectangle m_DesktopBounds;
-		Size m_Size;
-		FormWindowState m_WindowState;
-		double m_Opacity;
+	    Rectangle m_DesktopBounds;
 	}
 
 	public class GameListFormConfig : FormConfig {
@@ -95,20 +80,20 @@ namespace DosboxApp {
 			: base() {
 			base.Name = typeof(GameListForm).Name;
 			base.Size = new Size(500, 400);
-			m_SearchWidth = 128;
-			m_Column0Width = 200;
-			m_Column1Width = 120;
-			m_Column2Width = 120;
+			SearchWidth = 128;
+			Column0Width = 200;
+			Column1Width = 120;
+			Column2Width = 120;
 		}
 
 		public override void SaveTo(INI ini) {
 			base.SaveTo(ini);
-			base.writeProp(ini, "SearchWidth", m_SearchWidth);
-			base.writeProp(ini, "Column0Width", m_Column0Width);
-			base.writeProp(ini, "Column1Width", m_Column1Width);
-			base.writeProp(ini, "Column2Width", m_Column2Width);
-			base.writeProp(ini, "FEDPinned", m_FEDPinned);
-			base.writeProp(ini, "SearchPhrase", m_SearchPhrase);
+			base.writeProp(ini, "SearchWidth", SearchWidth);
+			base.writeProp(ini, "Column0Width", Column0Width);
+			base.writeProp(ini, "Column1Width", Column1Width);
+			base.writeProp(ini, "Column2Width", Column2Width);
+			base.writeProp(ini, "FEDPinned", FEDPinned);
+			base.writeProp(ini, "SearchPhrase", SearchPhrase);
 		}
 
 		public override void LoadFrom(INI ini) {
@@ -116,76 +101,51 @@ namespace DosboxApp {
 			base.LoadFrom(ini);
 			if (base.readProp(ini, "SearchWidth", out value)) {
 				if (64 <= (int) value) {
-					m_SearchWidth = (int) value;
+					SearchWidth = (int) value;
 				}
 			}
 			if (base.readProp(ini, "Column0Width", out value)) {
 				if (8 <= (int) value) {
-					m_Column0Width = (int) value;
+					Column0Width = (int) value;
 				}
 				else {
-					m_Column0Width = 8;
+					Column0Width = 8;
 				}
 			}
 			if (base.readProp(ini, "Column1Width", out value)) {
 				if (8 <= (int) value) {
-					m_Column1Width = (int) value;
+					Column1Width = (int) value;
 				}
 				else {
-					m_Column1Width = 8;
+					Column1Width = 8;
 				}
 			}
 			if (base.readProp(ini, "Column2Width", out value)) {
 				if (8 <= (int) value) {
-					m_Column2Width = (int) value;
+					Column2Width = (int) value;
 				}
 				else {
-					m_Column2Width = 8;
+					Column2Width = 8;
 				}
 			}
 			if (base.readProp(ini, "FEDPinned", out value)) {
-				m_FEDPinned = (bool) value;
+				FEDPinned = (bool) value;
 			}
 			if (base.readProp(ini, "SearchPhrase", out value)) {
-				m_SearchPhrase = (string) value;
+				SearchPhrase = (string) value;
 			}
 		}
 
-		public int SearchWidth {
-			set { m_SearchWidth = value; }
-			get { return m_SearchWidth; }
-		}
+		public int SearchWidth { set; get; }
 
-		public int Column0Width {
-			set { m_Column0Width = value; }
-			get { return m_Column0Width; }
-		}
+	    public int Column0Width { set; get; }
 
-		public int Column1Width {
-			set { m_Column1Width = value; }
-			get { return m_Column1Width; }
-		}
+	    public int Column1Width { set; get; }
 
-		public int Column2Width {
-			set { m_Column2Width = value; }
-			get { return m_Column2Width; }
-		}
+	    public int Column2Width { set; get; }
 
-		public bool FEDPinned {
-			set { m_FEDPinned = value; }
-			get { return m_FEDPinned; }
-		}
+	    public bool FEDPinned { set; get; }
 
-		public string SearchPhrase {
-			set { m_SearchPhrase = value; }
-			get { return m_SearchPhrase; }
-		}
-
-		int m_SearchWidth;
-		int m_Column0Width;
-		int m_Column1Width;
-		int m_Column2Width;
-		bool m_FEDPinned;
-		string m_SearchPhrase;
+	    public string SearchPhrase { set; get; }
 	}
 }
