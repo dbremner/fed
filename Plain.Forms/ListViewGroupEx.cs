@@ -99,11 +99,12 @@ namespace Plain.Forms {
 
 		public int ID {
 			get {
-				PropertyInfo prop = null;
-				try {
-					prop = m_Group.GetType().GetProperty("ID", BindingFlags.Instance | BindingFlags.NonPublic);
-					return (int) prop.GetValue(m_Group, null);
-				} catch { }
+			    try
+				{
+				    PropertyInfo prop = m_Group.GetType().GetProperty("ID", BindingFlags.Instance | BindingFlags.NonPublic);
+				    return (int) prop.GetValue(m_Group, null);
+				}
+				catch { }
 				return 0;
 			}
 		}
@@ -112,21 +113,23 @@ namespace Plain.Forms {
 		string m_Header;
 
 		void deserialize(SerializationInfo info, StreamingContext context) {
-			MethodInfo func = null;
-			try {
-				func = m_Group.GetType().GetMethod("Deserialize", BindingFlags.Instance | BindingFlags.NonPublic);
-				func.Invoke(m_Group, new object[] { info, context });
-			} catch {
+		    try
+			{
+			    MethodInfo func = m_Group.GetType().GetMethod("Deserialize", BindingFlags.Instance | BindingFlags.NonPublic);
+			    func.Invoke(m_Group, new object[] { info, context });
+			}
+			catch {
 				Deserialize(info, context);
 			}
 		}
 
 		protected void getObjectData(SerializationInfo info, StreamingContext context) {
-			MethodInfo func = null;
-			try {
-				func = m_Group.GetType().GetMethod("GetObjectData", BindingFlags.Instance | BindingFlags.NonPublic);
-				func.Invoke(m_Group, new object[] { info, context });
-			} catch {
+		    try
+			{
+			    MethodInfo func = m_Group.GetType().GetMethod("GetObjectData", BindingFlags.Instance | BindingFlags.NonPublic);
+			    func.Invoke(m_Group, new object[] { info, context });
+			}
+			catch {
 				(this as ISerializable).GetObjectData(info, context);
 			}
 		}

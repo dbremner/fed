@@ -146,10 +146,10 @@ namespace Plain.Forms {
 		public void SetComment(string title, string description) {
 			Control comment = getControl(TYPE_DOCCOMMENT);
 			if (comment != null) {
-				MethodInfo func = null;
-				try {
-					func = comment.GetType().GetMethod("SetComment", BindingFlags.Instance | BindingFlags.Public);
-					func.Invoke(comment, new object[] { title, description });
+			    try
+				{
+				    MethodInfo func = comment.GetType().GetMethod("SetComment", BindingFlags.Instance | BindingFlags.Public);
+				    func.Invoke(comment, new object[] { title, description });
 				}
 				catch { }
 			}

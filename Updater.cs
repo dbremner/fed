@@ -143,20 +143,18 @@ namespace DosboxApp {
 			lock (m_LatestUpdate) {
 				if (this.IsUpdateAvailable) {
 					FileStream outStream = null;
-					HttpWebRequest request = null;
-					HttpWebResponse response = null;
-					int length = 0;
-					try {
+				    HttpWebResponse response = null;
+				    try {
 						string tmpPath = Path.GetTempFileName();
 						m_DownloadedUpdate.Path = tmpPath + ".exe";
 						FileInfo fi = new FileInfo(tmpPath);
 						fi.MoveTo(m_DownloadedUpdate.Path);
 
 						outStream = fi.OpenWrite();
-						request = (HttpWebRequest) WebRequest.Create(m_LatestUpdate.Path);
+						var request = (HttpWebRequest) WebRequest.Create(m_LatestUpdate.Path);
 						response = (HttpWebResponse) request.GetResponse();
 						if (response.StatusCode == HttpStatusCode.OK && response.ContentType.StartsWith("application/x-dosexec")) {
-							length = (int) response.ContentLength;
+							int length = (int) response.ContentLength;
 							byte[] updateData = new byte[length];
 							response.GetResponseStream().Read(updateData, 0, length);
 							outStream.Write(updateData, 0, length);

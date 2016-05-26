@@ -167,10 +167,9 @@ namespace DosboxApp {
 					}
 					string separator = culture.TextInfo.ListSeparator;
 					TypeConverter converter = TypeDescriptor.GetConverter(typeof(PriorityValue));
-					string[] strArray = new string[2];
-					int num = 0;
-					strArray[num++] = converter.ConvertToString(context, culture, pt.when_focused);
-					strArray[num++] = converter.ConvertToString(context, culture, pt.when_minimzed);
+				    var str1 = converter.ConvertToString(context, culture, pt.when_focused);
+					var str2 = converter.ConvertToString(context, culture, pt.when_minimzed);
+					string[] strArray = new string[2] {str1, str2};
 					return string.Join(separator, strArray);
 				}
 				if ((destinationType == typeof(InstanceDescriptor)) && (value is PriorityType)) {
