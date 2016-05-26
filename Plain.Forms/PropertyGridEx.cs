@@ -33,7 +33,7 @@ namespace Plain.Forms {
 			Control comment = getControl(TYPE_DOCCOMMENT);
 			if (comment != null) {
 				foreach (Control ctrl in comment.Controls) {
-					ctrl.TextChanged += new EventHandler(DocComment_TextChanged);
+					ctrl.TextChanged += DocComment_TextChanged;
 				}
 			}
 			m_Changes = new LinkedList<ChangeInfo>();

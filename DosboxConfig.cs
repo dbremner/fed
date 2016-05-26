@@ -351,11 +351,9 @@ namespace DosboxApp {
 		public static void SaveProperty(INI ini, string section, string name, object value) {
 			ini.Section = section;
 			ConfigMeta metaToSave = s_AllProperties[section].Find(
-				new Predicate<ConfigMeta>(
-					delegate(ConfigMeta meta) {
-						return meta.PropertyInfo.Name.ToLowerInvariant() == name.ToLowerInvariant();
-					}
-				)
+				delegate(ConfigMeta meta) {
+                    return meta.PropertyInfo.Name.ToLowerInvariant() == name.ToLowerInvariant();
+				}
 			);
 			if (metaToSave != null) {
 				ini.Write(metaToSave.PropertyInfo.Name, metaToSave.TypeConverter.ConvertToInvariantString(value));

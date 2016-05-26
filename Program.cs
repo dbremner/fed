@@ -56,7 +56,7 @@ namespace DosboxApp {
 				}
 			}
 
-			Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
+			Application.ApplicationExit += Application_ApplicationExit;
 #if DEBUG
 			Stopwatch.Mark("app config before form");
 #endif

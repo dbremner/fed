@@ -39,7 +39,7 @@ namespace DosboxApp {
 			Stopwatch.Mark("Before InitializeComponent");
 #endif
 			InitializeComponent();
-			DosboxLauncher.ProcessStarted += new EventHandler(DosboxProcess_Started);
+			DosboxLauncher.ProcessStarted += DosboxProcess_Started;
 #if DEBUG
 			Stopwatch.Mark("After InitializeComponent");
 #endif
@@ -314,7 +314,7 @@ namespace DosboxApp {
 			MenuItem mi = new MenuItem(info.VersionString);
 			mi.Tag = info;
 			mi.RadioCheck = true;
-			mi.Click += new EventHandler(mnuDosboxVersion_Click);
+			mi.Click += mnuDosboxVersion_Click;
 			mnuRun.MenuItems.Add(mnuRun.MenuItems.Count - 2, mi);
 			return mi;
 		}
@@ -491,7 +491,7 @@ namespace DosboxApp {
 				if (lvwGame.SelectedItems.Count > 0) {
 					string pathConfig = prepareTempConfig(dbinfo) ? m_TemporaryConfigFile : null;
 					DosboxLauncher.Starting(dbinfo, lvwGame.SelectedItems[0].Tag as GameObject, pathConfig);
-					DosboxLauncher.Process.Exited += new EventHandler(DosboxProcess_Exited);
+					DosboxLauncher.Process.Exited += DosboxProcess_Exited;
 					if (DosboxLauncher.Start()) {
 						if (btnPin.Pushed) {
 							notifyIcon.Visible = true;
