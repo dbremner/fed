@@ -336,8 +336,8 @@ namespace Plain.Forms {
 
 		void setInnerMargins(Padding margins) {
 			NativeMethods.SendMessage(base.Handle, NativeMethods.EM_SETMARGINS,
-				NativeMethods.EC_LEFTMARGIN | NativeMethods.EC_RIGHTMARGIN,
-				(int) NativeMethods.MAKELONG((ushort) margins.Left, (ushort) margins.Right));
+                (IntPtr)(NativeMethods.EC_LEFTMARGIN | NativeMethods.EC_RIGHTMARGIN),
+				(IntPtr) NativeMethods.MAKELONG((ushort) margins.Left, (ushort) margins.Right));
 		}
 	}
 }

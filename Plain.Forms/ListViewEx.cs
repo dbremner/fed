@@ -122,7 +122,7 @@ namespace Plain.Forms {
 				// May not be "created" when recreating, while header is there...
 				//if (base.Created) {
 					NativeMethods.RECT r = new NativeMethods.RECT();
-					NativeMethods.GetWindowRect((IntPtr) NativeMethods.SendMessage(base.Handle, NativeMethods.LVM_GETHEADER, 0, 0), ref r);
+					NativeMethods.GetWindowRect((IntPtr) NativeMethods.SendMessage(base.Handle, NativeMethods.LVM_GETHEADER, (IntPtr)0, (IntPtr)0), ref r);
 					return r.bottom - r.top;
 				//}
 				//return 0;
@@ -149,7 +149,8 @@ namespace Plain.Forms {
 
 		protected override void OnHandleCreated(EventArgs e) {
 			base.OnHandleCreated(e);
-			NativeMethods.SendMessage(base.Handle, NativeMethods.LVM_SETEXTENDEDLISTVIEWSTYLE, NativeMethods.LVS_EX_DOUBLEBUFFER, NativeMethods.LVS_EX_DOUBLEBUFFER);
+			NativeMethods.SendMessage(base.Handle, NativeMethods.LVM_SETEXTENDEDLISTVIEWSTYLE,
+			    (IntPtr)(NativeMethods.LVS_EX_DOUBLEBUFFER), (IntPtr)NativeMethods.LVS_EX_DOUBLEBUFFER);
 			NativeMethods.SetWindowTheme(base.Handle, "explorer", null);
 			updateEmptyText();
 		}

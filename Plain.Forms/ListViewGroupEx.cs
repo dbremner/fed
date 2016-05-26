@@ -72,7 +72,7 @@ namespace Plain.Forms {
 						lvg.mask = NativeMethods.LVGF_HEADER;
 						lvg.cchHeader = m_Header.Length;	// Should be ignored when set.
 						lvg.pszHeader = pszHeader;
-						NativeMethods.SendMessage(m_Group.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, this.ID, ref lvg);
+						NativeMethods.SendMessage(m_Group.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, (IntPtr)this.ID, ref lvg);
 						Marshal.FreeCoTaskMem(pszHeader);
 					}
 				}
@@ -88,7 +88,7 @@ namespace Plain.Forms {
 						lvg.mask = NativeMethods.LVGF_HEADER;
 						lvg.cchHeader = 512;
 						lvg.pszHeader = pszHeader;
-						NativeMethods.SendMessage(m_Group.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, this.ID, ref lvg);
+						NativeMethods.SendMessage(m_Group.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, (IntPtr)this.ID, ref lvg);
 						header = Marshal.PtrToStringUni(pszHeader);
 						Marshal.FreeCoTaskMem(pszHeader);
 					}
@@ -241,7 +241,7 @@ namespace Plain.Forms {
 					lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 					lvg.mask = NativeMethods.LVGF_STATE;
 					lvg.stateMask = NativeMethods.LVGS_COLLAPSED | NativeMethods.LVGS_COLLAPSIBLE;
-					int id = NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, base.ID, ref lvg);
+					int id = NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, (IntPtr)base.ID, ref lvg);
 					if (id == base.ID) {
 						return (lvg.state & NativeMethods.LVGS_COLLAPSIBLE) != 0;
 					}
@@ -270,7 +270,7 @@ namespace Plain.Forms {
 					lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 					lvg.mask = NativeMethods.LVGF_STATE;
 					lvg.stateMask = NativeMethods.LVGS_COLLAPSED | NativeMethods.LVGS_COLLAPSIBLE;
-					int id = NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, base.ID, ref lvg);
+					int id = NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_GETGROUPINFO, (IntPtr)base.ID, ref lvg);
 					if (id == base.ID) {
 						return (lvg.state & NativeMethods.LVGS_COLLAPSED) != 0;
 					}
@@ -309,7 +309,7 @@ namespace Plain.Forms {
 				if (m_Collapsed) {
 					lvg.state |= NativeMethods.LVGS_COLLAPSED;
 				}
-				NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, base.ID, ref lvg);
+				NativeMethods.SendMessage(base.BaseClass.ListView.Handle, NativeMethods.LVM_SETGROUPINFO, (IntPtr)base.ID, ref lvg);
 			}
 		}
 

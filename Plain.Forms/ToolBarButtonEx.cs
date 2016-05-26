@@ -59,7 +59,7 @@ namespace Plain.Forms {
 					Reflector _WindowsForms_ = new Reflector("System.Windows.Forms");
 					try {
 						int index = (int) _WindowsForms_.CallAs(typeof(ToolBarButton), this, "FindButtonIndex", null);
-						NativeMethods.SendMessage(base.Parent.Handle, NativeMethods.TB_SETBUTTONINFOW, index, ref tbinfo);
+						NativeMethods.SendMessage(base.Parent.Handle, NativeMethods.TB_SETBUTTONINFOW, (IntPtr)index, ref tbinfo);
 					}
 					catch { }
 				}
@@ -72,7 +72,7 @@ namespace Plain.Forms {
 					Reflector _WindowsForms_ = new Reflector("System.Windows.Forms");
 					try {
 						int index = (int) _WindowsForms_.CallAs(typeof(ToolBarButton), this, "FindButtonIndex", null);
-						NativeMethods.SendMessage(base.Parent.Handle, NativeMethods.TB_GETBUTTONINFOW, index, ref tbinfo);
+						NativeMethods.SendMessage(base.Parent.Handle, NativeMethods.TB_GETBUTTONINFOW, (IntPtr)index, ref tbinfo);
 						return tbinfo.cx;
 					}
 					catch { }

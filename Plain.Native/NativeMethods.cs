@@ -47,117 +47,61 @@ namespace Plain.Native {
 			return ((UInt16) (((Byte) (((UInt64) (a)) & 0xff)) | ((UInt16) ((Byte) (((UInt64) (b)) & 0xff))) << 8));
 		}
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, Int32 nMaxCount);
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, Int32 nMaxCount);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, String lpszClass, String lpszWindow);
+	    [DllImport("user32.dll")]
+	    internal static extern IntPtr GetDlgItem(IntPtr hDlg, Int32 nIDDlgItem);
 
-		[DllImport("user32.dll")]
-		public static extern IntPtr GetDlgItem(IntPtr hDlg, Int32 nIDDlgItem);
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam);
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, String lParam);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, String lParam);
-
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, StringBuilder lParam);
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern int SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, StringBuilder lParam);
 
 		// Must not be OFNOTIFY or my fake CDN_FILEOK WM_NOTIFY gets everything 0. (Use ref?)
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, UIntPtr wParam, ref OFNOTIFY lParam);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, Int32 Msg, Int32 wParam, ref LVGROUP lParam);
+	    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern int SendMessage(IntPtr hWnd, Int32 Msg, IntPtr wParam, ref LVGROUP lParam);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, ref NMLVEMPTYMARKUP lParam);
+	    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern int SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, ref TBBUTTONINFO lParam);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, ref TBBUTTONINFO lParam);
+	    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		internal static extern int PostMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, StringBuilder wParam, Int32 lParam);
+	    [DllImport("user32.dll")]
+	    internal static extern IntPtr GetFocus();
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern int PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam);
+		[DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+		internal static extern Int32 SetWindowTheme(IntPtr hwnd, String pszSubAppName, String pszSubIdList);
 
-		[DllImport("user32.dll")]
-		public static extern IntPtr GetAncestor(IntPtr hwnd, UInt32 gaFlags);
-
-		[DllImport("user32.dll")]
-		public static extern IntPtr GetFocus();
-
-		[DllImport("uxtheme.dll", CharSet = CharSet.Auto)]
-		public static extern Int32 SetWindowTheme(IntPtr hwnd, String pszSubAppName, String pszSubIdList);
-
-		[DllImport("comdlg32.dll")]
-		public static extern int CommDlgExtendedError();
+	    [DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+	    internal static extern bool WritePrivateProfileString(String lpAppName, String lpKeyName, String lpString, String lpFileName);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern bool WritePrivateProfileString(String lpAppName, String lpKeyName, String lpString, String lpFileName);
+		internal static extern uint GetPrivateProfileString(String lpAppName, String lpKeyName, String lpDefault, StringBuilder lpReturnedString, UInt32 nSize, String lpFileName);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern uint GetPrivateProfileString(String lpAppName, String lpKeyName, String lpDefault, StringBuilder lpReturnedString, UInt32 nSize, String lpFileName);
+		internal static extern bool WritePrivateProfileSection(String lpAppName, String lpString, String lpFileName);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern bool WritePrivateProfileSection(String lpAppName, String lpString, String lpFileName);
-
-		[DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-		public static extern uint GetPrivateProfileSection(String lpAppName, IntPtr lpReturnedString, UInt32 nSize, String lpFileName);
+		internal static extern uint GetPrivateProfileSection(String lpAppName, IntPtr lpReturnedString, UInt32 nSize, String lpFileName);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
-		public static extern uint GetPrivateProfileInt(String lpAppName, String lpKeyName, Int32 nDefault, String lpFileName);
+		internal static extern uint GetPrivateProfileInt(String lpAppName, String lpKeyName, Int32 nDefault, String lpFileName);
 
-		[DllImport("dwmapi.dll")]
-		public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
+	    [DllImport("user32.dll")]
+		internal static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
-		[DllImport("user32.dll")]
-		public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+	    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+	    internal static extern Int32 GetShortPathName(String lpszLongPath, StringBuilder lpszShortPath, Int32 cchBuffer);
 
-		[DllImport("user32.dll", SetLastError = true)]
-		public static extern int GetWindowLong(IntPtr hWnd, Int32 nIndex);
-
-		[DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
-		public static extern IntPtr GetWindowLong64(IntPtr hWnd, Int32 nIndex);
-
-		public static IntPtr GetWindowLongPtr(IntPtr hWnd, Int32 nIndex) {
-			if (IntPtr.Size == 4) {
-				return (IntPtr) GetWindowLong(hWnd, nIndex);
-			}
-			else {
-				return GetWindowLong64(hWnd, nIndex);
-			}
-		}
-
-		[DllImport("user32.dll", SetLastError = true)]
-		public static extern int SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
-
-		[DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-		public static extern IntPtr SetWindowLong64(IntPtr hWnd, Int32 nIndex, IntPtr dwNewLong);
-
-		public static IntPtr SetWindowLongPtr(IntPtr hWnd, Int32 nIndex, IntPtr dwNewLong) {
-			if (IntPtr.Size == 4) {
-				return (IntPtr) SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32());
-			}
-			else {
-				return SetWindowLong64(hWnd, nIndex, dwNewLong);
-			}
-		}
-
-		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-		public static extern Int32 GetShortPathName(String lpszLongPath, StringBuilder lpszShortPath, Int32 cchBuffer);
-
-		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-		public static extern Int32 GetLongPathName(String lpszShortPath, StringBuilder lpszLongPath, Int32 cchBuffer);
-
-		[DllImport("user32.dll")]
-		public static extern Boolean SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, Int32 X, Int32 Y, Int32 cx, Int32 cy, UInt32 uFlags);
-
-		[DllImport("user32.dll")]
-		public static extern UInt32 GetWindowThreadProcessId(IntPtr hWnd, out UInt32 lpdwProcessId);
+	    [DllImport("user32.dll")]
+	    internal static extern UInt32 GetWindowThreadProcessId(IntPtr hWnd, out UInt32 lpdwProcessId);
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct NMHDR {
@@ -175,31 +119,7 @@ namespace Plain.Native {
 			public IntPtr pszFile;
 		}
 
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-		public struct OPENFILENAME_9x {
-			public UInt32 lStructSize;
-			public IntPtr hwndOwner;
-			public IntPtr hInstance;
-			public IntPtr lpstrFilter;
-			public IntPtr lpstrCustomFilter;
-			public UInt32 nMaxCustFilter;
-			public UInt32 nFilterIndex;
-			public IntPtr lpstrFile;
-			public UInt32 nMaxFile;
-			public IntPtr lpstrFileTitle;
-			public UInt32 nMaxFileTitle;
-			public IntPtr lpstrInitialDir;
-			public IntPtr lpstrTitle;
-			public UInt32 Flags;
-			public UInt16 nFileOffset;
-			public UInt16 nFileExtension;
-			public IntPtr lpstrDefExt;
-			public IntPtr lCustData;
-			public IntPtr lpfnHook;
-			public IntPtr lpTemplateName;
-		}
-
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+	    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 		public struct OPENFILENAME {
 			public UInt32 lStructSize;
 			public IntPtr hwndOwner;
@@ -401,11 +321,7 @@ namespace Plain.Native {
 		public const int WM_DESTROY = 0x0002;
 		public const int WM_NCDESTROY = 0x0082;
 
-		public const uint GA_PARENT = 1;
-		public const uint GA_ROOT = 2;
-		public const uint GA_ROOTOWNER = 3;
-
-		public const int LVM_FIRST = 0x1000;
+	    public const int LVM_FIRST = 0x1000;
 		public const int LVM_GETITEMCOUNT = (LVM_FIRST + 4);
 		public const int LVM_INSERTITEMA = (LVM_FIRST + 7);
 		public const int LVM_INSERTITEMW = (LVM_FIRST + 77);
@@ -503,10 +419,8 @@ namespace Plain.Native {
 		public const int TBIF_SIZE = 0x00000040;
 		public const int TB_GETBUTTONINFOW = (WM_USER + 63);
 		public const int TB_SETBUTTONINFOW = (WM_USER + 64);
-		public const int TB_GETBUTTONINFOA = (WM_USER + 65);
-		public const int TB_SETBUTTONINFOA = (WM_USER + 66);
 
-		public const int EM_SETMARGINS = 0x00D3;
+	    public const int EM_SETMARGINS = 0x00D3;
 		public const int EM_GETMARGINS = 0x00D4;
 		public const int ECM_FIRST = 0x1500;
 		public const int EM_SETCUEBANNER = (ECM_FIRST + 1);
@@ -518,17 +432,5 @@ namespace Plain.Native {
 
 		public const int WM_NCHITTEST = 0x0084;
 		public const int HTTRANSPARENT = (-1);
-
-		public const UInt32 SWP_NOSIZE = 0x0001;
-		public const UInt32 SWP_NOMOVE = 0x0002;
-		public const UInt32 SWP_NOZORDER = 0x0004;
-		public const UInt32 SWP_NOREDRAW = 0x0008;
-		public const UInt32 SWP_NOACTIVATE = 0x0010;
-		public const UInt32 SWP_FRAMECHANGED = 0x0020;
-		public const UInt32 SWP_SHOWWINDOW = 0x0040;
-		public const UInt32 SWP_HIDEWINDOW = 0x0080;
-		public const UInt32 SWP_NOCOPYBITS = 0x0100;
-		public const UInt32 SWP_NOOWNERZORDER = 0x0200;
-		public const UInt32 SWP_NOSENDCHANGING = 0x0400;
 	}
 }

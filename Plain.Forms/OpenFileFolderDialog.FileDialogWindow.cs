@@ -57,11 +57,11 @@ namespace Plain.Forms {
 						m_CDNWindow = new CommonDialogNotifyWindow(hwndCommonDialogNotify);
 					}
 #endif
-					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_HIDECONTROL, NativeMethods.cmb1, 0);
-					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_HIDECONTROL, NativeMethods.stc2, 0);
+					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_HIDECONTROL, (IntPtr)NativeMethods.cmb1, IntPtr.Zero);
+					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_HIDECONTROL, (IntPtr)NativeMethods.stc2, IntPtr.Zero);
 					// TODO: localize
-					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_SETCONTROLTEXT, NativeMethods.IDOK, "Select");
-					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_SETCONTROLTEXT, NativeMethods.stc3, "Folder:");
+					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_SETCONTROLTEXT, (IntPtr)NativeMethods.IDOK, "Select");
+					NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_SETCONTROLTEXT, (IntPtr)NativeMethods.stc3, "Folder:");
 					break;
 				case NativeMethods.WM_COMMAND:
 					switch (NativeMethods.LOWORD(m.WParam.ToInt32())) {
@@ -71,16 +71,16 @@ namespace Plain.Forms {
 							bool bAcceptOK = true;
 							IntPtr hwndFocus = NativeMethods.GetFocus();
 							IntPtr hwndComboBoxEx32 = NativeMethods.GetDlgItem(m.HWnd, NativeMethods.cmb13);
-							IntPtr hwndComboBox = NativeMethods.FindWindowEx(hwndComboBoxEx32, IntPtr.Zero, null, null);
-							IntPtr hwndEdit = NativeMethods.FindWindowEx(hwndComboBox, IntPtr.Zero, null, null);
+							IntPtr hwndComboBox = PInvoke.User32.FindWindowEx(hwndComboBoxEx32, IntPtr.Zero, null, null);
+							IntPtr hwndEdit = PInvoke.User32.FindWindowEx(hwndComboBox, IntPtr.Zero, null, null);
 							if (hwndFocus == hwndEdit) {
 								bAcceptOK = false;
 							}
 							if (bAcceptOK) {
-								int bufSize = NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_GETFILEPATH, 0, (StringBuilder) null);
+								int bufSize = NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_GETFILEPATH, IntPtr.Zero, (StringBuilder) null);
 								if (bufSize >= 0) {
 									StringBuilder sb = new StringBuilder(bufSize);
-									bufSize = NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_GETFILEPATH, sb.Capacity, sb);
+									bufSize = NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_GETFILEPATH, (IntPtr)sb.Capacity, sb);
 									if (bufSize >= 0) {
 										string path = sb.ToString();
 										System.Diagnostics.Debug.WriteLine("Checking " + path, "FileDialogWindow.WndProc");
@@ -102,7 +102,7 @@ namespace Plain.Forms {
 										m_OpenFileFolderDialog.OnFileOK(e);
 										if (e.Cancel == false) {
 											m_AcceptedFolderOK = true;
-											NativeMethods.PostMessage(m.HWnd, NativeMethods.WM_CLOSE, 0, 0);
+											NativeMethods.PostMessage(m.HWnd, NativeMethods.WM_CLOSE, (IntPtr) 0, (IntPtr) 0);
 											m.Result = IntPtr.Zero;
 										}
 #endif
