@@ -77,14 +77,14 @@ namespace DosboxApp {
 		static IntPtr getDosboxWindowHandle() {
 			// FIXME: use EnumWindows.
 			// FIXME: m_Process may have exited.
-			IntPtr hwnd = NativeMethods.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "SDL_app", null);
+			IntPtr hwnd = PInvoke.User32.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "SDL_app", null);
 			while (hwnd != IntPtr.Zero) {
 				uint pid;
 				NativeMethods.GetWindowThreadProcessId(hwnd, out pid);
 				if (pid == m_Process.Id) {
 					break;
 				}
-				hwnd = NativeMethods.FindWindowEx(IntPtr.Zero, hwnd, "SDL_app", null);
+				hwnd = PInvoke.User32.FindWindowEx(IntPtr.Zero, hwnd, "SDL_app", null);
 			}
 			return hwnd;
 		}

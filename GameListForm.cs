@@ -30,6 +30,7 @@ using Plain.Forms;
 using Plain.IO;
 using Plain.Native;
 using System.Threading;
+using PInvoke;
 
 namespace DosboxApp {
 	public partial class GameListForm : FEDFormEx {
@@ -901,7 +902,7 @@ namespace DosboxApp {
 				if (dbinfo.Config.fullscreen == false) {
 					for (int i = 0; i < 2; ++i) {
 						Thread.CurrentThread.Join(500);
-						NativeMethods.SetWindowPos(DosboxLauncher.WindowHandle, IntPtr.Zero, base.Left, base.Top, 0, 0, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOSIZE);
+						PInvoke.User32.SetWindowPos(DosboxLauncher.WindowHandle, IntPtr.Zero, base.Left, base.Top, 0, 0, User32.SetWindowPosFlags.SWP_NOZORDER | User32.SetWindowPosFlags.SWP_NOSIZE);
 					}
 				}
 			}
