@@ -19,12 +19,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 using System;
 using System.IO;
+using System.Windows.Forms;
 using Plain.IO;
 
 namespace DosboxApp {
 	public static class AppInfo {
 		public static string GetAppSearchDirectory() {
-			return Path.GetFullPath(System.Windows.Forms.Application.StartupPath);
+			return Path.GetFullPath(Application.StartupPath);
 		}
 
 		public static string GetRelativePath(string path) {
