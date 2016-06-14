@@ -248,9 +248,8 @@ namespace DosboxApp {
 
 		class UpdateInfo {
 			public UpdateInfo() {
-				MD5Sum = string.Empty;
 			}
-			public string MD5Sum;
+			public string MD5Sum = string.Empty;
 			public Version Version;
 			public string Path;
 			public bool IsCompatible {
