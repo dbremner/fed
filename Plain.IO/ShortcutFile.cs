@@ -152,8 +152,7 @@ namespace Plain.IO {
 		public Keys Hotkey {
 			set {
 				if (_comShellLink != null) {
-					byte vk;
-					byte mod = 0;
+				    byte mod = 0;
 					if ((value & Keys.Shift) != 0) {
 						value &= ~Keys.Shift;
 						mod |= NativeMethods.HOTKEYF_SHIFT;
@@ -166,7 +165,7 @@ namespace Plain.IO {
 						value &= ~Keys.Alt;
 						mod |= NativeMethods.HOTKEYF_ALT;
 					}
-					vk = (byte) value;
+					byte vk = (byte) value;
 					_comShellLink.SetHotkey(NativeMethods.MAKEWORD(vk, mod));
 				}
 			}

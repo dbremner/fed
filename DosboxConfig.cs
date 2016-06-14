@@ -299,8 +299,7 @@ namespace DosboxApp {
 			Stopwatch.Mark("before s_AllProperties");
 #endif
 			s_AllProperties = new Dictionary<string, List<ConfigMeta>>();
-			List<ConfigMeta> metalist;
-			foreach (PropertyInfo pi in typeof(DosboxConfig).GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
+		    foreach (PropertyInfo pi in typeof(DosboxConfig).GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
 				string cat = ((CategoryOrderAttribute) pi.GetCustomAttributes(typeof(CategoryOrderAttribute), true)[0]).Category;
 				if (cat != DosboxConfig.SECTION_AUTOEXEC) {
 					var meta = new ConfigMeta();
@@ -313,7 +312,8 @@ namespace DosboxApp {
 					else {
 						meta.TypeConverter = (TypeConverter) TypeDescriptor.GetConverter(pi.PropertyType);
 					}
-					if (s_AllProperties.ContainsKey(cat)) {
+				    List<ConfigMeta> metalist;
+				    if (s_AllProperties.ContainsKey(cat)) {
 						metalist = s_AllProperties[cat];
 					}
 					else {
