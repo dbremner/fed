@@ -79,7 +79,7 @@ namespace Plain.Forms {
 							if (bAcceptOK) {
 								int bufSize = NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_GETFILEPATH, IntPtr.Zero, (StringBuilder) null);
 								if (bufSize >= 0) {
-									StringBuilder sb = new StringBuilder(bufSize);
+									var sb = new StringBuilder(bufSize);
 									bufSize = NativeMethods.SendMessage(m.HWnd, NativeMethods.CDM_GETFILEPATH, (IntPtr)sb.Capacity, sb);
 									if (bufSize >= 0) {
 										string path = sb.ToString();

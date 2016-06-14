@@ -48,7 +48,7 @@ namespace Plain.Forms {
 				configOpenFileDialogToSelectFolder();
 				DialogResult answer;
 				if ((bool) _WindowsForms_.Get(openFileDialog, "UseVistaDialogInternal") == false) {
-					FileDialogParentForm frmMsg = new FileDialogParentForm(this);
+					var frmMsg = new FileDialogParentForm(this);
 					frmMsg.ShowFileDialog(owner, openFileDialog);
 					frmMsg.Close();
 					answer = frmMsg.DialogResult;

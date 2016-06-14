@@ -161,20 +161,20 @@ namespace DosboxApp {
 					throw new ArgumentNullException("destinationType");
 				}
 				if ((destinationType == typeof(string)) && (value is PriorityType)) {
-					PriorityType pt = (PriorityType) value;
+					var pt = (PriorityType) value;
 					if (culture == null) {
 						culture = CultureInfo.CurrentCulture;
 					}
 					string separator = culture.TextInfo.ListSeparator;
-					TypeConverter converter = TypeDescriptor.GetConverter(typeof(PriorityValue));
+					var converter = TypeDescriptor.GetConverter(typeof(PriorityValue));
 				    var str1 = converter.ConvertToString(context, culture, pt.when_focused);
 					var str2 = converter.ConvertToString(context, culture, pt.when_minimzed);
 					string[] strArray = new string[2] {str1, str2};
 					return string.Join(separator, strArray);
 				}
 				if ((destinationType == typeof(InstanceDescriptor)) && (value is PriorityType)) {
-					PriorityType pt2 = (PriorityType) value;
-					ConstructorInfo constructor = typeof(PriorityType).GetConstructor(new Type[] { typeof(PriorityValue), typeof(PriorityValue) });
+					var pt2 = (PriorityType) value;
+					var constructor = typeof(PriorityType).GetConstructor(new Type[] { typeof(PriorityValue), typeof(PriorityValue) });
 					if (constructor != null) {
 						return new InstanceDescriptor(constructor, new object[] { pt2.when_focused, pt2.when_minimzed });
 					}
@@ -303,7 +303,7 @@ namespace DosboxApp {
 			foreach (PropertyInfo pi in typeof(DosboxConfig).GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
 				string cat = ((CategoryOrderAttribute) pi.GetCustomAttributes(typeof(CategoryOrderAttribute), true)[0]).Category;
 				if (cat != DosboxConfig.SECTION_AUTOEXEC) {
-					ConfigMeta meta = new ConfigMeta();
+					var meta = new ConfigMeta();
 					meta.PropertyInfo = pi;
 					object[] attribs = pi.GetCustomAttributes(typeof(TypeConverterAttribute), true);
 					if (attribs.Length > 0) {

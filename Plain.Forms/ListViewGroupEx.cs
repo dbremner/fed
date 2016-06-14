@@ -67,7 +67,7 @@ namespace Plain.Forms {
 				if (m_Group.ListView != null && m_Group.ListView.Created) {
 					IntPtr pszHeader = Marshal.StringToCoTaskMemUni(m_Header);
 					if (pszHeader != IntPtr.Zero) {
-						NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
+						var lvg = new NativeMethods.LVGROUP();
 						lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 						lvg.mask = NativeMethods.LVGF_HEADER;
 						lvg.cchHeader = m_Header.Length;	// Should be ignored when set.
@@ -160,7 +160,7 @@ namespace Plain.Forms {
 				}
 			}
 			if (num > 0) {
-				ListViewItem[] items = new ListViewItem[num];
+				var items = new ListViewItem[num];
 				for (int i = 0; i < num; i++) {
 					items[i] = (ListViewItem) info.GetValue("Item" + i, typeof(ListViewItem));
 				}
@@ -237,7 +237,7 @@ namespace Plain.Forms {
 			}
 			get {
 				if (base.BaseClass.ListView != null && base.BaseClass.ListView.Created) {
-					NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
+					var lvg = new NativeMethods.LVGROUP();
 					lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 					lvg.mask = NativeMethods.LVGF_STATE;
 					lvg.stateMask = NativeMethods.LVGS_COLLAPSED | NativeMethods.LVGS_COLLAPSIBLE;
@@ -266,7 +266,7 @@ namespace Plain.Forms {
 			}
 			get {
 				if (base.BaseClass.ListView != null && base.BaseClass.ListView.Created) {
-					NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
+					var lvg = new NativeMethods.LVGROUP();
 					lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 					lvg.mask = NativeMethods.LVGF_STATE;
 					lvg.stateMask = NativeMethods.LVGS_COLLAPSED | NativeMethods.LVGS_COLLAPSIBLE;
@@ -291,7 +291,7 @@ namespace Plain.Forms {
 
 		void updateState() {
 			if (base.BaseClass.ListView != null && base.BaseClass.ListView.Created) {
-				NativeMethods.LVGROUP lvg = new NativeMethods.LVGROUP();
+				var lvg = new NativeMethods.LVGROUP();
 				lvg.cbSize = (uint) Marshal.SizeOf(lvg);
 				lvg.mask = NativeMethods.LVGF_STATE;
 				lvg.stateMask = NativeMethods.LVGS_COLLAPSIBLE | NativeMethods.LVGS_COLLAPSED;

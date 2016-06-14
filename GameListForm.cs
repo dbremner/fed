@@ -958,7 +958,7 @@ namespace DosboxApp {
 				DosboxInfo dbinfo = getSelectedDosboxVersion();
 				if (dbinfo != null) {
 					if (File.Exists(dbinfo.Config.mapperfile)) {
-						using (Process process = new Process()) {
+						using (var process = new Process()) {
 							process.StartInfo.FileName = "notepad.exe";
 							process.StartInfo.Arguments = dbinfo.Config.mapperfile;
 							process.StartInfo.ErrorDialog = true;
@@ -972,7 +972,7 @@ namespace DosboxApp {
 				if (dbinfo != null) {
 					string path = dbinfo.GetUserConfigFileName();
 					Clipboard.SetText(path);
-					using (Process process = new Process()) {
+					using (var process = new Process()) {
 						process.StartInfo.FileName = "notepad.exe";
 						process.StartInfo.Arguments = path;
 						process.StartInfo.ErrorDialog = true;
@@ -983,7 +983,7 @@ namespace DosboxApp {
 			else if (e.Button == btnViewTempConfigExtern) {
 				if (m_TemporaryConfigFile != null) {
 					Clipboard.SetText(m_TemporaryConfigFile);
-					using (Process process = new Process()) {
+					using (var process = new Process()) {
 						process.StartInfo.FileName = "notepad.exe";
 						process.StartInfo.Arguments = m_TemporaryConfigFile;
 						process.StartInfo.ErrorDialog = true;

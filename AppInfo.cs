@@ -29,8 +29,8 @@ namespace DosboxApp {
 		}
 
 		public static string GetRelativePath(string path) {
-			string lowpath = Path.GetFullPath(path);
-			string apppath = GetAppSearchDirectory();
+			var lowpath = Path.GetFullPath(path);
+			var apppath = GetAppSearchDirectory();
 			return PathEx.GetRelativePath(apppath, lowpath);
 		}
 
@@ -52,10 +52,10 @@ namespace DosboxApp {
 		}
 
 		public static AppConfig LoadConfig(string path) {
-			AppConfig config = new AppConfig();
+			var config = new AppConfig();
 			
 			if (File.Exists(path)) {
-				INI ini = new INI(path);
+				var ini = new INI(path);
 				config.GameListFormConfig.LoadFrom(ini);
 				config.GameConfig.LoadFrom(ini);
 				config.UpdateConfig.LoadFrom(ini);
@@ -74,11 +74,11 @@ namespace DosboxApp {
 		}
 
 		public static void SaveConfig(AppConfig config, string path) {
-			string dir = Path.GetDirectoryName(path);
+			var dir = Path.GetDirectoryName(path);
 			if (Directory.Exists(dir) == false) {
 				Directory.CreateDirectory(dir);
 			}
-			INI ini = new INI(path);
+			var ini = new INI(path);
 			config.GameListFormConfig.SaveTo(ini);
 			config.GameConfig.SaveTo(ini);
 			config.UpdateConfig.SaveTo(ini);

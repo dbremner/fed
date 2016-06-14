@@ -11,8 +11,8 @@ namespace DosboxApp {
 		public static event EventHandler ProcessStarted;
 
 		public static void Starting(DosboxInfo dbinfo, GameObject gobj, string pathConf) {
-			StringBuilder shortDirName = new StringBuilder(1024);
-			StringBuilder shortExeName = new StringBuilder(1024);
+			var shortDirName = new StringBuilder(1024);
+			var shortExeName = new StringBuilder(1024);
 			NativeMethods.GetShortPathName(gobj.Directory, shortDirName, shortDirName.Capacity);
 			NativeMethods.GetShortPathName(gobj.FileName, shortExeName, shortExeName.Capacity);
 			string args = "-noconsole";
