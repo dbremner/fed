@@ -404,7 +404,7 @@ namespace DosboxApp {
 			foreach (ConfigMeta meta in s_AllProperties[section]) {
 				string s = ini.Read(meta.PropertyInfo.Name);
 				if (string.IsNullOrEmpty(s) == false) {
-					object val = null;
+					object val;
 					try {
 						val = meta.TypeConverter.ConvertFromInvariantString(s);
 					}

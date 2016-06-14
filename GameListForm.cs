@@ -234,7 +234,7 @@ namespace DosboxApp {
 			m_IsInitializationDone = false;
 			this.Visible = false;
 
-			FileInfo fi = null;
+			FileInfo fi;
 			if (m_TemporaryConfigFile != null) {
 				try {
 					fi = new FileInfo(m_TemporaryConfigFile);
