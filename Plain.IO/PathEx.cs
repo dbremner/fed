@@ -57,8 +57,9 @@ namespace Plain.IO {
 					if (i == minlen) {
 						--i;
 					}
-					string pre = string.Empty, post = string.Empty;
-					for (int j = (dst_name[i] == Path.DirectorySeparatorChar ? i : i - 1); j >= 0; --j) {
+					string pre = string.Empty;
+				    string post = string.Empty;
+				    for (int j = (dst_name[i] == Path.DirectorySeparatorChar ? i : i - 1); j >= 0; --j) {
 						if (src_path[j] == Path.DirectorySeparatorChar) {
 							for (int k = j + 1; k < src_path.Length; ++k) {
 								if (src_path[k] == Path.DirectorySeparatorChar) {
