@@ -74,6 +74,7 @@ namespace DosboxApp {
 				}
 			}
 			foreach (string e in exes) {
+                //TODO missing conditional
 				return e;
 			}
 			return string.Empty;
